@@ -1,230 +1,106 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "version": 1,
-    "newProjectRoot": "projects",
-    "projects": {
-        "sellers-hub": {
-            "root": "",
-            "sourceRoot": "src",
-            "projectType": "application",
-            "prefix": "app",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                }
-            },
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "aot": true,
-                        "outputPath": "dist/sellers-hub",
-                        "index": "src/index.html",
-                        "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "src/tsconfig.app.json",
-                        "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
-                        ],
-                        "styles": [
-                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-                            "src/assets/scss/style.min.css",
-                            "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
-                            "src/assets/css/responsive.dataTables.min.css",
-                            "node_modules/ngx-toastr/toastr.css",
-                            "node_modules/sweetalert2/dist/sweetalert2.min.css",
-                            "src/assets/morisjs/morris.css",
-                            "src/assets/jsv2/vectormap/jquery-jvectormap-2.0.2.css",
-                            "node_modules/bs-stepper/dist/css/bs-stepper.min.css",
-                            "node_modules/magnific-popup/dist/magnific-popup.css",
-                            "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
-                            "node_modules/gridstack/dist/gridstack.min.css"
-                        ],
-                        "scripts": [
-                            "node_modules/jquery/dist/jquery.min.js",
-                            "src/assets/jsv2/perfect-scrollbar.jquery.min.js",
-                            "src/assets/bootstrap/dist/js/bootstrap.bundle.min.js",
-                            "node_modules/sticky-kit/dist/sticky-kit.min.js",
-                            "node_modules/jquery-sparkline/jquery.sparkline.min.js",
-                            "node_modules/pace-js/pace.min.js",
-                            "node_modules/datatables.net/js/jquery.dataTables.min.js",
-                            "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js",
-                            "node_modules/datatables-buttons/js/dataTables.buttons.js",
-                            "node_modules/datatables-buttons/js/buttons.flash.js",
-                            "node_modules/jszip/dist/jszip.min.js",
-                            "node_modules/pdfmake/build/pdfmake.min.js",
-                            "node_modules/pdfmake/build/vfs_fonts.js",
-                            "node_modules/datatables-buttons/js/buttons.html5.js",
-                            "node_modules/datatables-buttons/js/buttons.print.js",
-                            "src/assets/jsv2/waves.js",
-                            "src/assets/jsv2/custom.min.js",
-                            "node_modules/sweetalert2/dist/sweetalert2.all.min.js",
-                            "node_modules/chart.js/dist/chart.min.js",
-                            "node_modules/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js",
-                            "node_modules/crypto-js/crypto-js.js",
-                            "src/assets/morisjs/morris.min.js",
-                            "node_modules/raphael/raphael.min.js",
-                            "src/assets/jsv2/vectormap/jquery-jvectormap-2.0.2.min.js",
-                            "src/assets/jsv2/vectormap/jquery-jvectormap-world-mill-en.js",
-                            "src/assets/jsv2/jquery.PrintArea.js",
-                            "node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
-                            "node_modules/gridstack/dist/gridstack-h5.js"
-                        ]
-                    },
-                    "configurations": {
-                        "production": {
-                            "budgets": [{
-                                "type": "anyComponentStyle",
-                                "maximumWarning": "6kb"
-                            }],
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.prod.ts"
-                            }],
-                            "baseHref": "/secure/",
-                            "optimization": false,
-                            "outputHashing": "all",
-                            "sourceMap": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true
-                        },
-                        "development": {
-                            "buildOptimizer": false,
-                            "optimization": false,
-                            "vendorChunk": true,
-                            "extractLicenses": false,
-                            "sourceMap": true,
-                            "namedChunks": true
-                        },
-                        "staging": {
-                            "budgets": [{
-                                "type": "anyComponentStyle",
-                                "maximumWarning": "6kb"
-                            }],
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.staging.ts"
-                            }],
-                            "baseHref": "/secure/",
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true
-                        },
-                        "test": {
-                            "budgets": [{
-                                "type": "anyComponentStyle",
-                                "maximumWarning": "6kb"
-                            }],
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.test.ts"
-                            }],
-                            "baseHref": "/secure/",
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true
-                        },
-                        "es5": {
-                            "tsConfig": "./tsconfig.es5.json"
-                        }
-                    }
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "sellers-hub:build",
-                        "proxyConfig": "proxy.config.js"
-                    },
-                    "configurations": {
-                        "development": {
-                            "browserTarget": "sellers-hub:build:development"
-                        },
-                        "production": {
-                            "browserTarget": "sellers-hub:build:production"
-                        },
-                        "es5": {
-                            "browserTarget": "sellers-hub:build:es5"
-                        }
-                    },
-                    "defaultConfiguration": "development"
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "sellers-hub:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "src/tsconfig.spec.json",
-                        "karmaConfig": "src/karma.conf.js",
-                        "styles": [
-                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-                            "src/styles.css"
-                        ],
-                        "scripts": [],
-                        "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
-                        ]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "src/tsconfig.app.json",
-                            "src/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
-        },
-        "sellers-hub-e2e": {
-            "root": "e2e/",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "sellers-hub:serve"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": "e2e/tsconfig.e2e.json",
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                }
-            }
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "sellershubangularui": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
         }
-    },
-    "defaultProject": "sellers-hub",
-    "cli": {
-        "analytics": false
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/sellershubangularui",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "sellershubangularui:build:production"
+            },
+            "development": {
+              "browserTarget": "sellershubangularui:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sellershubangularui:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
     }
+  },
+  "defaultProject": "sellershubangularui"
 }
