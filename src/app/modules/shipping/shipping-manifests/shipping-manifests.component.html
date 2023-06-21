@@ -1,0 +1,204 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <app-apploader [Uloading]="loading" *ngIf="!isEdit && loading"></app-apploader>
+                        <table class="table table color-bordered-table success-bordered-table table-bordered">
+                            <thead class="text-center">
+                                <!-- <th></th> -->
+                                <th>Vendor</th>
+                                <th>Shipping Method</th>
+                                <!-- <th>Account Number</th> -->
+                                <th> Total</th>
+                                <!-- <th>Deferred</th> -->
+                                <th>Total Weight</th>
+                                <th>Avg Weight</th>
+                                <th>Current Manifest</th>
+                                <th>Previous Manifest</th>
+
+                                <!-- <th>ACTION<span class="fas fa-sort"></span></th> -->
+                            </thead>
+                            <tbody class="text-center">
+                                <tr *ngFor="let order of allSales;let i=index">
+                                    <!-- <td></td> -->
+                                    <td>{{order.carrierName != "null" ? order.carrierName : ''}}</td>
+                                    <td>{{order.shippingMethod != "null" ? order.shippingMethod : ''}}</td>
+                                    <td>{{order.total}}</td>
+                                    <!-- <td></td> -->
+                                    <td>{{order.weight?.toFixed(2)}}</td>
+                                    <!-- <td></td> -->
+                                    <td>{{(order.weight /order.total)?.toFixed(2)}}</td>
+                                    <!-- <td>{{order.weight}}</td> -->
+                                    <td>
+                                        <div class="row justify-content-center align-items-center">
+                                            <button class="btn btn-sm btn-success"
+                                                (click)="viewShippingManifest(order)">View</button>
+                                            <!-- <i title="print" style="cursor: pointer;color: #00c292;" class="m-l-15 fas fa-print fa-lg"></i> 
+                                            <i title="file" style="cursor: pointer;color: #00c292;" class="m-l-15 fas fa-file fa-lg"></i> -->
+                                        </div>
+                                    </td>
+                                    <td><span class="hover" (click)="editproduct(order)">{{order.manifestId != "null" ?
+                                            order.manifestId : ''}}</span></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="row col-lg-12 col-md-12">
+                        <div class="col-lg-6 col-md-6 ">
+                            <span>Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of {{collectionsize}} entries</span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right">
+                            <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3" [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+                            </ngb-pagination>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="viewmanifest-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right " style="padding-right: 0px;">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <button (click)="generateManifest();" type="button"
+                            class="btn btn-success btn-sm d-lg-block m-l-15">Generate Manifest</button>
+                        <button type="button" (click)="exportManifest();"
+                            class="btn btn-success btn-sm d-lg-block m-l-15">Export</button>
+                    </div>
+                </div>
+                <div class="table-responsive mt-2">
+                    <app-apploader [Uloading]="loading" *ngIf="isEdit && loading"></app-apploader>
+
+                    <table id="printabletable" class="display nowrap table table-hover table-striped table-bordered">
+                        <thead class="text-center">
+                            <th>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="checkall" [(ngModel)]="isAllChecked" name="checkall"
+                                        (click)="selectall($event)" class="custom-control-input checkallP">
+                                    <label class="custom-control-label" for="checkall"></label>
+                                </div>
+                            </th>
+                            <th>Order Id</th>
+                            <th>Customer</th>
+                            <th>Email</th>
+                            <th>Postal Code</th>
+                            <th>Country</th>
+                            <th>Weight</th>
+                            <th>Tracking Number</th>
+                            <!-- <th>Email</th> -->
+                        </thead>
+                        <tbody class="text-center">
+                            <tr *ngFor="let order of Sales;let i=index">
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input (click)="individualselection(order)" [checked]="order.selected"
+                                            type="checkbox" [id]="order.id" [value]="order.selected" [name]="test"
+                                            class="custom-control-input checkallP">
+                                        <label class="custom-control-label" for="{{order.id}}"></label>
+                                    </div>
+                                </td>
+                                <td><span class="hover" (click)="viewOrdersTab(order)">{{order.orderId}}</span></td>
+                                <td>{{order.buyerName}}</td>
+                                <td>{{order.buyerEmail}}</td>
+                                <td>{{order.shipPostalCode != "null" ? order.shipPostalCode : ''}}</td>
+                                <td>{{order.shipCountry}}</td>
+                                <td>{{order.weight != "null" ? order.weight : ''}}</td>
+                                <td>{{order.trackingNumber != "null" ? order.trackingNumber : ''}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row col-lg-12 col-md-12 mt-2">
+                    <div class="col-lg-6 col-md-6 ">
+                        <span>Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of {{collectionsize}}
+                                entries</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-right">
+                        <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page"
+                            [maxSize]="3" [rotate]="true" [boundaryLinks]="true" (pageChange)="changepage(page);">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"
+                    (click)="modalclosed()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="view-manifest-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" (click)="viewmodalclosed()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <app-apploader [Uloading]="loading" *ngIf="isEdit && loading"></app-apploader>
+                <div class="table-responsive mt-2">
+
+                    <table id="printabletable" class="display nowrap table table-hover table-striped table-bordered"
+                        cellspacing="0" width="100%">
+                        <thead class="text-center">
+                            <th>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="checkallsale" [(ngModel)]="isSaleAllChecked"
+                                        name="checkallsalename" (click)="selectallsales($event)"
+                                        class="custom-control-input checkallP">
+                                    <label class="custom-control-label" for="checkallsale"></label>
+                                </div>
+                            </th>
+                            <th>Order Id</th>
+                            <th>Customer</th>
+                            <th>Email</th>
+                            <th>Postal Code</th>
+                            <th>Country</th>
+                            <th>Weight</th>
+                            <th>Tracking Number</th>
+                            <!-- <th>Email</th> -->
+                        </thead>
+                        <tbody class="text-center">
+                            <tr *ngFor="let order of viewSales;let i=index">
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input (click)="individualSaleselection(order)" [checked]="order.selected"
+                                            type="checkbox" [id]="order.id" [value]="order.selected"
+                                            [name]="order.id + test" class="custom-control-input checkallP">
+                                        <label class="custom-control-label" for="{{order.id}}"></label>
+                                    </div>
+                                </td>
+                                <td>{{order.orderId}}</td>
+                                <td>{{order.buyerName}}</td>
+                                <td>{{order.buyerEmail}}</td>
+                                <td>{{order.shipPostalCode != "null" ? order.shipPostalCode : ''}}</td>
+                                <td>{{order.shipCountry}}</td>
+                                <td>{{order.weight != "null" ? order.weight : ''}}</td>
+                                <td>{{order.trackingNumber != "null" ? order.trackingNumber : ''}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"
+                    (click)="viewmodalclosed()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

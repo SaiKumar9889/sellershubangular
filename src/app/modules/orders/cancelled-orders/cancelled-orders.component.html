@@ -1,0 +1,140 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-12 col-md-12 row option-alignment">
+            <div class="col-lg-6 col-sm-12 col-md-6">
+              <h4 class="card-title">Cancelled Orders</h4>
+            </div>
+
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12 row" style="padding-right: 0px;">
+            <div class="col-lg-6 col-sm-9 col-md-6 row" style="padding-right: 0px;">
+
+            </div>
+            <div class="col-lg-6 col-sm-12 col-md-6  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+              <div class=" row">
+                <select class="col-sm-6 form-control custom-select" [(ngModel)]="searchBy" id="searchname">
+                  <option value="0">Search by</option>
+																<option value="1">SKU</option>
+																<option value="3">Title</option>
+																<option value="4">Order No</option>
+																<option value="5">Customer Name</option>
+                </select>
+                <div class="col-sm-6">
+                  <div class="input-group">
+                    <input type="text" [(ngModel)]="searchValue" class="form-control" id="pass3"
+                      placeholder="Enter Search Value">
+                      <div class="input-group-append"><span class="input-group-text"
+                        (click)="getOrders()"><i class="ti-search"></i></span>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <button (click)="reset()" type="button" class="btn btn-warning d-lg-block m-l-15"><i
+                class="fa fa-plus-circle"></i> Reset</button>
+              <!-- <button type="button" class="btn btn-info d-lg-block m-l-15 mr-1"><i class=" fas fa-file-excel"></i> Export To CSV</button> -->
+              <div class="d-flex justify-content-end align-items-center">
+                <!-- <div>
+
+                  <select class="form-control custom-select">
+                    <option value="0">Select</option>
+                    <option value="1">SKU</option>
+                    <option value="3">Title</option>
+                    <option value="4">Order No</option>
+                    <option value="5">Customer Name</option>
+                  </select>
+
+                </div> -->
+                <div>
+                  <!-- <label class="control-label">Page Size</label> -->
+                  <select (change)="getOrders()" class="form-control custom-select" [(ngModel)]="pageSize">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                  <!-- <small class="form-control-feedback"> Select your gender </small> -->
+                </div>
+                <!-- <button type="button" data-toggle="modal" data-target="#search-modal"
+                  class="btn btn-success d-lg-block m-l-15"><i class=" fas fa-search"></i> Search</button> -->
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table class="table table color-bordered-table success-bordered-table table-bordered">
+              <thead>
+                <!-- <th>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="checkall" name="checkall" class="custom-control-input checkallP">
+                    <label class="custom-control-label" for="checkall"></label>
+                  </div>
+                </th> -->
+                <th>Order No <!-- <app-filter></app-filter> --></th>
+                <th>Channel</th>
+                <th>Site</th>
+                <th>Image</th>
+                <th style="min-width: 200px;">Title <!-- <app-filter></app-filter> -->
+                </th>
+                <th  style="min-width: 150px;">SKU <!-- <app-filter></app-filter> --></th>
+                <th style="min-width: 130px;">Order Date</th>
+
+                <th style="min-width: 200px;">Customer <!-- <app-filter></app-filter> -->
+                </th>
+                <th>Amount </th>
+                <th>Stock Qty </th>
+                <th>Shipping</th>
+                <th>View</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of allOrders">
+                  <!-- <td>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input checkallP">
+                      <label class="custom-control-label"></label>
+                    </div>
+                  </td> -->
+                  <td>{{ order.channelOrderId }}</td>
+                  <td><img [src]="getImage(order.channel)"  alt="{{order.channel}}" class="img-responsive"></td>
+                  <td><img *ngIf="order.site" alt="{{order.site}}" [src]="getSiteImage(order.site)" class="img-responsive"></td>
+                  <td><img src="{{ order.imageUrl }}"  class="img-responsive prod-img"></td>
+                  <td>{{ order.title }}</td>
+                  <td>{{ order.sku }}</td>
+                  <td>{{ order.purchaseDate | date:'dd/MM/yyyy H:mm:ss' }}</td>
+                  <td>{{ order.buyerName }}</td>
+                  <td>{{ order.itemPrice }}</td>
+                  <td>{{ order.quantityPurchased }}</td>
+                  <td>{{ order.orderStatus }}</td>
+                  <td>
+                    <button type="button" class="btn btn-success d-lg-block m-l-15" (click)="viewOrderTab(order)">View Order</button>
+                  </td>
+                  <!-- <td><button type="button" class="btn btn-sm btn-success"><i class=" fas fa-eye"> </i> view</button></td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div  class="col-lg-6 col-md-6 ">
+              <span >Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of {{collectionsize}} entries</span>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+              <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+              </ngb-pagination>
+            </div>
+          </div>
+
+        </div>
+        <!-- <app-order-view></app-order-view> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+

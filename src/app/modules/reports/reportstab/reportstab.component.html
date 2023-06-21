@@ -1,0 +1,46 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div class="card">
+        <div class="card-body p-b-0">
+          <h2 class="card-title">Reports</h2>
+          <!-- <h6 class="card-subtitle">Use default tab with class <code>customtab</code></h6> -->
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs customtab2" role="tablist">
+            <li class="nav-item" *ngFor="let tab of selectedTabs;let i = index">
+                  <a class="nav-link" [ngClass]="tab.active?'active':''" data-toggle="tab" [href]="'#'+tab.id" role="tab">
+                      <!-- <span  class="hidden-sm-up"><i class="ti-user"></i></span>  -->
+                      <span class="hidden-xs-down"> {{tab.titlename}} </span> 
+                      <span  class="hidden-sm-up"><i (click)="closeTab(tab)" class="ti-close"></i></span> </a>
+            </li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <ng-container  *ngFor="let tab of selectedTabs;let i = index">
+              <div class="tab-pane" [ngClass]="tab.active?'active':''" [id]="tab.id" role="tabpanel" >
+                <div>
+                  <div [ngSwitch]="tab.id">
+                    <div *ngSwitchCase="'sales_by_prod'">
+                      <app-search-by-prod></app-search-by-prod>
+                    </div>
+                    <div *ngSwitchCase="'low_stock'">
+                      <app-lowstock></app-lowstock>
+                    </div>            
+                    <div *ngSwitchCase="'stock_value_repo'">
+                      <app-stock-value-repo></app-stock-value-repo>
+                    </div>
+                    <div *ngSwitchCase="'order_history'">
+                      <app-order-history></app-order-history>
+                    </div>
+                    <div *ngSwitchDefault>
+                     <p>No one is matched</p>
+                    </div>
+                </div>
+                </div>
+              </div>           
+            </ng-container>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

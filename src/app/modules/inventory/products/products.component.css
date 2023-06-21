@@ -1,0 +1,59 @@
+.card-body {
+    padding: 0.5rem;
+}
+
+.search-alignment{
+    padding-right: 0px;
+    margin-bottom: 0.5%;
+}
+
+.option-alignment{
+    padding-right: 0px;
+    margin-bottom: 0.5%;
+}
+
+.prod-img{
+    max-height: 30px;
+}
+.hide {
+  display: none;
+}
+    
+.prod-img:hover + .hide {
+    max-height: 100px;
+    display: block;
+    margin-left: 10px;
+}
+ngb-pagination{
+  float: right;
+}
+
+.refresh{
+    font-size: 20px;
+    margin-top: 7px;
+    color: green;
+}
+:host ::ng-deep .multiselect-dropdown .selected-item{
+    max-width: 200px!important;
+  }
+  .icon-space {
+    margin-left: 10px;
+    margin-top: 12px;
+    color: #00c292;
+  }
+  
+  
+  .icon-space-error {
+    margin-left: 10px;
+    margin-top: 12px;
+    color: #ff0000;
+  }
+  .hover{
+    cursor: pointer;
+    color: #ae73da;
+    overflow: hidden !important;
+    width:150px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1 !important;
+    -webkit-box-orient: vertical !important;
+  }

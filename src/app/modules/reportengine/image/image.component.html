@@ -1,0 +1,45 @@
+<div class=" showoptions col-md-12 col-lg-12">
+    <div class="hide text-right">
+        <button (click)="openmodal()" type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm mr-1" title="Hide & Show" data-toggle="collapse" data-target="#demo"><i style="color:rgb(18, 180, 126) !important" class="far fa-sun"></i></button>
+        <button type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm mr-1" title="Hide & Show" data-toggle="collapse" data-target="#demo"><i style="color:rgb(60, 121, 212) !important" class=" fas fa-long-arrow-alt-up"></i></button>
+        <button type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm mr-1" title="Hide & Show" data-toggle="collapse" data-target="#demo"><i style="color:rgb(60, 121, 212) !important" class=" fas fa-long-arrow-alt-down"></i></button>
+        <button (click)="delete()" type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm" title="Delete"><i class="fa fa-trash" style="color:red !important " ></i></button>
+    </div>
+    <div class=" form-group row imgUp">
+        <div class="col-sm-4" [style.margin-left]="getposition()">
+            <div class="imagePreview"></div>
+            <label class="btn btn-primary">
+         Upload
+         <input type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
+        </label>
+        </div>
+        <!-- col-2 -->
+        <i class="fa fa-plus imgAdd"></i>
+    </div>
+</div>
+<div id="modal-{{obj.id}}" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myLargeModalLabel" style="padding-left: 38%;color: rgb(255 165 0);font-weight: 600">Image Settings</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label lable-weight">Position :</label>
+                    <select (change)="changePosition($event)" name="position" class="form-control custom-select" id="position">
+                        <option value="0">Please Select Position </option>
+                        <option value="text-left">Left </option>
+                        <option value="text-right">Right </option>
+                        <option value="text-center">Center</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn waves-effect waves-light btn-success" (click)="updateImagesettings()">Save</button>
+                <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal" (click)="modalclosed()">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -1,0 +1,58 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" [ngClass]="isLeftsidemenuhide?'sidebar-bar-mobile':''">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <!-- <li class="user-pro"> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
+            aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"><span
+              class="hide-menu">Mark Jeckson</span></a>
+          <ul aria-expanded="false" class="collapse">
+            <li><a href="javascript:void(0)"><i class="ti-user"></i> My Profile</a></li>
+            <li><a href="javascript:void(0)"><i class="ti-wallet"></i> My Balance</a></li>
+            <li><a href="javascript:void(0)"><i class="ti-email"></i> Inbox</a></li>
+            <li><a href="javascript:void(0)"><i class="ti-settings"></i> Account Setting</a></li>
+            <li><a href="javascript:void(0)"><i class="fa fa-power-off"></i> Logout</a></li>
+          </ul>
+        </li> -->
+                <!-- <li class="nav-small-cap">--- PERSONAL</li> -->
+                <ng-container *ngFor="let menu of allMenus">
+                    <li [ngClass]="{active: menu.pmenu===selectedMenuName}">
+                        <a *ngIf="!menu.haschildrens" (click)="setMenuName(menu)" class="waves-effect waves-dark handicon" aria-expanded="false">
+                            <i [ngClass]="menu.icon"></i><span class="hide-menu">{{menu.menuname.toUpperCase()}}
+                            <span *ngIf="menu.isPremium" class="label-loc label-prime">Premium</span>
+                            <span *ngIf="menu.isComingSoon" class="label-loc label-comingsoon">Coming soon</span>
+                            <span *ngIf="menu.isBeta" class="label-loc label-comingsoon">Beta</span>
+                            </span>
+                        </a>
+                        <a *ngIf="menu.haschildrens" class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                            <i [ngClass]="menu.icon"></i>
+                            <span class="hide-menu">{{menu.menuname.toUpperCase()}}
+                            <span *ngIf="menu.isPremium" class="label-loc label-prime">Premium</span>
+                            <span *ngIf="menu.isComingSoon" class="label-loc label-comingsoon">Coming soon</span>
+                            <span *ngIf="menu.isBeta" class="label-loc label-comingsoon">Beta</span>
+                            </span>
+                        </a>
+                        <ul aria-expanded="false" class="collapse" *ngIf="menu.chaildrens?.length>0&&menu.haschildrens">
+                            <ng-container *ngFor="let cmenu of menu.chaildrens">
+                                <li class="handicon" [ngClass]="{active: menu.pmenu===selectedMenuName}">
+                                    <div>
+                                        <span *ngIf="cmenu.isPremium" class="label-loc-inner label-prime">Premium</span>
+                                        <span *ngIf="cmenu.isComingSoon" class="label-loc-inner label-comingsoon">Coming soon</span>
+                                        <span *ngIf="cmenu.isBeta" class="label-loc-inner label-comingsoon">Beta</span>
+                                        <a *ngIf="status=='ACTIVE' || status=='active'||status=='Active'" (click)="setMenuName(cmenu)">{{cmenu.menuname.toUpperCase()}}</a>
+                                    </div>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </li>
+                </ng-container>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

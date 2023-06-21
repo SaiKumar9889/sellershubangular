@@ -1,0 +1,1064 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+        style="padding-right: 0px;">
+        <div class="d-flex justify-content-end align-items-center">
+            <div>
+                <button (click)="openmodalMergeProd()" type="button" class="btn btn-success d-lg-block m-r-15"><i
+                        class=" fas fa-download"></i> Merge
+                    Product</button>
+            </div>
+
+            <div>
+                <button (click)="duplicateProd()" type="button" class="btn btn-success d-lg-block m-r-15"><i
+                        class=" fas fa-download"></i> Duplicate Product</button>
+            </div>
+            <div class="btn-group mr-1">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class=" fas fa-print"></i> More
+                </button>
+                <div class="dropdown-menu animated flipInX">
+                    <a (click)="deleteProd()" class="dropdown-item" href="javascript:void(0)">Delete</a>
+                    <a (click)="printProd()" class="dropdown-item" href="javascript:void(0)">Print</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-md-12">
+        <h5 style="font-weight: 500;">{{sku?sku:'SKU'}}-{{title?title:'Product Name'}}</h5>
+        <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+        <div id="stepper1" class="bs-stepper">
+            <div class="bs-stepper-header">
+                <div class="step" data-target="#test-l-1">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">1</span> -->
+                        <span class="bs-stepper-label">Product Details</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#test-l-2">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">2</span> -->
+                        <span class="bs-stepper-label">SKU Price & Quantity</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#test-l-3">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">3</span> -->
+                        <span class="bs-stepper-label">Variations</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#test-l-4">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">4</span> -->
+                        <span class="bs-stepper-label">Product Image</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#test-l-5">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">5</span> -->
+                        <span class="bs-stepper-label">Attributes</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#test-l-6">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">6</span> -->
+                        <span class="bs-stepper-label">Supplier</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <div class="step" data-target="#test-l-7">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">6</span> -->
+                        <span class="bs-stepper-label">Location</span>
+                    </button>
+                </div>
+                <br>
+                <div class="line"></div>
+                <div class="step" data-target="#test-l-8">
+                    <button class="step-trigger">
+                        <!-- <span class="bs-stepper-circle">7</span> -->
+                        <span class="bs-stepper-label">Composition</span>
+                    </button>
+                </div>
+                <!-- <div class="step" data-target="#test-l-7" >
+                <button class="step-trigger">
+                    <span class="bs-stepper-label">Product Tracking</span>
+                </button>
+            </div> -->
+            </div>
+            <div class="bs-stepper-content mt-3">
+                <form name="123">
+                    <div id="test-l-1" class="content">
+                        <form action="#">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label>Title <span style="color:red">*</span></label>
+                                            <input name="title" [(ngModel)]="title" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label>Stock keeping unit (SKU) <span style="color:red">*</span></label>
+                                            <input name="sku" [(ngModel)]="sku" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description <span style="color:red">*</span></label>
+                                            <angular-editor id="editor" [(ngModel)]="desc" name="editor"
+                                                [config]="editorConfig" (focusout)="emithtml($event)">
+                                            </angular-editor>
+                                            <!-- <textarea name="desc" [(ngModel)]="desc" class="form-control"
+                                            rows="5"></textarea> -->
+                                            <!-- <ckeditor #ckeditorObj [data]="desc" [config]="config"></ckeditor> -->
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Product Summary </label>
+                                            <textarea name="productsummary" [(ngModel)]="productsummary"
+                                                class="form-control" rows="5"></textarea>
+                                        </div>
+                                        <!-- <div class="col-md-6 col-md-6">
+                                        <label>Product Summary </label>
+                                        <input name="title" [(ngModel)]="productsummary" type="text" class="form-control">
+                                    </div> -->
+                                        <!-- <div class="col-md-6 col-md-6">
+                                        <label> Product Summary 1 </label>
+                                        <input name="title" [(ngModel)]="productsummary1" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 col-md-6" >
+                                        <label> Product Summary 2 </label>
+                                        <input name="title" [(ngModel)]="productsummary2" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 col-md-6" >
+                                        <label> Product Summary 3 </label>
+                                        <input name="title" [(ngModel)]="productsummary3" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 col-md-6" >
+                                        <label> Product Summary 4 </label>
+                                        <input name="title" [(ngModel)]="productsummary4" type="text" class="form-control">
+                                    </div> -->
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label text-right">Product Code: <span
+                                                    style="color:red">*</span> Please check the below relevant box to
+                                                enter
+                                                code</label>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+
+                                <!--/row-->
+                                <div class="form-group row">
+                                    <div class="col-sm-9 col-md-3">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input [checked]="isUpcSelected" (click)="upcSelected()" type="checkbox"
+                                                class="custom-control-input">
+                                            <span class="custom-control-label">UPC</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-9 col-md-3">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input [checked]="isEAN_FSNSelected" (click)="EAN_FSNSelected()"
+                                                type="checkbox" class="custom-control-input">
+                                            <span class="custom-control-label">EAN/FSN</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-9 col-md-3">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input [checked]="isISBNSelected" (click)="isbnSelected()" type="checkbox"
+                                                class="custom-control-input">
+                                            <span class="custom-control-label">ISBN</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-9 col-md-3">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input [checked]="isASINSelected" (click)="asinSelected()" type="checkbox"
+                                                class="custom-control-input">
+                                            <span class="custom-control-label">ASIN</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" *ngIf="isUpcSelected">
+                                        <div class="form-group">
+                                            <label>UPC</label>
+                                            <input name="UPC" [(ngModel)]="UPC" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6" *ngIf="isEAN_FSNSelected">
+                                        <div class="form-group">
+                                            <label>EAN/FSN</label>
+                                            <input name="ean_fsn" [(ngModel)]="ean_fsn" type="text"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6" *ngIf="isISBNSelected">
+                                        <div class="form-group">
+                                            <label>ISBN</label>
+                                            <input name="ISBN" [(ngModel)]="ISBN" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" *ngIf="isASINSelected">
+                                        <div class="form-group">
+                                            <label>ASIN</label>
+                                            <input name="ASIN" [(ngModel)]="ASIN" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 col-lg-12 row">
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label>Category:</label>
+                                            <ng-multiselect-dropdown [settings]="dropdownSettings_category"
+                                                [placeholder]="'Select Category'" id="catgory" name="catgory"
+                                                [data]="allCategories" ngDefaultControl [(ngModel)]="selectedCategory">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label>Country Of Origin:</label>
+                                            <ng-multiselect-dropdown (onSelect)="onItemSelectCountryBil($event)"
+                                                [settings]="dropdownSettings_country" [placeholder]="'Select Country'"
+                                                id="country" name="country" [data]="allCountries" ngDefaultControl
+                                                [(ngModel)]="selectedCountry">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <app-app-date-picker (selectedDate)="expiryDate($event)" lable="Expiry Date"
+                                                [minDate]="minDate" [selectedIpDate]="expirayDate">
+                                            </app-app-date-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-12 col-lg-12 row">
+                                <div class="col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Batch Type :</label>
+                                        <ng-multiselect-dropdown (onSelect)="onItemSelectCountryBil($event)" [settings]="dropdownSettings_country" [placeholder]="'Select Country'" id="country" name="country" [data]="allCountries" ngDefaultControl [(ngModel)]="selectedCountry">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>COndition :</label>
+                                        <ng-multiselect-dropdown (onSelect)="onItemSelectCountryBil($event)" [settings]="dropdownSettings_country" [placeholder]="'Select Country'" id="country" name="country" [data]="allCountries" ngDefaultControl [(ngModel)]="selectedCountry">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            </div>
+                        </form>
+                        <div class="col-md-12 col-lg-12 text-right">
+                            <button (click)="next('saveGeneralSetting')" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                    <div id="test-l-2" class="content">
+                        <!-- <h3 class="card-title">Product Prices</h3>
+                    <hr>
+                    <h3 class="card-title">Product Quantities</h3>
+                    <hr>
+                    <h3 class="card-title">Product Location</h3>
+                    <hr>
+                    <h3 class="card-title">Postage Definition</h3>
+                    <hr>
+                    <h3 class="card-title">Weight(Kg) and Dimensions (cms)</h3>
+                    <hr> -->
+                        <div class="row">
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Selling Price (Inc Tax): <span style="color:red">*</span></label>
+                                    <input appDecimaNumberDirective [(ngModel)]="sellingprice" name='sellingprice'
+                                        type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Recommended Retail Price (RRP): </label>
+                                    <input appDecimaNumberDirective [(ngModel)]="recomRetailsPrice"
+                                        name='recomRetailsPrice' type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Cost Price </label>
+                                    <input appDecimaNumberDirective [(ngModel)]="costprice" name='costprice' type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Tax Rate </label>
+                                    <!-- <input [(ngModel)]="taxrate" name='costprice' type="text"
+                                class="form-control"> -->
+                                    <select [(ngModel)]="taxrate" name='taxrate' class="form-control custom-select">
+                                        <option value="">--Select your Tax Rate--</option>
+                                        <option value="{{tax.id}}" *ngFor="let tax of taxRatesDropdown">{{tax.name}} (
+                                            {{tax.rate}} )</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Total Quantity:<span style="color:red">*</span></label>
+                                    <input appNumber [(ngModel)]="totlQty" name='totlQty' type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Minimum Qty: </label>
+                                    <input appNumber [(ngModel)]="minQty" name='minQty' type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Item Condition: </label>
+                                    <select [(ngModel)]="itemCond" name='itemCond' class="form-control custom-select">
+                                        <option>--Select Item Condition--</option>
+                                        <option value="New">New/Brand New/New with box/New with tags</option>
+                                        <option value="10">New without tags/Unused item with no signs of wear/Packaging
+                                            may
+                                            be missing or opened.</option>
+                                        <option value="5">New with defects/Collectible Like New</option>
+                                        <option value="Used">Used/Pre-Owned</option>
+                                        <option value="1">Used Like New</option>
+                                        <option value="2">Used Very Good</option>
+                                        <option value="3">Used Good</option>
+                                        <option value="9">Good</option>
+                                        <option value="4">Used Acceptable</option>
+                                        <option value="6">Manufacturer refurbished/Collectible Very Good</option>
+                                        <option value="7">Seller refurbished/Collectible Good</option>
+                                        <option value="8">Collectible Acceptable</option>
+                                        <option value="12">For parts or not working</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 ">
+                                <div class="form-group">
+                                    <label>Condition Note: </label>
+                                    <input [(ngModel)]="condNotes" name='condNotes' type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <h4 style="font-weight: 500;">Dimeensions :</h4>
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="col-md-12 row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Weight(KG):</label>
+                                            <input appDecimaNumberDirective [(ngModel)]="weightkg" name="weightkg"
+                                                (input)="onWeightKG()" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Weight(GR):</label>
+                                            <input appDecimaNumberDirective [(ngModel)]="weightgr" name="weightgr"
+                                                (input)="onWeightGR()" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 ">
+                                <div class="form-group">
+                                    <label>Length(cm):</label>
+                                    <input appNumber [(ngModel)]="heightkg" name='heightkg' type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="form-group">
+                                    <label>Depth(cm):</label>
+                                    <input appDecimaNumberDirective [(ngModel)]="depth" name='depth' type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="form-group">
+                                    <label>Width(cm):</label>
+                                    <input appDecimaNumberDirective [(ngModel)]="width" name='width' type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="card">
+                        <div class="card-header  col-12">
+                           Postage Definition 
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label>Default Postal Service </label>
+                                        <input [(ngModel)]="taxrate" name='costprice' type="text"
+                                        class="form-control">
+                                        <select  name='taxrate' class="form-control custom-select">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let item of allShippingServices" [value]="item"> {{item}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label>Packaging Group </label>
+                                        <input [(ngModel)]="taxrate" name='costprice' type="text"
+                                        class="form-control">
+                                        <select  name='taxrate' class="form-control custom-select">
+                                            <option value="">--Select--</option>
+                                            <option value="Large Box" >Large Box</option>
+                                            <option value="Large Letter Envelope" >Large Letter Envelope</option>
+                                            <option value="Medium Box" >Medium Box</option>
+                                            <option value="Packet" >Packet</option>
+                                            <option value="Packet - Jiffy Bag" >Packet - Jiffy Bag</option>
+                                            <option value="Packet - Jiffy Bag (Chunky Light Products)" >Packet - Jiffy Bag (Chunky Light Products)</option>
+                                            <option value="Pallet" >Pallet</option>
+                                            <option value="Small Box" >Small Box</option>
+                                            <option value="Small Letter Envelope" >Small Letter Envelope</option>
+                                            <option value="Small Parcel" >Small Parcel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                        <div class="col-md-12 col-lg-12 row ">
+                            <div class="col-md-6 text-left">
+                                <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button (click)="next('skuPrice')" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="test-l-3" class="content" style="min-height: 80vh;">
+                        <div *ngIf="!isSaveVariationDone">
+                            <div class="form-group row">
+                                <div class="col-sm-9 col-md-3">
+                                    <label class="custom-control custom-checkbox m-b-0">
+                                        <input (click)="changeVariation(false)" [checked]="!hasVariation"
+                                            type="checkbox" class="custom-control-input">
+                                        <span class="custom-control-label">No variations</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-9 col-md-3">
+                                    <label class="custom-control custom-checkbox m-b-0">
+                                        <input (click)="changeVariation(true)" [checked]="hasVariation" type="checkbox"
+                                            class="custom-control-input">
+                                        <span class="custom-control-label">Had Variation</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="form-group" *ngIf="hasVariation">
+                                <label>Attributes:</label>
+                                <ng-multiselect-dropdown (onDropDownClose)="onDropDownClose($event)"
+                                    [settings]="dropdownSettings_attributes" [placeholder]="'Select Attributes'"
+                                    id="attributes" name="attributes" [data]="attributes" ngDefaultControl
+                                    [(ngModel)]="selectedAttributes">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-12 col-lg-12 row" *ngIf="hasVariation && mappedAttributes.length>0">
+                                <div class="col-md-6 col-lg-6" *ngFor="let vari of mappedAttributes">
+                                    <div class="form-group">
+                                        <label>{{vari.name}} :</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSettings_attributes_dynamic"
+                                            [placeholder]="'Select Attributes'" id="attributes-{{vari.name}}"
+                                            name="attributes-{{vari.name}}" ngDefaultControl
+                                            (onSelect)="onItemSelect($event)" [(ngModel)]="vari.selvalues"
+                                            [data]="vari?.attributeValuesJson?.values">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive" *ngIf="isSaveVariationDone">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>UPC</th>
+                                        <th>EAN</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th *ngFor="let ma of mappedAttributes">{{ma.name}}</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let tbf of tableFields">
+                                        <td><input name="{{tbf.sku}}" disabled [value]="tbf.sku" type="text"
+                                                class="form-control" placeholder=""></td>
+                                        <td><input name="{{tbf.sku}}-UPC" type="text" [(ngModel)]="tbf.upc"
+                                                class="form-control" placeholder=""></td>
+                                        <td><input name="{{tbf.sku}}-EAN" type="text" [(ngModel)]="tbf.ean"
+                                                class="form-control" placeholder=""></td>
+                                        <td><input appDecimaNumberDirective name="{{tbf.sku}}-PRICE" type="text"
+                                                [(ngModel)]="tbf.baseprice" class="form-control" placeholder=""></td>
+                                        <td><input name="{{tbf.sku}}-QTY" type="text" [(ngModel)]="tbf.qty"
+                                                class="form-control" placeholder=""></td>
+                                        <td *ngFor='let cmb of tbf.combinationIpArray'>
+                                            <input disabled [value]="cmb" type="text" class="form-control"
+                                                placeholder="">
+                                        </td>
+                                        <td>
+                                            <button (click)="removeFromcombi(tbf)" type="button"
+                                                class="btn btn-primary btn-circle"><i class="fa fa-trash"></i> </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-lg-12 row" *ngIf="this.hasVariation && !isSaveVariationDone">
+                            <div class="col-md-6 col-lg-6 text-left">
+                                <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                            </div>
+                            <div class="col-md-6 col-lg-6 text-right" *ngIf="isSelectVariationDone">
+                                <button (click)="genTableVariations()" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 row" *ngIf="!this.hasVariation || isSaveVariationDone">
+                            <div class="col-md-6 col-lg-6 text-left">
+                                <button (click)="goBacktoVariation()" class="btn btn-primary">Previous</button>
+                            </div>
+                            <div class="col-md-6 col-lg-6 text-right">
+                                <button (click)="next('variation')" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="test-l-4" class="content ">
+                        <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+                            style="padding-right: 0px;">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <div>
+                                    <input multiple accept="image/png, image/gif, image/jpeg" type="file"
+                                        (change)="changeFiles($event)" name="my_file" id="my-file"
+                                        style="display: none;" />
+                                    <button (click)="openuploadfun()" for="actual-btn" type="button"
+                                        class="btn btn-success d-lg-block m-r-15"><i class="fas fa-upload"></i> Add
+                                        Image</button>
+                                </div>
+
+                                <div>
+                                    <button (click)="uploadFormUrls()" type="button"
+                                        class="btn btn-success d-lg-block m-r-15"><i class=" fas fa-upload"></i>Upload
+                                        From
+                                        Urls</button>
+                                </div>
+
+
+                                <div>
+                                    <button (click)="gwtImagesForMapping()" type="button"
+                                        class="btn btn-success d-lg-block m-r-15"><i class=" fas fa-upload"></i>
+                                        Associate
+                                        Images to variations</button>
+                                </div>
+
+                                <div>
+                                    <button type="button" class="btn btn-success d-lg-block m-r-15"><i
+                                            class=" fas fa-sync"></i> Refresh</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="table-responsive m-t-15" *ngIf="!isVarionImages">
+                            <table class="table color-bordered-table success-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Gallery</th>
+                                        <th>Sort Order</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let image of uploadedimages">
+                                        <td><img src="{{image.url}}" class="img-responsive prod-img" /></td>
+                                        <td>{{image.name}}</td>
+                                        <td>
+                                            <div class="col-md-12 col-lg-12 ">
+                                                <label class="custom-control custom-checkbox m-b-0">
+                                                    <input [checked]="image.galleryImage"
+                                                        (click)="changeTheGallery(image)" type="checkbox"
+                                                        class="custom-control-input">
+                                                    <span class="custom-control-label">Gallery Image</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="text" [(ngModel)]="image.sortorders" name="brand"
+                                                class="form-control">
+                                        </td>
+                                        <td><button (click)="removeImage(image)" type="button"
+                                                class="btn btn-primary btn-circle"><i class="fa fa-trash"></i> </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive m-t-15" *ngIf="isVarionImages && variations">
+                            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+                                style="padding-right: 0px;">
+                                <div class="d-flex justify-content-end align-items-center">
+                                    <button (click)="getBackToUplod()" type="button"
+                                        class="btn btn-success d-lg-block m-r-15"><i class=" fas fa-upload"></i> Back To
+                                        Upload</button>
+                                </div>
+                            </div>
+                            <table class="table color-bordered-table success-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>Title</th>
+                                        <th *ngFor="let img of variations?.imagelist;let i=index">Image {{i}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let childs of variations?.childproducts">
+                                        <td>{{childs?.sku}}</td>
+                                        <td>{{childs?.title}}</td>
+                                        <td *ngFor="let img of variations?.imagelist">
+                                            <div class="col-md-12 col-lg-12">
+                                                <label class="custom-control custom-checkbox m-b-0">
+                                                    <input (click)="saveChaildImage(childs,img)" type="checkbox"
+                                                        class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
+                                            <img src="{{img.url}}" class="img-responsive prod-img" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-lg-12 row" *ngIf="!isVarionImages">
+                            <div class="col-md-6 col-lg-6 text-left">
+                                <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                            </div>
+                            <div class="col-md-6 col-lg-6 text-right">
+                                <button (click)="next('images')" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 row" *ngIf="isVarionImages">
+                            <div class="col-md-6 col-lg-6 text-left">
+                                <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                            </div>
+                            <div class="col-md-6 col-lg-6 text-right">
+                                <button (click)="next('variationimages')" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="test-l-5" class="content ">
+                        <div class="table-responsive">
+                            <table class="table color-bordered-table success-bordered-table table-bordered">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Attribute Name</th>
+                                        <th>Value</th>
+                                        <th>
+                                            <span> Available Values</span>
+                                            <button class="btn create btn-sm"
+                                                (click)="createAttribute()">Create</button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr *ngFor="let item of attributesArray">
+                                        <td *ngIf="!item.isEdit">{{item.name}}</td>
+                                        <td *ngIf="item.isEdit">
+                                            <input type="text" [(ngModel)]="item.name" name="brand{{item.name}}"
+                                                class="form-control">
+                                        </td>
+                                        <td><input type="text" [(ngModel)]="item.value" name="brand{{item.name}}"
+                                                class="form-control"></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select class="form-control custom-select col-lg-6"
+                                                    name="dropdown{{name}}" [(ngModel)]="item.brandValue"
+                                                    (ngModelChange)="itemChange($event, item)"
+                                                    data-placeholder="Choose a Category" tabindex="1">
+                                                    <option *ngFor="let value of item.values" [ngValue]="value">
+                                                        {{value}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-lg-12 row">
+                            <div class="col-md-6 col-lg-6 text-left">
+                                <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                            </div>
+                            <div class="col-md-6 col-lg-6 text-right">
+                                <button (click)="next('saveAttibutes')" class="btn btn-primary">Save</button>
+                            </div>
+                            <!-- <button type="button" (click)="saveAttibutes()" class="btn btn-primary mt-5">Save</button> -->
+                        </div>
+
+                    </div>
+                    <div id="test-l-6" class="content ">
+                        <div class="col-md-12 col-lg-12 row">
+                            <div class="col-md-6 col-lg-6">
+                                <ng-multiselect-dropdown [settings]="dropdownSettings_supplier"
+                                    [placeholder]="'Select Suppliers'" id="Suppliers" name="Suppliers" [data]="allSupl"
+                                    ngDefaultControl [(ngModel)]="selectedSuppkiers">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <button (click)="addSuppliers()" type="button" class="btn btn-success">Add
+                                    Suppliers</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 row m-t-15 table-responsive" id="test-l-6-table">
+                            <table class="table table color-bordered-table success-bordered-table">
+                                <thead>
+
+                                    <th>Default</th>
+                                    <th>Name</th>
+                                    <th>Supplier Code</th>
+                                    <th>Supplier Sku</th>
+                                    <th>Barcode</th>
+                                    <th>Carton Size/Qty</th>
+                                    <th>Pallet Qty</th>
+                                    <th>Lead Time</th>
+                                    <th>Purchase Price</th>
+                                    <th>Vat</th>
+                                    <th class="currency">Currency</th>
+                                    <th>Min Order</th>
+                                    <th>PackSize</th>
+                                    <th>Misc. Notes</th>
+                                    <th>Action</th>
+
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let supp of selectedSupp; let i = index">
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="customCheck{{i}}" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="supp.isDefault"
+                                                    (click)="selectDefaultSupp($event, supp)">
+                                                <label class="custom-control-label" for="customCheck{{i}}"></label>
+                                            </div>
+
+                                        </td>
+                                        <td><input name="s-name{{i}}" [(ngModel)]="supp.name" type="text"
+                                                id="s-name{{i}}" class="form-control" [disabled]="true"></td>
+                                        <td><input name="s-supplierCode{{i}}" [(ngModel)]="supp.supplierCode"
+                                                type="text" id="s-supplierCode{{i}}" class="form-control"
+                                                [disabled]="true"></td>
+                                        <td><input name="s-supplierSku{{i}}" [(ngModel)]="supp.supplierSku" type="text"
+                                                id="s-supplierSku{{i}}" class="form-control"></td>
+                                        <td><input name="s-barcode{{i}}" [(ngModel)]="supp.barcode" type="text"
+                                                id="s-barcode{{i}}" class="form-control"></td>
+                                        <td><input name="s-cortonSize{{i}}" [(ngModel)]="supp.cortonSize" type="text"
+                                                id="s-cortonSize{{i}}" class="form-control"></td>
+                                        <td><input name="s-palletQty{{i}}" [(ngModel)]="supp.palletQty" type="text"
+                                                id="s-palletQty{{i}}" class="form-control"></td>
+                                        <td><input name="s-leadTime{{i}}" [(ngModel)]="supp.leadTime" type="text"
+                                                id="s-leadTime{{i}}" class="form-control"></td>
+                                        <td><input name="s-purchasePrice{{i}}" [(ngModel)]="supp.costPrice" type="text"
+                                                id="s-purchasePrice{{i}}" class="form-control"></td>
+                                        <td><input name="s-vat{{i}}" [(ngModel)]="supp.vat" type="text" id="s-vat{{i}}"
+                                                class="form-control"></td>
+                                        <td>
+                                            <ng-multiselect-dropdown (onSelect)="onItemSelectCurrency($event,supp)"
+                                                [settings]="dropdownSettings_currency" [placeholder]="'Currency'"
+                                                id="s-currency{{i}}" name="curencies{{i}}" [data]="curencies"
+                                                ngDefaultControl>
+                                            </ng-multiselect-dropdown>
+                                        </td>
+                                        <!-- <input name="s-currency" [(ngModel)]="supp.currency" type="text" id="s-currency" class="form-control"> -->
+                                        <td><input name="s-minOrder{{i}}" [(ngModel)]="supp.minValue" type="text"
+                                                id="s-minOrder{{i}}" class="form-control"></td>
+                                        <td><input name="s-packsize{{i}}" [(ngModel)]="supp.packSize" type="text"
+                                                id="s-packsize{{i}}" class="form-control"></td>
+                                        <td><input name="s-miscNotes{{i}}" [(ngModel)]="supp.miscNotes" type="text"
+                                                id="s-miscNotes{{i}}" class="form-control"></td>
+                                        <td class="row">
+                                            <button (click)="deleteSupplier(supp, i)" type="button"
+                                                class="btn btn-warning btn-circle"><i class="fa fa-times"></i> </button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- <div class="col-md-12 col-lg-12 text-right">
+
+
+                    </div> -->
+                        <div class="col-md-12 col-lg-12 row">
+                            <div class="col-md-6 col-lg-6 text-left">
+                                <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                            </div>
+                            <div class="col-md-6 col-lg-6 text-right">
+                                <button (click)="next('saveProductSuppliers')" class="btn btn-primary">Submit</button>
+                            </div>
+                            <!-- <button type="button" (click)="saveAttibutes()" class="btn btn-primary mt-5">Save</button> -->
+                        </div>
+
+                    </div>
+                    <div id="test-l-7" class="content ">
+                        <div class="col-md-12 col-lg-12 row">
+                            <div class="col-md-4 col-lg-4">
+                                <label class="control-label">Select Warehouse</label>
+                                <ng-multiselect-dropdown [settings]="dropdownSettings_warehouse"
+                                    (onSelect)="onSelectWarehouse($event)" [placeholder]="'Select Warehouse'"
+                                    id="Suppliers" name="Suppliers" [data]="allProds" ngDefaultControl
+                                    [(ngModel)]="selectedWarehouse">
+                                </ng-multiselect-dropdown>
+                                <!-- <select id="select-type-basic" (change)="onSelectWarehouse($event.target.value)"
+                    class="form-control custom-select" [(ngModel)]="selectedWarehouse" [ngModelOptions]="{standalone: true}">
+                    <option value="">Please Select</option>
+                    <option *ngFor="let list of allProds" value="{{list.id}}">
+                      {{list.name}}
+                    </option>
+                  </select> -->
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <label class="control-label">Select Warehouse Location </label>
+                                <ng-multiselect-dropdown [settings]="dropdownSettings_location"
+                                    (onSelect)="onSelectLocation($event)" [placeholder]="'Select Warehouse Location'"
+                                    id="Suppliers" name="Suppliers" [data]="allwarehouseLocations" ngDefaultControl
+                                    [(ngModel)]="location">
+                                </ng-multiselect-dropdown>
+                                <!-- <select id="select-type-basic" (change)="onSelectLocation($event.target.value)"
+                    class="form-control custom-select" [(ngModel)]="location" [ngModelOptions]="{standalone: true}">
+                    <option value="">Please Select</option>
+                    <option *ngFor="let loc of allwarehouseLocations" value="{{loc.id}}">
+                      {{loc.location}}
+                    </option>
+                  </select> -->
+                            </div>
+                            <div class="col-md-4 col-lg-4 mt-4">
+                                <button (click)="addLocations()" type="button" class="btn btn-success">Add
+                                    Locations</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 row m-t-15 table-responsive" id="test-l-6-table">
+                            <table class="table table color-bordered-table success-bordered-table">
+                                <thead>
+
+                                    <th>Warehouse Name</th>
+                                    <th>Location Name</th>
+                                    <th>Qty</th>
+                                    <th>Action</th>
+
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let loc of locations;">
+
+                                        <td>{{loc.warehouseName}}</td>
+                                        <td>{{loc.locationdetails}}</td>
+                                        <td>
+                                            <div class="col-md-6">
+                                                <input class="form-control" type="text" [(ngModel)]="loc.qty"
+                                                    name="qty">
+                                            </div>
+                                        </td>
+                                        <td class="row">
+                                            <button (click)="onQuantitySubmit(loc)" type="button"
+                                                class="btn btn-sm btn-success"> Submit </button>
+                                            <!-- <button (click)="deleteSupplier(supp, i)" type="button" class="btn btn-sm btn-warning"> Cancel </button> -->
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-lg-12 text-right">
+                            <button (click)="next('saveWarehouseLocations')" class="btn btn-primary">Submit</button>
+                        </div>
+
+                    </div>
+                    <div id="test-l-8" class="content">
+                        <app-composition-products [sku]="sku" *ngIf="productid != null" [totlQty]="totlQty"
+                            [productId]="productid"></app-composition-products>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="imageurl-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Upload Images
+                    from URL
+                </h2>
+
+                <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 col-lg-12">
+                    <div class="col-md-12 col-lg-12 row">
+                        <div class="form-group col-md-12 col-lg-12 ">
+                            <label class="control-label">Image URL</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="URL">
+                        </div>
+                        <div class="form-group col-md-12 col-lg-12 ">
+                            <label class="control-label">Image URL</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="URL">
+                        </div>
+                        <div class="form-group col-md-12 col-lg-12  ">
+                            <label class="control-label">Image URL</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="URL">
+                        </div>
+                        <div class="form-group col-md-12 col-lg-12  ">
+                            <label class="control-label">Image URL</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="URL">
+                        </div>
+                        <div class="form-group col-md-12 col-lg-12 ">
+                            <label class="control-label">Image URL</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="URL">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-lg-12 ">
+                        <label class="custom-control custom-checkbox m-b-0">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-label">Download Images to Kartzhub</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn waves-effect waves-light btn-success">Upload</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mergeProd-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Please select a product to merge
+                    into
+                </h2>
+
+                <button type="button" class="close" data-dismiss="modal" (click)="modalclosedMerge()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive " style="clear: both;">
+                    <table class="table table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Image</th>
+                                <th>SKU</th>
+                                <th>Title</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let prod of mergedProds">
+                                <td><img style="max-width: 37px;" [src]="prod?.imageUrl" class="img-responsive" /></td>
+                                <td>{{prod.sku}}</td>
+                                <td>{{prod.title}}</td>
+                                <td class="text-center"><button (click)="mergeThisProd(prod)" type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-primary">Merge into this
+                                        product</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                    [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+                </ngb-pagination>
+            </div>
+            <div class="modal-footer">
+                <button (click)="modalclosedMerge()" type="button" class="btn btn-danger waves-effect"
+                    data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="uploadimagesfromurl" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Upload Images from Url</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+                    <ng-container *ngFor="let item of urlsPaths; let i=index">
+                        <div class="form-group row">
+                            <label for="imageurl1" class="col-sm-2 control-label">Image Url</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" [(ngModel)]="item.url" name="urlimage{{i}}"
+                                    placeholder="Enter image url">
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">Download Images to sellershub</label>
+                        <div class="col-md-9">
+                            <div class="checkbox-list">
+                                <label>
+                                    <input id="downloadimagestokartzhub" value="false" type="checkbox">
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default btn-danger btn-default btn-sm"
+                    data-dismiss="modal">Cancel</button>
+                <button (click)="uploadFromUrl()" class="btn btn-success btn-default btn-sm">Upload </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

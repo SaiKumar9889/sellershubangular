@@ -1,0 +1,147 @@
+<div class="card">
+   <div class="card-body p-b-0">
+      <div class="col-md-12 col-lg-12 text-center m-t-10">
+         <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubhermes.png" alt="user"
+            class="img-responsive img-fixed img-fluid">
+      </div>
+      <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right " style="padding-right: 0px;">
+         <div class="d-flex justify-content-end align-items-center">
+            <!-- <button type="button" class="btn btn-success d-lg-block m-l-15"><i class="fa fa-check"></i>
+                Create a Test Label</button>
+            <button  type="button" class="btn btn-success d-lg-block m-l-15"><i class="fa fa-check"></i>
+            Preview Integrated Label</button> -->
+            <button (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i class="fa fa-check"></i>
+               Save</button>
+            <!-- <button *ngIf="isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i class="fa fa-check"></i>
+              Update</button> -->
+         </div>
+
+      </div>
+      <ul class="nav nav-tabs customtab2" role="tablist">
+         <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#integration" role="tab"
+               aria-selected="false"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span
+                  class="hidden-xs-down">
+                  Integration</span></a>
+         </li>
+         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#shippingsettings" role="tab"
+               aria-selected="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span
+                  class="hidden-xs-down">
+                  Label Settings</span></a>
+         </li>
+         <!-- <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#labelsettings" role="tab"
+             aria-selected="true"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">
+            Thermal Label Setup</span></a>  
+         </li> 
+         <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#printStep" role="tab"
+            aria-selected="true"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">
+            Printer Setup</span></a>  
+        </li>  -->
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+         <div class="tab-pane active" id="integration" role="tabpanel">
+            <div class="col-md-12">
+               <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+               <div class="m-t-5">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class="card border-primary">
+                           <!-- <div class="form-group breadcrumb clmessage">
+                             <p>Please enter below details and click enter. Please note that this will only work with Myhermes Business or corporate accounts. If you have pre-paid accounts please use the export from selro order screens and import into Hermes</p>
+                         </div> -->
+                           <div class="card-body">
+                              <form class="form-horizontal mt-4" name="dac">
+
+                                 <div class="has-success col-md-12 form-group">
+                                    <div class="row">
+                                       <div class="col-md-3 text-center"><label>Hermes Account Type</label><span
+                                             style="color:red">*</span></div>
+                                       <div class="col-md-9">
+                                          <select name="accunt" [(ngModel)]="accountType"
+                                             class="form-control custom-select">
+                                             <option value="businessAccount">Business Account</option>
+                                             <option value="userAccount">User Account</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="has-success col-md-12 form-group">
+                                    <div class="row">
+                                       <div class="col-md-3 text-center"><label>Account Nickname</label><span
+                                             style="color:red">*</span></div>
+                                       <div class="col-md-9"><input [(ngModel)]="nickname" name="nickname" type="text"
+                                             class="form-control ng-untouched ng-pristine ng-valid"></div>
+                                    </div>
+                                 </div>
+                                 <div class="has-success col-md-12 form-group">
+                                    <div class="row">
+                                       <div class="col-md-3 text-center"><label>Hermes Client Id</label><span
+                                             style="color:red">*</span></div>
+                                       <div class="col-md-9"><input [(ngModel)]="clientid" name="customerid" type="text"
+                                             class="form-control ng-untouched ng-pristine ng-valid"></div>
+                                    </div>
+                                 </div>
+                                 <div class="has-success col-md-12 form-group">
+                                    <div class="row">
+                                       <div class="col-md-3 text-center"><label>Hermes Client Secret</label><span
+                                             style="color:red">*</span></div>
+                                       <div class="col-md-9"><input [(ngModel)]="clientsecret" name="customerid"
+                                             type="text" class="form-control ng-untouched ng-pristine ng-valid"></div>
+                                    </div>
+                                 </div>
+                                 <div class="has-success col-md-12 form-group">
+                                    <div class="row">
+                                       <div class="col-md-3 text-center"><label>MyHermes Access Code</label><span
+                                             style="color:red">*</span></div>
+                                       <div class="col-md-9"><input [(ngModel)]="accesscode" name="customerid"
+                                             type="text" class="form-control ng-untouched ng-pristine ng-valid"></div>
+                                    </div>
+                                 </div>
+                                 <div class="has-success col-md-12 form-group">
+                                    <div class="row">
+                                       <div class="col-md-3 text-center"><label>Label Format</label><span
+                                             style="color:red">*</span></div>
+                                       <div class="col-md-9">
+                                          <select name="labelFormat" [(ngModel)]="labelFormat"
+                                             class="form-control custom-select">
+                                             <option value="a4">A4</option>
+                                             <option value="4X6">Thermal</option>
+                                             <option value="4X6">Two per page</option>
+                                          </select>
+
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="has-success col-md-12 form-group">
+                                    <div class="row">
+                                       <div class="col-md-3 text-center"><label> Label Type</label><span
+                                             style="color:red">*</span></div>
+                                       <div class="col-md-9">
+                                          <select name="labeltype" [(ngModel)]="labelType"
+                                             class="form-control custom-select">
+                                             <option value="pdf">pdf</option>
+                                             <option value="png">png</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- <div class="col-md-4">
+                                    <button  (click)="connect()" type="button" class="btn btn-success d-lg-block m-l-15"><i class="fa fa-check"></i>
+                                        Connect</button>
+                                  </div> -->
+                              </form>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="tab-pane p-20" id="shippingsettings" role="tabpanel">
+         </div>
+         <div class="tab-pane p-20" id="labelsettings" role="tabpanel">3</div>
+         <div class="tab-pane p-20" id="printStep" role="tabpanel">3</div>
+      </div>
+   </div>
+</div>

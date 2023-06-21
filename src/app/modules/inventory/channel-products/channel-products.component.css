@@ -1,0 +1,44 @@
+.prod-img{
+    max-height: 100px;
+}
+ngb-pagination{
+  float: right;
+}
+
+.well {
+  border: 0;
+  padding: 20px;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.prod-imgs{
+  width:43% !important
+}
+.flipInY{
+  top: 30px!important;
+  left: -158px!important;
+}
+:host ::ng-deep .multiselect-dropdown .selected-item{
+  max-width: 200px!important;
+}
+.prod-img{
+  max-height: 50px;
+  max-width: 70px;
+}
+.title{
+  overflow: hidden !important;
+  width:120px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}
+.sku{
+  overflow: hidden !important;
+  width:100px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}

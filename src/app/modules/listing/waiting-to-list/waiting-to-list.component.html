@@ -1,0 +1,336 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body" *ngIf="!editChannel">
+            <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+              <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+                style="padding-right: 0px;">
+                <div class="d-flex justify-content-end align-items-center">
+                  <div class=" row">
+                    <select class="col-sm-6 form-control custom-select" [(ngModel)]="searchName" id="searchname">
+                      <option value="0">Search by</option>
+                      <option value="1">SKU</option>
+                      <!--option value="2">Channel</option-->
+                      <option value="3">Title</option>
+                    </select>
+                    <div class="col-sm-6">
+                      <div class="input-group">
+                        <input type="text" [(ngModel)]="searchValue" class="form-control" id="pass3"
+                          placeholder="Enter Search Value">
+                        <div class="input-group-append" (click)="getProducts();auditTrack(1)"><span class="input-group-text"><i class="ti-search"></i></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="m-l-5">
+                    <select class="form-control custom-select" [(ngModel)]="searchChannel" name="channelType">
+                      <option value="all" disabled>--Select Channel--</option>
+                      <option class="form-control" *ngFor="let channel of channels" value="{{channel.id}}">
+                        {{channel.type}}-{{channel.name}}</option>
+                    </select>
+                  </div>
+
+                  <!-- <div class="m-r-15">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="sku or product title" aria-label="Username">
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="ti-search"></i></span>
+                      </div>
+                    </div>
+                  </div> -->
+                  <!-- <button type="button" data-toggle="modal" data-target="#responsive-modal"
+                    class="btn btn-success d-lg-block m-r-15"><i class=" fas fa-download"></i> Download Orders</button> -->
+                    <div class="m-r-5 m-l-5">
+
+                      <button (click)="getProducts();auditTrack(2)" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                        class="fa fa-plus-circle"></i> Apply Filter</button>
+
+                    </div>
+                    <div class="m-r-5 m-l-5">
+
+                      <button (click)="reset();auditTrack(3)" type="button" class="btn btn-warning d-lg-block m-l-15"><i
+                        class="fa fa-plus-circle"></i> Reset</button>
+
+                    </div>
+                    <div>
+                      <button type="button" (click)="openRemoveAllProductsModal();auditTrack(4)"
+                        class="btn btn-success d-lg-block m-r-15"><i class=" far fa-money-bill-alt"></i> Remove all
+                        Products</button>
+                    </div>
+                  <div>
+                    <!-- <label class="control-label">Page Size</label> -->
+                    <select (change)="getProducts()" class="form-control custom-select" [(ngModel)]="pageSize">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                  </div>
+                  <!-- <button type="button" data-toggle="modal" data-target="#search-modal"
+                    class="btn btn-success d-lg-block m-l-15"><i class=" fas fa-search"></i> Filter</button> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-sm-12 col-md-12 text-right">
+              <div *ngIf="selectedItemsLength > 0">
+                  <span style="font-weight: bold;" *ngIf="selectedItemsLength == 1">{{selectedItemsLength}}
+                      product selected</span>
+                  <span style="font-weight: bold;" *ngIf="selectedItemsLength > 1">{{selectedItemsLength}}
+                      products selected</span>
+              </div>
+          </div>
+            <div class="table-responsive">
+              <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+              <table class="table table color-bordered-table success-bordered-table table-bordered">
+                <thead class="text-center">
+                  <th>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" id="checkall" name="checkall" (change)="selectAll($event)" class="custom-control-input checkallP">
+                      <label class="custom-control-label" for="checkall"></label>
+                    </div>
+                  </th>
+                  <th>IMAGE<span class="fas fa-sort"></span> </th>
+                  <th>SKU<span class="fas fa-sort"></span> </th>
+                  <th>PRODUCT ID<span class="fas fa-sort"></span></th>
+                  <th>TITLE<span class="fas fa-sort"></span></th>
+                  <th>SELLING PRICE<span class="fas fa-sort"></span></th>
+                  <th>CHANNEL<span class="fas fa-sort"></span></th>
+                  <th>TOTAL QUANTITY<span class="fas fa-sort"></span></th>
+                  <th>LISTING QUANTITY<span class="fas fa-sort"></span></th>
+                  <th>LISTING STATUS<span class="fas fa-sort"></span></th>
+                  <th>MODIFIED DATE<span class="fas fa-sort"></span></th>
+                  <th>ACTIONS<span class="fas fa-sort"></span></th>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let prod of allProducts">
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input checkallP" type="checkbox" [checked]="prod?.isChecked">
+                        <label class="custom-control-label"></label>
+                      </div>
+                    </td>
+                    <td><img [src]="prod.imageUrl" class="img-responsive prod-img"></td>
+                    <td><span class="sku">{{ prod.sku }}</span></td>
+                    <td>{{ prod.productId }}</td>
+                    <td><span class="sku">{{ prod.title }}</span></td>
+                    <!-- <td> <img [src]="https://s3-us-west-2.amazonaws.com/khubstatic/web/kartzhub{{ prod.channel }}icon.png" class="img-responsive"></td> -->
+                    <td>{{ prod.sellingPrice }}</td>
+                    <td><img class="img-responsive prod-img"
+                      src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhub{{ prod.channel }}.png">
+                      <!-- <br ><span >{{prod.channel}}</span> -->
+                    </td>
+                    <td>{{ prod.listingQty }}</td>
+
+                    <td>{{ prod.qty }}
+                      <!-- <i (click)="editChannelProduct(prod)" style="cursor: pointer;color: #fec107;"
+                      class="m-l-5 fas fa-edit"></i> -->
+                    </td>
+                    <td>{{ prod.feedStatus }}</td>
+                    <td>{{ prod.modifiedDate | date:'dd MMM yyyy' }}</td>
+                    <!-- <td>{{ prod.sku }}</td> -->
+                    <!-- <td><button type="button" class="btn btn-success d-lg-block m-l-15">Action</button></td> -->
+                    <td>
+                      <!-- <button type="button" class="btn btn-warning" (click)="editproduct(prod)"> Edit Sellershub product
+                      </button> -->
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">
+                          <i class="ti-settings"></i>
+                        </button>
+
+                        <div class="dropdown-menu  animated flipInY ">
+                          <a class="dropdown-item" href="javascript:void(0)"(click)="updateView(prod)">Edit channel Product</a>
+                          <a class="dropdown-item" href="javascript:void(0)" (click)="editproduct(prod)">Edit Sellershub product</a>
+                          <a class="dropdown-item" href="javascript:void(0)" (click)="updateproduct(prod)">Update to channel</a>
+                          <a class="dropdown-item" href="javascript:void(0)" (click)="removeKartzhubproduct(prod)">Remove</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row col-lg-12 col-md-12">
+              <div  class="col-lg-6 col-md-6 ">
+                <span >Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of {{collectionsize}} entries</span>
+              </div>
+              <div class="col-lg-6 col-md-6 text-right">
+                <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                  [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+                </ngb-pagination>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-body" *ngIf="editChannel">
+            <app-ebay-channel [channelId]="channelId" (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'ebay'"
+            [channelId]="channelId"
+            [channelProduct]="channelProduct" [productImages]="productImages"></app-ebay-channel>
+            <app-onbuy  (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'onbuy'"
+            [channelId]="channelId"
+            [channelProduct]="channelProduct" [productImages]="productImages"></app-onbuy>
+            <app-amazon-channel (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'amazon'"
+            [channelId]="channelId"
+            [channelProduct]="channelProduct" [productImages]="productImages"></app-amazon-channel>
+            <app-etsy-channel  (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'etsy'"
+            [channelId]="channelId"
+            [channelProduct]="channelProduct" [productImages]="productImages"></app-etsy-channel>
+            <app-shopify-channel (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'shopify'"
+            [channelId]="channelId"
+            [channelProduct]="channelProduct" [productImages]="productImages"></app-shopify-channel>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="search-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Search Criteria
+          </h2>
+
+          <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <select class="form-control custom-select" aria-placeholder="filter By">
+                  <option value="">Male</option>
+                  <option value="">Female</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn waves-effect waves-light btn-success">Save</button>
+          <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="removeallProducts-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Remove All Products
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeremoveallProductsModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-12 col-lg-12">
+            <div class="form-group">
+              <!-- <select class="form-control custom-select" aria-placeholder="filter By">
+                <option value="">By Percentage</option>
+                <option value="">By Number</option>
+              </select> -->
+              <p>Are you sure you want to remove the items from the queue? Items will be removed from Inventory and you
+                will have to add it again. Active items will not be removed.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="onSubmit($event)" class="btn waves-effect waves-light btn-success">Ok</button>
+        <button type="button" (click)="closeremoveallProductsModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  

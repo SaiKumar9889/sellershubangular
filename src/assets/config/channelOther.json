@@ -1,0 +1,16 @@
+[
+    {
+      "channel_id": "1",
+      "channel_title": "TelaSales",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubtelesale.png",
+      "channel_link_path": "telasales-other",
+      "channel_link_website": "http://pre.sellershub.io/settings/edittelesalechannel"
+    },
+    {
+      "channel_id": "2",
+      "channel_title": "WebStore",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubwebstore.png",
+      "channel_link_path": "websoter-other",
+      "channel_link_website": "http://pre.sellershub.io/settings/edittelesalechannel"
+    }
+  ]

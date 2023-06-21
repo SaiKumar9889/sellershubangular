@@ -1,0 +1,324 @@
+<div  class="container-fluid" style="margin-top: 2px;">
+    <div  class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right">
+        <div  class="d-flex justify-content-end align-items-center"><button 
+                type="button" class="btn btn-warning d-lg-block m-l-15"><i 
+                    class="fas fa-arrow-left"></i> Back To List</button></div>
+    </div>
+    <div  class="col-md-12 col-lg-12 text-center m-t-10"><img 
+            src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhub11street.png" alt="user"
+            class="img-responsive img-fixed img-fluid"></div>
+    <div  class="card-body p-b-0">
+        <ul  role="tablist" class="nav nav-tabs customtab2">
+            <li  class="nav-item"><a  data-toggle="tab" role="tab"  (click)="listing = false"
+                    aria-selected="true" class="nav-link active"><span  class="hidden-sm-up"><i
+                             class="ti-home"></i></span><span 
+                        class="hidden-xs-down"> Integration</span></a></li>
+            <li  class="nav-item"><a  data-toggle="tab" role="tab"  (click)="listing = true"
+                    aria-selected="false" class="nav-link"><span  class="hidden-sm-up"><i
+                             class="ti-user"></i></span><span 
+                        class="hidden-xs-down"> Listing Templates</span></a></li>
+        </ul>
+        <div  class="tab-content">
+            <div class=" active" *ngIf="!listing" role="tabpanel">
+                <div class="portlet transparent">
+                    <div class="col-md-12">
+                    
+                        <div class="pull-right">
+                          <form method="POST" enctype="multipart/form-data" action="/settings/uploadskufilefor11street">
+                            
+                            <span>
+                                
+                            </span>
+                                
+                                     <a  class="btn btn-success btn-sm "><i class="fa fa-check"></i> Save</a>
+                                <!--	<a href="javascript:void(0)" type="button" onclick="removeallchannelproductsfromkartzhub(6531)" class="btn btn-danger">Remove All listings from KartzHub</a> -->
+                                    <a href="/settings/listchanelsettings" class="btn btn-sm btn-default "><i class="fa fa-times font-red"></i> Close</a>
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="portlet-body ">
+                        
+
+                    <form role="form">
+                    <div class="row form">
+
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+
+                    <div class="form-group has-success">
+                    <label class="control-label">Account Name</label><br>
+                    <input type="text" value="11Street Account" class="form-control input-inline input-medium" id="accountname" placeholder="Enter a name to remember this channel">
+                    <input type="hidden" value="" class="form-control" id="code">
+                    </div>
+
+                    <div class="form-group has-success">
+                    <label class="control-label">User Id</label><br>
+                    <input type="text" value="" id="apiusername" class="form-control input-inline input-medium">
+                    <span class="help-inline">
+                    </span>
+                    </div>
+
+                    <div class="form-group has-success">
+                    <label class="control-label">Key</label><br>
+                    <input type="text" value="" id="apikey" class="form-control input-inline input-medium">
+                    </div> 
+
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+
+                    <div class="form-group has-success">
+                   
+                        
+                        <div  class="form-group mt-checkbox-list">
+                            <label  class="mt-checkbox mt-checkbox-outline"> Download Orders 
+                                <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                <span ></span></label>
+                          </div>
+
+                          <div  class="form-group mt-checkbox-list">
+                            <label  class="mt-checkbox mt-checkbox-outline">Download the catalog into SellersHub
+                                <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                <span ></span></label>
+                          </div>
+
+                    </div>
+
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group has-success">
+                          <label class="control-label">Max Listed</label>
+                          <input type="text"  name="username" class="form-control" placeholder="Max Listed">
+                          
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group has-success">
+                          <label class="control-label">Stock Percentage</label>
+                          <input type="text"  name="username" class="form-control" placeholder="Stock Percentage">
+                          
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group has-success">
+                          <label class="control-label">End When</label>
+                          <input type="text"  name="username" class="form-control" placeholder="End When">
+                          
+                        </div>
+                      </div> -->
+
+
+
+
+
+
+                    </div>
+                    </form>
+
+
+                    </div>
+                </div>
+             
+            </div>
+
+            <div  *ngIf="listing">
+
+                <div class="portlet box ">
+														
+                    <div class="actions pull-right">
+                        <button (click)="newTemplate = true" class="btn btn-success btn-sm " >New Listing Template</button>
+                        <a class="btn red-mint btn-sm btn-danger">Close</a>
+                    </div>
+            
+                
+                <div class="portlet-body" *ngIf="!newTemplate">
+                    <div class="portlet light" id="maintemplatelist">
+
+
+                    <div class="portlet-body">
+
+                    <div id="bollistingtemplatediv1" class="table-scrollable">
+
+
+                    <table class="table tableFixHead table-hover order-column v2">
+                    <thead>
+                    <tr>
+                    <th>
+                    Name
+                    </th>
+                    <th>
+                    Action
+                    </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+
+                    </tbody>
+
+                    </table>
+
+                    </div>
+
+                    <div id="shopclueslistingtemplatediv2">
+
+
+                    </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div *ngIf="newTemplate">
+
+                    <div class="portlet-body form">
+                        <form class="" action="#" id="submit_form" method="POST" novalidate="novalidate">
+                            <div class="form-wizard">
+                                <div class="form-body">
+                                
+                                   
+                                    <div class="tab-content">
+                                        <div class="alert alert-warning display-none">
+                                            <button class="close" data-dismiss="alert"></button> You have some form errors. Please check below. </div>
+                                        <div class="alert alert-success display-none">
+                                            <button class="close" data-dismiss="alert"></button> Your form validation is successful! </div>
+                                        <div class="tab-pane active" id="tab1">
+                                            <h4>Provide Listing Category details </h4>
+                                            <input type="hidden" id="channelid" value="6531">
+                                            
+                                        <div class="row">
+                                        <div class="col-md-12 row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        
+                                            <div class="form-group has-success">
+                                                <label class="control-label ">Template name<span class="required" aria-required="true"> * </span></label>
+                                                    <input type="text" class="form-control" id="templatename" name="templatename" value="">
+                                                    <input type="hidden" class="form-control" id="templateid" name="templateid" value="-1">
+                                                     <input type="hidden" class="form-control" id="userid" name="userid" value="6531">
+                                            </div>
+                                            
+                                            
+                                            <div class="form-group has-success">
+                                                <label class="control-label ">Listing Category<span class="required" aria-required="true"> * </span> </label>
+                                                    <div class="input-group">
+                                                    <input type="text"  readonly="" class="form-control" id="lazadacategory" name="lazada_category" value="">
+                                                    <span class="input-group-btn">
+                                                        <a  href="javascript:void(0)">
+                                                            <button class="btn-xs" type="button">Categories</button>
+                                                        </a>
+                                                    </span>
+                                                    
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group has-success">
+                                                <label class="control-label ">After service details<span class="required" aria-required="true"> * </span><br>Note:It could be the address or contact info of after-sales service. </label>
+                                                   <textarea cols="70" rows="5" class="form-control" id="afterSaleServiceInfo">															   
+                                                    </textarea>
+                                            </div>
+                                            
+                                            <div class="form-group has-success">
+                                                <label class="control-label">Return/exchange details<span class="required" aria-required="true"> * </span><br>Note:Instruction which will help customer.</label><br>
+                                                   <textarea class="form-control" cols="70" rows="5" id="returnExchangeInfo">															   
+                                                    </textarea>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        
+                                             <div class="form-group has-success">
+                                                <label class="control-label">Product type<span class="required" aria-required="true"> * </span></label><br>
+                                                    <select class="form-control" id="productType">
+                                                        <option value="01">General Product</option>
+                                                        <option value="25">E-Voucher</option>
+                                                    </select>
+                                            </div>
+                                            
+                                             <div class="form-group has-success">
+                                                <label class="control-label">Can a minor buy<span class="required" aria-required="true"> * </span></label><br>
+                                                    <select class="form-control" id="minorCanBuy">
+                                                        <option value="Y">Yes</option>
+                                                        <option value="N">No</option>
+                                                    </select>
+                                            </div>
+                                            
+                                            <div class="form-group has-success">
+                                                <label class="control-label">GST Type<span class="required" aria-required="true"> * </span></label><br>
+                                                    <select class="form-control" id="gstMethod" onchange="checkGstType(this.selectedIndex);">
+                                                       <option value="00">Flat rate</option>
+                                                        <option value="01">Standard rate(SR 6%)</option>
+                                                        <option value="02">Zero rate(ZRL 0%)</option>
+                                                        <option value="04">Not Applicable(NON-GST)</option>
+                                                    
+                                                    </select>
+                                                   <span id="nonGstSpan">Flat Rate GST *<input type="text" class="form-control" id="flatRateGst" value=""></span>
+                                            </div>
+                                            
+                                             <div class="form-group has-success">
+                                                <label class="control-label">Delivery type<span class="required" aria-required="true"> * </span></label><br>
+                                                    <select class="form-control" id="deliveryType">
+                                                        <option value="01">Free</option>
+                                                        <option value="11">Shipping rate by product</option>
+                                                        <option value="12">Bundle shipping fee</option>
+                                                    </select>
+                                            </div>
+                                            
+                                            <div class="form-group has-success">
+                                                <label class="control-label ">Shipping method<span class="required" aria-required="true"> * </span></label><br>
+                                                    <select class="form-control" id="shippingMethod">
+                                                        <option value="01">Courier service</option>
+                                                        <option value="05">Direct shipping</option>
+                                                    </select>
+                                            </div>
+                                            
+                                             <div class="form-group has-success">
+                                                <label class="control-label ">Country of origin<span class="required" aria-required="true"> * </span></label><br>
+                                                    <select class="form-control" id="countryOfOrigin">
+                                                        <option value="01">Domestic</option>
+                                                        <option value="02">Overseas</option>
+                                                    </select>
+                                            </div>
+                                            
+
+                                        </div>	
+                                        </div>	
+                                            
+                                            <div class=" col-md-12">
+                                            <div class="pull-right">
+                                                <a href="javascript:;"  class="btn btn-sm  btn-success "> Submit</a>	  
+                                            </div>
+                                            </div>
+                                        </div>
+                                                      
+                                        
+                                        
+                                        
+                                        
+                                       
+                                        
+                                    </div>
+                                    
+                                    <div style="padding:10px;">
+                                </div>
+                                </div>
+
+                                
+                                
+                            </div>
+                        
+                    </div></form>
+                </div>
+                </div>
+            </div>
+             
+            </div>
+
+
+
+         
+        </div>
+    </div>
+</div>

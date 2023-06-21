@@ -1,0 +1,31 @@
+<div class=" row m-t-20">
+
+  <div class="col-md-6">
+    <div class="form-group ">
+      <label class="control-label">Split type</label>
+      <select type="text" name="splittype" placeholder="" class="form-control" [(ngModel)]="splitRule.ruleType">
+        <option value="'NONE'">NONE</option>
+        <option value="PACKAGE">Split order into packages of maximum values</option>
+        <option value="WEIGHT">Split order into packages of maximum weight</option>
+        <option value="SINGLE_ITEM">Split order into packages of single items</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group ">
+      <label class="control-label">Min Value</label>
+      <input type="number" name="minvalue" placeholder="0" class="form-control " [(ngModel)]="splitRule.minValue"
+        min="0">
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group">
+      <label class="control-label">Max Value</label>
+      <input type="text" name="maxvalue" placeholder="0" class="form-control " [(ngModel)]="splitRule.maxValue" min="0">
+    </div>
+  </div>
+
+</div>
+<div class="col-md-12 col-lg-12 text-right m-b-10">
+  <button type="button" class="btn btn-primary mr-1 " (click)="updateSpliRulz()"><i class="fa fa-times-circle-o"></i>Save </button>
+</div>

@@ -1,0 +1,154 @@
+<!-- <div id="editqty-modal-listing" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Update Quantity for the product
+          {{editedProductDetails?.title}} - SKU {{editedProductDetails?.sku}}</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeChannelProductModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-3 col-lg-3">
+            <label for="example-text-input" class="col-form-label">New Total Quantity :</label>
+            <label for="example-text-input" class="col-form-label">Price :</label>
+          </div>
+          <div class="col-md-3 col-lg-3" *ngIf="channelDet&&channelDet.kartzhubproduct">
+            <input appNumber class="form-control" type="text" [(ngModel)]="channelDet.kartzhubproduct.qty" id="example-text-input">
+            <input appNumber class="form-control" type="text"  [(ngModel)]="channelDet.kartzhubproduct.sellingPrice"  id="example-text-input">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <div class="form-group">
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input (click)="changListFull()" [checked]="listfullQuantity" type="checkbox" class="custom-control-input" id="listfullQuantity" value="check">
+                <label class="custom-control-label" for="listfullQuantity">List Full Quantity</label>
+              </div>
+            </div>
+
+          </div>
+         
+        </div>
+
+        <div class="col-md-12 col-lg-12 ">
+          <h4 class="col-form-label"> This will update the quantity for all the
+            products with SKU {{channelDet?.kartzhubproduct?.sku}}</h4>
+        </div>
+        <div class="col-md-12 col-lg-12 well" *ngIf="channelDet?.child?.length>0">
+          <table
+            class="table table-responsive table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>
+                  Image
+                </th>
+                <th>
+                  Variation SKU
+                </th>
+                <th>
+                  Variation Theme
+                </th>
+                <th>
+                 Variation Total Qty
+                </th>
+                <th>
+                  Listing Full Qty
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let child of channelDet?.child">
+                 <td><img [src]="child?.imageUrl" height="30"></td>
+                 <td>{{child.sku}}</td>
+                 <td>{{child.variations}}</td>
+                 <td>
+                  <input [(ngModel)]="child.qty" class="form-control" name="variations" type="text" value="0">
+                 </td>
+                 <td>
+                  <div class="custom-control custom-checkbox mr-sm-2">
+                    <input (click)="changVariationStatus(child)" [checked]="child.variationSelected" type="checkbox" class="custom-control-input" id="{{child.sku}}" value="check">
+                    <label class="custom-control-label" [for]="child.sku"></label>
+                  </div>
+                 </td>
+               </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-12 col-lg-12 p-10 text-white label-info">
+          <div class="form-group">
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input (click)="changeRelist()"  [checked]="relistClosedItems" type="checkbox" class="custom-control-input" id="relistClosedItems" value="check">
+              <label class="custom-control-label" for="relistClosedItems"> Relist Closed Items</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12 label-warning m-t-5 p-10 text-white">
+          <strong>Channel Products associated with this SKU and variation SKUs are shown below</strong><br>
+          <span>You can adjust listng quantity for each channel below.</span>
+        </div>
+        <div class="col-md-12 col-lg-12 well">
+          <table
+            class="table table-responsive table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>
+                  Channel
+                </th>
+                <th>
+                  SKU
+                </th>
+                <th>
+                  Variation Theme
+                </th>
+                <th>
+                  Total Qty
+                </th>
+                <th>
+                  Listing Qty
+                </th>
+                <th>
+                  Selling Price
+                </th>
+                <th>
+                  Listing Status
+                </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cp of channelDet?.products">
+                <td>
+                  <img [src]="getImage(cp.channel)" height="30">
+                </td>
+                <td>
+                 {{cp.sku}}
+                </td>
+                <td>
+                 {{cp.variationTheme}}
+                </td>
+                <td>
+                 {{cp.qty}}
+                </td>
+                <td>
+                  <input [(ngModel)]="cp.listingQty" class="form-control" name="updateqtylistingqtyinput" type="text" value="0">
+                </td>
+                <td>
+                  <input disabled [(ngModel)]="cp.sellingPrice"  class="form-control" id="updatesellingpriceinput" type="text" value="">
+                </td>
+                <td>
+                 {{cp.listingStatus}}
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="updateProductQty()" type="button" class="btn waves-effect waves-light btn-success">Update</button>
+        <button type="button" (click)="closeChannelProductModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> -->

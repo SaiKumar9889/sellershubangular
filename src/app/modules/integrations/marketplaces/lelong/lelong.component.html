@@ -1,0 +1,361 @@
+<div  class="container-fluid" style="margin-top: 2px;">
+    <div  class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right">
+        <div  class="d-flex justify-content-end align-items-center"><button 
+                type="button" class="btn btn-warning d-lg-block m-l-15"><i 
+                    class="fas fa-arrow-left"></i> Back To List</button></div>
+    </div>
+    <div  class="col-md-12 col-lg-12 text-center m-t-10"><img 
+            src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhublelong.png" alt="user"
+            class="img-responsive img-fixed img-fluid"></div>
+    <div  class="card-body p-b-0">
+        <ul  role="tablist" class="nav nav-tabs customtab2">
+            <li  class="nav-item"><a  data-toggle="tab" role="tab" (click)="listing = false"
+                    aria-selected="true" class="nav-link active"><span  class="hidden-sm-up"><i
+                             class="ti-home"></i></span><span 
+                        class="hidden-xs-down"> Integration</span></a></li>
+            <li  class="nav-item"><a  data-toggle="tab" role="tab" (click)="listing = true"
+                aria-selected="true" class="nav-link "><span  class="hidden-sm-up"><i
+                            class="ti-home"></i></span><span 
+                    class="hidden-xs-down"> Listing</span></a></li>
+          
+        </ul>
+        <div  class="tab-content">
+            <div class="tab-pane active" *ngIf="!listing" role="tabpanel">
+              
+                <div class="portlet box ">
+                        <div class="portlet-body">
+                             <div class="portlet transparent">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <button class="btn btn-success btn-sm btn-success"><i class="fa fa-check"></i> Save</button>
+                                       <button class="btn btn-success btn-sm btn-danger"><i class="fa fa-times font-red"></i> Close </button>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    
+                                <div class="row">
+                                <div class="col-md-12">
+                                <form class="form-horizontal" role="form">
+
+                                <div class="form-body">
+
+                                <div class="form-group has-success">
+                                <label class=" control-label">Account Name</label><br>
+
+                                <input type="text" value="Lelong Account" class="form-control" id="accountname" placeholder="Enter a name to remember this channel">
+                                <input type="hidden" value="" class="form-control" id="code">
+
+                                </div>
+
+                                <div class="form-group has-success">
+                                <label class="control-label">Application/User Id</label><br>
+
+                                <input type="text" value="" id="apiusername" class="form-control">
+                                <span class="help-inline">
+
+                                </span>
+
+                                </div>
+
+                                <div class="form-group has-success">
+                                <label class="control-label">Key</label><br>
+
+                                <input type="text" value="" id="apikey" class="form-control">
+
+                                </div>  
+
+                                <div class="form-group has-success ">
+                                <div class="mt-checkbox-list">
+
+                                <label class="  mt-checkbox mt-checkbox-outline">Download Inventory
+                                <div class="checker" id="uniform-downloadinventory"><span class="checked"><input type="checkbox" class="form-control" checked="" id="downloadinventory" value="true"></span></div> 
+                                <span></span>
+                                </label>
+
+
+                                <label class=" mt-checkbox mt-checkbox-outline">Download Orders 
+                                    <div class="checker" id="uniform-downloadorders"><span class="checked"><input checked="" type="checkbox" class="form-control" id="downloadorders" value="true"></span></div> 
+                                    <a  href="javascript:void(0)"></a>
+                                    <span></span>
+                                </label>
+                                </div>
+                                </div>
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group has-success">
+                                      <label class="control-label">Max Listed</label>
+                                      <input type="text"  name="username" class="form-control" placeholder="Max Listed">
+                                      
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group has-success">
+                                      <label class="control-label">Stock Percentage</label>
+                                      <input type="text"  name="username" class="form-control" placeholder="Stock Percentage">
+                                      
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group has-success">
+                                      <label class="control-label">End When</label>
+                                      <input type="text"  name="username" class="form-control" placeholder="End When">
+                                      
+                                    </div>
+                                  </div> -->
+
+
+                                </div>		
+                                </form>
+                                </div>
+
+                              
+
+                                </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div> 
+            
+            <div class="tab-pane active" *ngIf="listing" role="tabpanel">
+                <div class="tab-pane active" id="tab1">
+                    <h4>Provide Listing Category details </h4>
+                    <input type="hidden" id="channelid" value="6513">
+                <div class="row" style="padding: 25px;">	
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                        <label class="control-label ">Template name<span class="required" aria-required="true"> * </span> </label>
+                            <input type="text" class="form-control" id="templatename" name="templatename" value="">
+                            <input type="hidden" class="form-control" id="templateid" name="templateid" value="-1">
+                             <input type="hidden" class="form-control" id="userid" name="userid" value="6513">
+                    </div>
+                </div>
+               
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                        <label class="control-label">Listing Category<span class="required" aria-required="true"> * </span></label>
+                            <div class="input-group">
+                            <input type="text" readonly="" class="form-control" id="lazadacategory" name="lazada_category" value="">
+                            <span class="input-group-btn">
+                                <a  href="javascript:void(0)">
+                                    <button class="btn-xs" type="button">Categories</button>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                     <div class="form-group has-success">
+                        <label class="control-label ">Ship with in <span class="required" aria-required="true"> *</span></label><br>
+                            <select class="form-control" class="form-control" id="shipWithIn">
+                                
+                                    <option class="form-control" value="3">BuyNow_DAYS_1_TO_3</option>
+                                
+                                    <option class="form-control" value="4">BuyNow_DAYS_3_TO_5</option>
+                                
+                                    <option class="form-control" value="5">BuyNow_DAYS_5_TO_7</option>
+                                
+                                    <option class="form-control" value="6">BuyNow_DAYS_7_TO_10</option>
+                                
+                            </select>
+                    </div>
+                </div>
+                
+                
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                     <div class="form-group has-success">
+                        <label class="control-label">Payment method<span class="required" aria-required="true"> * </span></label>
+                            <select class="form-control" id="paymentMethod">
+                                
+                                    <option class="form-control" value="Q">Cheque</option>
+                                
+                                    <option class="form-control" value="B">Internet_banking</option>
+                                
+                                    <option class="form-control" value="C">Credit_card</option>
+                                
+                                    <option class="form-control" value="T">Bank_transfer</option>
+                                
+                                    <option class="form-control" value="H">Others</option>
+                                
+                                    <option class="form-control" value="N">ATM</option>
+                                
+                                    <option class="form-control" value="O">Cash_on_collection</option>
+                                
+                            </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">											
+                     <div class="form-group has-success">
+                       <label class="control-label">GST Type<span class="required" aria-required="true"> * </span></label><br>
+                            <select class="form-control" id="gstType">
+                                
+                                    <option class="form-control" value="0">GST_Standard_rated</option>
+                                
+                                    <option class="form-control" value="2">GST_Zero_rated</option>
+                                
+                                    <option class="form-control" value="3">GST_Exempted</option>
+                                
+                                    <option class="form-control" value="4">NOGST_Standard_rated</option>
+                                
+                                    <option class="form-control" value="5">NOGST_Zero_rated</option>
+                                
+                                    <option class="form-control" value="6">NOGST_Exempted</option>
+                                
+                            </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                        <label class="control-label">Item Condition<span class="required" aria-required="true"> * </span></label><br>
+                            <select class="form-control" id="itemCondition">
+                                
+                                    <option class="form-control" value="A">Antique</option>
+                                
+                                    <option class="form-control" value="R">Refurbished</option>
+                                
+                                    <option class="form-control" value="S">Unused</option>
+                                
+                                    <option class="form-control" value="D">Demo_Set</option>
+                                
+                                    <option class="form-control" value="E">Return</option>
+                                
+                                    <option class="form-control" value="U">Used</option>
+                                
+                                    <option class="form-control" value="F">Faulty</option>
+                                
+                                    <option class="form-control" value="X">Unknown</option>
+                                
+                                    <option class="form-control" value="N">New</option>
+                                
+                                    <option class="form-control" value="O">Open_Box</option>
+                                
+                            </select>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                     <div class="form-group has-success">
+                        <label class="control-label">Shipping method<span class="required" aria-required="true"> * </span></label><br>
+                            <select id="shippingmethod">
+                            <option value="NONE">None</option>
+                                
+                                    <option value="P">Courier_service</option>
+                                
+                                    <option value="C">Self_collect</option>
+                                
+                                    <option value="NONE">NONE</option>
+                                
+                                    <option value="N">Normal_post</option>
+                                
+                                    <option value="O">Others</option>
+                                
+                            </select>
+                    </div>
+                </div>	
+                    
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">	
+                     <div class="form-group has-success">
+                        <label class="control-label">Ship to location<span class="required" aria-required="true"> * </span></label><br>
+                            <select class="form-control" id="shiptolocation">
+                            <option class="form-control" value="NONE">None</option>
+                                
+                                    <option value="P">Only_Peninsular</option>
+                                
+                                    <option value="A">Within_Asia</option>
+                                
+                                    <option value="R">Refer_to_Product_Info</option>
+                                
+                                    <option value="B">Within_Sabah</option>
+                                
+                                    <option value="S">Only_same_state</option>
+                                
+                                    <option value="T">Within_East_Malaysia</option>
+                                
+                                    <option value="E">Within_Asean</option>
+                                
+                                    <option value="W">Within_Sarawak</option>
+                                
+                                    <option value="I">International</option>
+                                
+                                    <option value="L">Only_same_location</option>
+                                
+                                    <option value="NONE">NONE</option>
+                                
+                                    <option value="M">Within_Malaysia</option>
+                                
+                            </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                     <div class="form-group has-success">
+                        <label class="control-label">State<span class="required" aria-required="true"> * </span> </label><br>
+                            <select class="form-control" id="state">
+                            <option class="form-control" value="NONE">None</option>
+                                
+                                    <option value="Johor">Johor</option>
+                                
+                                    <option value="Labuan">Labuan</option>
+                                
+                                    <option value="Kedah">Kedah</option>
+                                
+                                    <option value="Kelantan">Kelantan</option>
+                                
+                                    <option value="Others">Others</option>
+                                
+                                    <option value="Sabah">Sabah</option>
+                                
+                                    <option value="Melaka">Melaka</option>
+                                
+                                    <option value="Penang">Penang</option>
+                                
+                                    <option value="Pahang">Pahang</option>
+                                
+                                    <option value="Kuala Lumpur">Kuala_Lumpur</option>
+                                
+                                    <option value="Putrajaya">Putrajaya</option>
+                                
+                                    <option value="Selangor">Selangor</option>
+                                
+                                    <option value="Negeri Sembilan">Negeri_Sembilan</option>
+                                
+                                    <option value="Perak">Perak</option>
+                                
+                                    <option value="Perlis">Perlis</option>
+                                
+                                    <option value="Sarawak">Sarawak</option>
+                                
+                                    <option value="Terengganu">Terengganu</option>
+                                
+                                    <option value="NONE">NONE</option>
+                                
+                            </select>
+                    </div>
+                </div>
+                
+            <div class=" col-md-12">
+                <div class="pull-right">
+                    <a href="javascript:;" class="btn btn-success btn-sm btn-success "> Submit</a>		  
+                </div>
+            </div>
+          </div>
+                              
+                
+                
+                
+                
+               
+                
+            </div>
+            </div>
+
+            
+         
+        </div>
+    </div>
+</div>

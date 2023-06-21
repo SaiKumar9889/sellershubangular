@@ -1,0 +1,19 @@
+// .page {
+//     width: 10.5cm;
+//     min-height: 14.8cm;
+//     padding: 2cm;
+//     margin: 1cm auto;
+//     border: 1px #D3D3D3 solid;
+//     border-radius: 5px;
+//     background: white;
+//     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+//   }
+
+  @media print {
+    @page {
+      size: 4in 6in potrait;
+    }
+  }
+  // @page {
+  //   size: 4in 6in landscape;
+  // }

@@ -1,0 +1,218 @@
+<div class="card">
+    <div class="card-body p-b-0">
+        <div class="col-md-12 col-lg-12 text-center m-t-10">
+            <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubamazonbuyshipping.png" alt="user"
+                class="img-responsive img-fixed img-fluid" />
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right" style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+                <button *ngIf="!isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                        class="fas fa-arrow-left"></i> Save</button>
+                <button *ngIf="isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                        class="fas fa-arrow-left"></i> Update</button>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs customtab2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#integration" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">
+                        Integration</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#shippingsettings" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down"> Shipping
+                        Services</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#labelsettings" role="tab" aria-selected="true">
+                    <span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"> Label Settings</span>
+                </a>
+            </li> -->
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="integration" role="tabpanel" *ngIf="amazonShippingClientDetails">
+                <div class="col-md-12">
+                    <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                    <div class="m-t-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Amazon Shipping Account Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Amazon Shipping Account ID <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="accountnumber"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingAccountId"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <!-- <div class="form-group has-success">
+                                            <label>Shipping Order Source: <span style="color: red;">*</span></label>
+                                            <input name="deliveryinstruction_1" [(ngModel)]="apiusername" type="text" class="form-control" />
+                                        </div>                                         -->
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Pickup Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Contact Name <span style="color: red;">*</span></label>
+                                                <input name="contactname"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromName"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Company Name <span style="color: red;">*</span></label>
+                                                <input name="companyname"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromCompanyName"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Email <span style="color: red;">*</span></label>
+                                                <input name="email"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromEmail"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Street Name <span style="color: red;">*</span></label>
+                                                <input name="streetname"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromAddressLine1"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town <span style="color: red;">*</span></label>
+                                                <input name="picktown"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromCity"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>State Or Province Code <span style="color: red;">*</span></label>
+                                                <input name="pickpostcode"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromStateOrRegion"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode <span style="color: red;">*</span></label>
+                                                <input name="pickpostcode"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromPostalCode"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label for="inputPassword5" class="col-sm-3 control-label">Country <span
+                                                        style="color:red">*</span>
+                                                </label>
+                                                <div class="col-sm-9 col-nd-9 col-lg-9">
+                                                    <ng-multiselect-dropdown (onSelect)="onItemSelectCountryBil($event)"
+                                                        [settings]="dropdownSettings_country"
+                                                        [placeholder]="'Select Country'" id="country" name="country"
+                                                        [data]="allCountries" ngDefaultControl
+                                                        [(ngModel)]="selectedCountry">
+                                                    </ng-multiselect-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Contact Phone Number <span style="color: red;">*</span></label>
+                                                <input name="contactphonenumber"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingFromPhone"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Return Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Contact Name <span style="color: red;">*</span></label>
+                                                <input name="contactname"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingReturnName"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Company Name <span style="color: red;">*</span></label>
+                                                <input name="companyname"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingReturnCompanyName"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Street Name <span style="color: red;">*</span></label>
+                                                <input name="streetname"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingReturnAddressLine1"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town <span style="color: red;">*</span></label>
+                                                <input name="picktown"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingReturnCity"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode <span style="color: red;">*</span></label>
+                                                <input name="pickpostcode"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingReturnPostalCode"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Contact Phone Number <span style="color: red;">*</span></label>
+                                                <input name="contactphonenumber"
+                                                    [(ngModel)]="amazonShippingClientDetails.amazonShippingReturnPhone"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary">
+                                    <h4 class="m-b-0 text-white">Quote</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form-horizontal mt-4">
+                                        <div class="form-group">
+                                            <label class="custom-control custom-checkbox m-b-0">
+                                              <input name="includedropoff" type="checkbox" class="custom-control-input">
+                                              <span class="custom-control-label">Include drop offs:</span>
+                                            </label>
+                                          </div>
+                                          <div class="form-group">
+                                            <label class="custom-control custom-checkbox m-b-0">
+                                              <input name="downOrders" type="checkbox" class="custom-control-input">
+                                              <span class="custom-control-label">Delivery Confirmation with Signature:</span>
+                                            </label>
+                                          </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>   -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-20" id="shippingsettings" role="tabpanel">
+
+            </div>
+            <div class="tab-pane p-20" id="labelsettings" role="tabpanel">3</div>
+        </div>
+    </div>
+</div>

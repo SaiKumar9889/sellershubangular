@@ -1,0 +1,446 @@
+<div class="card">
+    <div class="card-body p-b-0">
+        <div class="col-md-12 col-lg-12 text-center m-t-10">
+            <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubdhl.png" alt="user"
+                class="img-responsive img-fixed img-fluid" />
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right" style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+                <button *ngIf="!isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15">
+                    Save</button>
+                <button *ngIf="isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15">
+                    Update</button>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs customtab2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#integration" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">
+                        Integration</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#shippingsettings" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down"> Shipping
+                        Services</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#labelsettings" role="tab" aria-selected="true">
+                    <span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"> Label Settings</span>
+                </a>
+            </li> -->
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="integration" role="tabpanel">
+                <div class="col-md-12">
+                    <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                    <div class="m-t-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">DHL Shipping Account Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Amazon Shipping Account ID <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="accountnumber" [(ngModel)]="shippingaccountid" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <!--  <div class="form-group has-success">
+                                            <label>Shipping Order Source: <span style="color: red;">*</span></label>
+                                            <input name="deliveryinstruction_1" [(ngModel)]="shippingordersource" type="text" class="form-control" />
+                                        </div>  -->
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Pickup Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Shipment From Name<span style="color: red;">*</span></label>
+                                                <input name="fromname" [(ngModel)]="fromname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 1 <span style="color: red;">*</span></label>
+                                                <input name="addressline1" [(ngModel)]="addressline1" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 2 <span style="color: red;">*</span></label>
+                                                <input name="addressline2" [(ngModel)]="addressline2" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 3 <span style="color: red;">*</span></label>
+                                                <input name="addressline3" [(ngModel)]="addressline3" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Company Name <span style="color: red;">*</span></label>
+                                                <input name="companyname" [(ngModel)]="companyname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>State <span style="color: red;">*</span></label>
+                                                <input name="streetname" [(ngModel)]="state" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town/City <span style="color: red;">*</span></label>
+                                                <input name="picktown" [(ngModel)]="picktown" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group  has-success">
+                                                <label>Country Of Origin:</label>
+                                                <ng-multiselect-dropdown [settings]="dropdownSettings_country"
+                                                    [placeholder]="'Select Country'" id="country" name="country"
+                                                    [data]="allCountries" ngDefaultControl
+                                                    [(ngModel)]="selecte_country">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode <span style="color: red;">*</span></label>
+                                                <input name="pickpostcode" [(ngModel)]="pickpostcode" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Return Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Return Name<span style="color: red;">*</span></label>
+                                                <input name="return" [(ngModel)]="return" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 1 <span style="color: red;">*</span></label>
+                                                <input name="return_addressline1" [(ngModel)]="return_addressline1"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 2 <span style="color: red;">*</span></label>
+                                                <input name="return_addressline2" [(ngModel)]="return_addressline2"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 3 <span style="color: red;">*</span></label>
+                                                <input name="return_addressline3" [(ngModel)]="return_addressline3"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Company Name <span style="color: red;">*</span></label>
+                                                <input name="return_companyname" [(ngModel)]="return_companyname"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>State <span style="color: red;">*</span></label>
+                                                <input name="return_state" [(ngModel)]="return_state" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town/City <span style="color: red;">*</span></label>
+                                                <input name="return_picktown" [(ngModel)]="return_picktown" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group  has-success">
+                                                <label>Country Of Origin:</label>
+                                                <ng-multiselect-dropdown [settings]="dropdownSettings_country"
+                                                    [placeholder]="'Select Country'" id="country" name="country"
+                                                    [data]="allCountries" ngDefaultControl
+                                                    [(ngModel)]="selecte_country_return">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode <span style="color: red;">*</span></label>
+                                                <input name="return_pickpostcode" [(ngModel)]="return_pickpostcode"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Optional Pickup Time</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Monday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="monday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Monday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="monday_et" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Tuesday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="tuesday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Tuesday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="tuesday_et" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Wednesday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="wednesday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Wednesday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="wednesday_et"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Thursday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="thursday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Thursday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="thursday_et"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Friday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="friday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Friday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="friday_et" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-20" id="shippingsettings" role="tabpanel">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Service Name
+                            </th>
+
+                            <th>
+                                Service Code
+                            </th>
+
+                            <th>
+                                Enabled
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>1</strong>
+                            </td>
+                            <td>
+                                DOM - DHL DOMESTIC EXPRESS (UK to UK)
+                            </td>
+                            <td>
+                                N
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('N','DOM - DHL DOMESTIC EXPRESS (UK to UK)')"
+                                    (click)="appendData($event)" name="DOM - DHL DOMESTIC EXPRESS (UK to UK)" value="N"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>2</strong>
+                            </td>
+                            <td>
+                                DOT - DHL DOMESTIC EXPRESS 12:00
+                            </td>
+                            <td>
+                                1
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('1','DOT - DHL DOMESTIC EXPRESS 12:00')"
+                                    (click)="appendData($event)" name="DOT - DHL DOMESTIC EXPRESS 12:00" value="1"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>3</strong>
+                            </td>
+                            <td>
+                                DOK - DHL DOMESTIC EXPRESS 9:00
+                            </td>
+                            <td>
+                                I
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('I','DOK - DHL DOMESTIC EXPRESS 9:00')"
+                                    (click)="appendData($event)" name="DOK - DHL DOMESTIC EXPRESS 9:00"
+                                    value="I" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>4</strong>
+                            </td>
+                            <td>
+                                ESI - DHL Economy Select (nondoc)
+                            </td>
+                            <td>
+                                H
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('H','ESI - DHL Economy Select (nondoc)')"
+                                    (click)="appendData($event)" name="ESI - DHL Economy Select (nondoc)"
+                                    value="H" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>5</strong>
+                            </td>
+                            <td>
+                                DOX - DHL Express Worldwide (International non-dutiable shipment - documents)
+                            </td>
+                            <td>
+                                D
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('D','DOX - DHL Express Worldwide (International non-dutiable shipment - documents)')"
+                                    (click)="appendData($event)" name="DOX - DHL Express Worldwide (International non-dutiable shipment - documents)"
+                                    value="D" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>6</strong>
+                            </td>
+                            <td>
+                                WPX -DHL Express Worldwide (NON DOC International dutiable shipment)
+                            </td>
+                            <td>
+                                P
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('P','WPX -DHL Express Worldwide (NON DOC International dutiable shipment)')"
+                                    (click)="appendData($event)" name="WPX -DHL Express Worldwide (NON DOC International dutiable shipment)"
+                                    value="P" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>7</strong>
+                            </td>
+                            <td>
+                                TD -EXPRESS EASY
+                            </td>
+                            <td>
+                                8
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('8','TD -EXPRESS EASY')"
+                                    (click)="appendData($event)" name="TD -EXPRESS EASY"
+                                    value="8" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>8</strong>
+                            </td>
+                            <td>
+                                TD - DHL Express Worldwide (nondoc)
+                            </td>
+                            <td>
+                                P
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('P','TD - DHL Express Worldwide (nondoc)')"
+                                    (click)="appendData($event)" name="TD - DHL Express Worldwide (nondoc)"
+                                    value="P" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>9</strong>
+                            </td>
+                            <td>
+                                TDE - DHL Express 09:00 (nondoc)
+                            </td>
+                            <td>
+                                E
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('E','TDE - DHL Express 09:00 (nondoc)')"
+                                    (click)="appendData($event)" name="TDE - DHL Express 09:00 (nondoc)"
+                                    value="E" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>10</strong>
+                            </td>
+                            <td>
+                                TD - EXPRESS 12:00
+                            </td>
+                            <td>
+                                Y
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('Y','TD - EXPRESS 12:00')"
+                                    (click)="appendData($event)" name="TD - EXPRESS 12:00"
+                                    value="Y" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>11</strong>
+                            </td>
+                            <td>
+                                TD - MEDICAL EXPRESS
+                            </td>
+                            <td>
+                                Q
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('Q','TD - MEDICAL EXPRESS')"
+                                    (click)="appendData($event)" name="TD - MEDICAL EXPRESS"
+                                    value="Q" type="checkbox" /></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane p-20" id="labelsettings" role="tabpanel">3</div>
+        </div>
+    </div>
+</div>

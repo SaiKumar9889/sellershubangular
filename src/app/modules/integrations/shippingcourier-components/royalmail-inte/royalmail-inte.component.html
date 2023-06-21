@@ -1,0 +1,2339 @@
+<div class="card">
+    <div class="card-body p-b-0">
+        <div class="col-md-12 col-lg-12 text-center m-t-10">
+            <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubroyalmail.png" alt="user"
+                class="img-responsive img-fixed img-fluid" />
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right" style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+                <button *ngIf="!isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                        class="fas fa-arrow-left"></i> Save</button>
+                <button *ngIf="isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                        class="fas fa-arrow-left"></i> Update</button>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs customtab2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#integration" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">
+                        Integration</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#shippingsettings" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down"> Shipping
+                        Services</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#labelsettings" role="tab" aria-selected="true">
+                    <span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"> Label Settings</span>
+                </a>
+            </li> -->
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="integration" role="tabpanel">
+                <div class="col-md-12">
+                    <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                    <div class="m-t-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Please follow the below steps</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="ribbon-content" style="color: black;">
+                                            <!-- <li>If you dont have an API key for Royal mail please go through the below
+                                                link:
+                                                <br>
+                                                <a (click)="royalmailDoc()" href="javascript:void(0)">Royal Mail API
+                                                    docuemntation</a>
+                                            </li> -->
+                                            <li>Please enter your Royal Mail OBA account details below. Please allow up
+                                                to 5-10 business days to receive the API keys from Royal Mail to connect
+                                                your contract account connected with Sellershub.io for label printing.
+                                                <br>
+                                                Please find the below <a (click)="royalmailDoc()"
+                                                    href="javascript:void(0)">docuemnt</a> and <a target="_blank"
+                                                    href="https://www.royalmail.com/business">link</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Royal Mail Account Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Account Number <span style="color: red;">*</span></label>
+                                                <input name="accountnumber" [(ngModel)]="accountnumber" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Domestic Shipping API Username <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="apiusername"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Domestic Shipping API Password <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="apipassword" [(ngModel)]="apipassword" type="password"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>International Shipping API Username <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="internationalapiusername"
+                                                    [(ngModel)]="internationalapiusername" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>International Shipping API Password <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="internationpassword" [(ngModel)]="internationpassword"
+                                                    type="password" class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Royal Mail Pickup Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Contact Name <span style="color: red;">*</span></label>
+                                                <input name="contactname" [(ngModel)]="contactname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Company Name <span style="color: red;">*</span></label>
+                                                <input name="companyname" [(ngModel)]="companyname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Street Name <span style="color: red;">*</span></label>
+                                                <input name="streetname" [(ngModel)]="streetname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town <span style="color: red;">*</span></label>
+                                                <input name="picktown" [(ngModel)]="picktown" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode <span style="color: red;">*</span></label>
+                                                <input name="pickpostcode" [(ngModel)]="pickpostcode" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Contact Phone Number <span style="color: red;">*</span></label>
+                                                <input name="contactphonenumber" [(ngModel)]="contactphonenumber"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Royal Mail International Shipping Settings</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>CN23 Export Entry Number </label>
+                                                <input name="exportEntrynumber" [(ngModel)]="exportEntrynumber"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>CN23 License/Certificate Number </label>
+                                                <input name="certificatenumber" [(ngModel)]="certificatenumber"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>CN23 - Customs Client Code </label>
+                                                <input name="clientcode" [(ngModel)]="clientcode" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>CN23 - Consignee VAT Number </label>
+                                                <input name="vatnumber" [(ngModel)]="vatnumber" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>CN23 Description of Export Type </label>
+                                                <input name="exporttype" [(ngModel)]="exporttype" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>HS Tariff Code </label>
+                                                <input name="tariffcode" [(ngModel)]="tariffcode" type="text"
+                                                    class="form-control" />
+                                            </div>
+
+                                            <div class="form-group has-success">
+                                                <label class="control-label">CN23 Non Delivery Instructions </label>
+                                                <select name="deliveryinstruction_1" [(ngModel)]="deliveryinstruction_1"
+                                                    class="form-control custom-select">
+                                                    <option disabled value="">--Select Instruction--</option>
+                                                    <option value="Return">Return</option>
+                                                    <option value="Destroy">Destroy</option>
+                                                    <option value="None">None</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-20" id="shippingsettings" role="tabpanel">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Service Code
+                            </th>
+
+                            <th>
+                                Service Name
+                            </th>
+
+                            <th>
+                                Enabled
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>1</strong>
+                            </td>
+                            <td>
+                                TPSS
+                            </td>
+                            <td>
+                                TRACKED 48 SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPSS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPSS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>2</strong>
+                            </td>
+                            <td>
+                                TPSN
+                            </td>
+                            <td>
+                                TRACKED 48 NO SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPSN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPSN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>3</strong>
+                            </td>
+                            <td>
+                                TPNS
+                            </td>
+                            <td>
+                                TRACKED 24 SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPNS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPNS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>4</strong>
+                            </td>
+                            <td>
+                                TPNN
+                            </td>
+                            <td>
+                                TRACKED 24 NO SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPNN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPNN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>5</strong>
+                            </td>
+                            <td>
+                                MTAS
+                            </td>
+                            <td>
+                                INTL BUS PARCELS GB TRACKED &amp; SIGNED
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTAS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTAS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>6</strong>
+                            </td>
+                            <td>
+                                MTA
+                            </td>
+                            <td>
+                                INTL BUS PARCELS TRACKD &amp; SIGND ZONE SRT
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTA"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTA') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>7</strong>
+                            </td>
+                            <td>
+                                MTB
+                            </td>
+                            <td>
+                                INTL BUS PRCL TRCKD SGND XTR CMP ZNE SRT
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTB"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTB') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>8</strong>
+                            </td>
+                            <td>
+                                STL1
+                            </td>
+                            <td>
+                                ROYAL MAIL FIRST CLASS
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="STL1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('STL1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>9</strong>
+                            </td>
+                            <td>
+                                STL2
+                            </td>
+                            <td>
+                                ROYAL MAIL SECOND CLASS
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="STL2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('STL2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>10</strong>
+                            </td>
+                            <td>
+                                STL1PS
+                            </td>
+                            <td>
+                                RM 1ST Signed P STL01
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="STL1PS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('STL1PS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>11</strong>
+                            </td>
+                            <td>
+                                STL1PN
+                            </td>
+                            <td>
+                                RM 1ST P STL01
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="STL1PN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('STL1PN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>12</strong>
+                            </td>
+                            <td>
+                                STL1FS
+                            </td>
+                            <td>
+                                RM 1ST Signed F STL01
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="STL1FS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('STL1FS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>13</strong>
+                            </td>
+                            <td>
+                                STL1PS
+                            </td>
+                            <td>
+                                RM 1ST Signed P STL01
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="STL1PS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('STL1PS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>14</strong>
+                            </td>
+                            <td>
+                                SD1
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 1PM (£500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>15</strong>
+                            </td>
+                            <td>
+                                SD2
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 1PM GB (£1000)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>16</strong>
+                            </td>
+                            <td>
+                                SD3
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 1PM GB (£2500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>17</strong>
+                            </td>
+                            <td>
+                                SD1SG
+                            </td>
+                            <td>
+                                SD SATURDAY GUARANTEED BY 1PM (£500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD1SG"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD1SG') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>18</strong>
+                            </td>
+                            <td>
+                                SD2SG
+                            </td>
+                            <td>
+                                SD SATURDAY GUARANTEED BY 1PM (£1000)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD2SG"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD2SG') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>19</strong>
+                            </td>
+                            <td>
+                                SD3SG
+                            </td>
+                            <td>
+                                SD SATURDAY GUARANTEED BY 1PM (£2500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD3SG"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD3SG') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>20</strong>
+                            </td>
+                            <td>
+                                SD4
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 9AM
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>21</strong>
+                            </td>
+                            <td>
+                                SD5
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 9AM (£1000)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD5"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD5') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>22</strong>
+                            </td>
+                            <td>
+                                SD6
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 9AM (£2500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="SD6"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('SD6') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>23</strong>
+                            </td>
+                            <td>
+                                MP1
+                            </td>
+                            <td>
+                                INTL BUS PARCELS GB TRACKED
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>24</strong>
+                            </td>
+                            <td>
+                                BPL1
+                            </td>
+                            <td>
+                                ROAYL MAIL 1st CLASS
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BPL1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BPL1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>25</strong>
+                            </td>
+                            <td>
+                                BPL2
+                            </td>
+                            <td>
+                                ROYAL MAIL 2nd CLASS
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BPL2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BPL2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>26</strong>
+                            </td>
+                            <td>
+                                BPR1
+                            </td>
+                            <td>
+                                ROYAL MAIL SIGNED 1ST GB CLASS
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BPR1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BPR1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>27</strong>
+                            </td>
+                            <td>
+                                BPR2
+                            </td>
+                            <td>
+                                ROYAL MAIL SIGNED 2ND GB CLASS
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BPR2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BPR2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>28</strong>
+                            </td>
+                            <td>
+                                IE1
+                            </td>
+                            <td>
+                                INTL BUS PARCELS ZONE INTL SORT PRIORITY (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="IE1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('IE1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>29</strong>
+                            </td>
+                            <td>
+                                IG1
+                            </td>
+                            <td>
+                                INTL BUS MAIL LRG LTR INTL ZONE SORT PRI (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="IG1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('IG1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>30</strong>
+                            </td>
+                            <td>
+                                MP4
+                            </td>
+                            <td>
+                                INTL BUS PARCELS INTL TRACKED EXTRA COMP INTERNATIONAL TRACKED (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>31</strong>
+                            </td>
+                            <td>
+                                MP5
+                            </td>
+                            <td>
+                                INTL BUS PARCELS SIGNED (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP5"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP5') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>32</strong>
+                            </td>
+                            <td>
+                                DW1
+                            </td>
+                            <td>
+                                DW1-INTL BUS PARCELS PARCELS BESPOKE POSTAL
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DW1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DW1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>33</strong>
+                            </td>
+                            <td>
+                                MTC
+                            </td>
+                            <td>
+                                INTL BUS MAIL TRACKED &amp; INTL SIGNED (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTC"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTC') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>34</strong>
+                            </td>
+                            <td>
+                                MTD
+                            </td>
+                            <td>
+                                INT BUS MAIL TRCKD &amp; SGND ZN SRT XTR CMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTD"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTD') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>35</strong>
+                            </td>
+                            <td>
+                                MTE
+                            </td>
+                            <td>
+                                INTL BUS PARCELS INTL TRACKED &amp; SIGNED CTRY (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTE"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTE') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>36</strong>
+                            </td>
+                            <td>
+                                MTI
+                            </td>
+                            <td>
+                                INTL BUS MAIL TRACKED (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTI"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTI') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>37</strong>
+                            </td>
+                            <td>
+                                MTM
+                            </td>
+                            <td>
+                                INTL BUS MAIL SIGNED (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTM"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTM') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>38</strong>
+                            </td>
+                            <td>
+                                OLA
+                            </td>
+                            <td>
+                                INTERNATIONAL STANDARD INTL ON ACCOUNT (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OLA"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OLA') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>39</strong>
+                            </td>
+                            <td>
+                                OSA
+                            </td>
+                            <td>
+                                INTERNATIONAL SIGNED ON INTL ACCOUNT (INTERNATIONAL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OSA"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OSA') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>40</strong>
+                            </td>
+                            <td>
+                                OSB
+                            </td>
+                            <td>
+                                INTERNATIONAL SIGNED ON ACCOUNT EXTRA COMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OSB"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OSB') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>41</strong>
+                            </td>
+                            <td>
+                                OTA
+                            </td>
+                            <td>
+                                INTERNATIONAL TRACKED ON ACCOUNT
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OTA"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OTA') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>42</strong>
+                            </td>
+                            <td>
+                                OTB
+                            </td>
+                            <td>
+                                INTL TRACKED ON ACCOUNT EXTRA COMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OTB"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OTB') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>43</strong>
+                            </td>
+                            <td>
+                                OTC
+                            </td>
+                            <td>
+                                INTERNATIONAL TRACKED &amp; SIGNED ON ACCT
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OTC"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OTC') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>44</strong>
+                            </td>
+                            <td>
+                                OTD
+                            </td>
+                            <td>
+                                INTL TRACKED &amp; SIGNED ON ACCT EXTRA COMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OTD"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OTD') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>45</strong>
+                            </td>
+                            <td>
+                                PK0
+                            </td>
+                            <td>
+                                ROYAL MAIL 48 (LL) FLAT GB RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="PK0"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('PK0') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>46</strong>
+                            </td>
+                            <td>
+                                PK3
+                            </td>
+                            <td>
+                                ROYAL MAIL 24 (SORT8) GB (LL\P) DAILY RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="PK3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('PK3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>47</strong>
+                            </td>
+                            <td>
+                                PK4
+                            </td>
+                            <td>
+                                ROYAL MAIL 48 (SORT8) GB (LL\P) DAILY RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="PK4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('PK4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>48</strong>
+                            </td>
+                            <td>
+                                CRL1
+                            </td>
+                            <td>
+                                ROYAL MAIL 24
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="CRL1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('CRL1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>49</strong>
+                            </td>
+                            <td>
+                                CRL2
+                            </td>
+                            <td>
+                                ROYAL MAIL 48
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="CRL2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('CRL2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>50</strong>
+                            </td>
+                            <td>
+                                FS1
+                            </td>
+                            <td>
+                                ROYAL MAIL 24 (SORT8) (LL) FLAT RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="FS1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('FS1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>51</strong>
+                            </td>
+                            <td>
+                                FS2
+                            </td>
+                            <td>
+                                ROYAL MAIL 48 (SORT8) (LL) FLAT RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="FS2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('FS2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>52</strong>
+                            </td>
+                            <td>
+                                FS7
+                            </td>
+                            <td>
+                                ROYAL MAIL 24 (PRESORTED) (LL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="FS7"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('FS7') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>53</strong>
+                            </td>
+                            <td>
+                                FS8
+                            </td>
+                            <td>
+                                ROYAL MAIL 48 (PRESORTED) (LL)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="FS8"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('FS8') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>54</strong>
+                            </td>
+                            <td>
+                                IG6
+                            </td>
+                            <td>
+                                INTL BUS MAIL L LTR ZONE SRT ECONOMY MCH
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="IG6"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('IG6') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>55</strong>
+                            </td>
+                            <td>
+                                LA1
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 1PM LA
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="LA1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('LA1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>56</strong>
+                            </td>
+                            <td>
+                                LA2
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 1PM LA (£1000)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="LA2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('LA2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>57</strong>
+                            </td>
+                            <td>
+                                LA3
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 1PM LA (£2500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="LA3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('LA3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>58</strong>
+                            </td>
+                            <td>
+                                LA4
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 9AM LA
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="LA4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('LA4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>59</strong>
+                            </td>
+                            <td>
+                                LA5
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 9AM LA (£1000)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="LA5"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('LA5') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>60</strong>
+                            </td>
+                            <td>
+                                LA6
+                            </td>
+                            <td>
+                                SD GUARANTEED BY 9AM LA (£2500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="LA6"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('LA6') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>61</strong>
+                            </td>
+                            <td>
+                                MP0
+                            </td>
+                            <td>
+                                INTL BUS PARCELS SIGNED EXTRA COMP CTRY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP0"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP0') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>62</strong>
+                            </td>
+                            <td>
+                                MP6
+                            </td>
+                            <td>
+                                INTL BUS PARCELS SIGNED EXTRA COMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP6"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP6') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>63</strong>
+                            </td>
+                            <td>
+                                MP7
+                            </td>
+                            <td>
+                                INTL BUS PARCELS TRACKED COUNTRY PRICED
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP7"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP7') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>64</strong>
+                            </td>
+                            <td>
+                                MP8
+                            </td>
+                            <td>
+                                INTL BUS PARCELS TRACKED EXTRA COMP CTRY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP8"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP8') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>65</strong>
+                            </td>
+                            <td>
+                                MP9
+                            </td>
+                            <td>
+                                INTL BUS PARCELS SIGNED COUNTRY PRICED
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MP9"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MP9') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>66</strong>
+                            </td>
+                            <td>
+                                MPB
+                            </td>
+                            <td>
+                                INTL BUS PARCEL TRACK BOX CTRY XTRA COMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MPB"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MPB') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>67</strong>
+                            </td>
+                            <td>
+                                MPF
+                            </td>
+                            <td>
+                                INTL BUS PARCEL TRACKED HIGH VOL
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MPF"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MPF') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>68</strong>
+                            </td>
+                            <td>
+                                MPG
+                            </td>
+                            <td>
+                                INTL BUS PARCEL TRACK &amp; SIGN HIGH VOL
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MPG"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MPG') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>69</strong>
+                            </td>
+                            <td>
+                                MPH
+                            </td>
+                            <td>
+                                INTL BUS PARCEL SIGNED HIGH VOL
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MPH"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MPH') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>70</strong>
+                            </td>
+                            <td>
+                                MPI
+                            </td>
+                            <td>
+                                INTL BUS PARCELS TRACKED EXTRA COMP CTRY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MPI"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MPI') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>71</strong>
+                            </td>
+                            <td>
+                                MPJ
+                            </td>
+                            <td>
+                                INTL BUS PARCEL T&amp;S HIGH VOL XTR COMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MPJ"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MPJ') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>72</strong>
+                            </td>
+                            <td>
+                                MPK
+                            </td>
+                            <td>
+                                INTL BUS PARCEL SIGNED HIGH VOL XTR COMP
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MPK"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MPK') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>73</strong>
+                            </td>
+                            <td>
+                                OZ1
+                            </td>
+                            <td>
+                                INTL BUS MAIL MIXED ZONE SORT PRIORITY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OZ1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OZ1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>74</strong>
+                            </td>
+                            <td>
+                                OLS
+                            </td>
+                            <td>
+                                INTERNATIONAL ECONOMY ON ACCOUNT
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="OLS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('OLS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>75</strong>
+                            </td>
+                            <td>
+                                TSS
+                            </td>
+                            <td>
+                                TRACKED RETURNS 48
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TSS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TSS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>76</strong>
+                            </td>
+                            <td>
+                                TSN
+                            </td>
+                            <td>
+                                TRACKED RETURNS 24
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TSN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TSN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>77</strong>
+                            </td>
+                            <td>
+                                TRS
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 48 (LBT) - Non Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TRS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TRS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>78</strong>
+                            </td>
+                            <td>
+                                TRN
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 24 (LBT) - Non Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TRN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TRN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>79</strong>
+                            </td>
+                            <td>
+                                TRM
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 24 (LBT) (HV) - Non Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TRM"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TRM') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>80</strong>
+                            </td>
+                            <td>
+                                TRL
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 48 (LBT) (HV) - Non Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TRL"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TRL') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>81</strong>
+                            </td>
+                            <td>
+                                RM6
+                            </td>
+                            <td>
+                                ROYAL MAIL 48 (P) FLAT RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="RM6"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('RM6') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>82</strong>
+                            </td>
+                            <td>
+                                RM5
+                            </td>
+                            <td>
+                                ROYAL MAIL 24 (P) FLAT RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="RM5"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('RM5') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>83</strong>
+                            </td>
+                            <td>
+                                RM4
+                            </td>
+                            <td>
+                                ROYAL MAIL 48 (P) DAILY RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="RM4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('RM4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>84</strong>
+                            </td>
+                            <td>
+                                RM3
+                            </td>
+                            <td>
+                                ROYAL MAIL 48 (LL) DAILY RATE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="RM3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('RM3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>85</strong>
+                            </td>
+                            <td>
+                                BF1
+                            </td>
+                            <td>
+                                HM FORCES
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BF1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BF1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>86</strong>
+                            </td>
+                            <td>
+                                BF2
+                            </td>
+                            <td>
+                                HM FORCES SIGNED FOR
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BF2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BF2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>87</strong>
+                            </td>
+                            <td>
+                                BF7
+                            </td>
+                            <td>
+                                HM FORCES SPECIAL DELIVERY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BF7"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BF7') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>88</strong>
+                            </td>
+                            <td>
+                                BF8
+                            </td>
+                            <td>
+                                HM FORCES SPECIAL DELIVERY (£1000)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BF9"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BF9') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>89</strong>
+                            </td>
+                            <td>
+                                BF9
+                            </td>
+                            <td>
+                                HM FORCES SPECIAL DELIVERY (£2500)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BF9"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BF9') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>90</strong>
+                            </td>
+                            <td>
+                                PS7
+                            </td>
+                            <td>
+                                INTL BUS MAIL LARGE LETTER MAX SORT PRIORITY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="PS7"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('PS7') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>91</strong>
+                            </td>
+                            <td>
+                                PS9
+                            </td>
+                            <td>
+                                INTL BUS PARCELS MAX SORT PRIORITY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="PS9"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('PS9') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>92</strong>
+                            </td>
+                            <td>
+                                TPC
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 24 (AGE)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPC"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPC') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>93</strong>
+                            </td>
+                            <td>
+                                TPD
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 48 (AGE)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPD"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPD') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>94</strong>
+                            </td>
+                            <td>
+                                UNH
+                            </td>
+                            <td>
+                                UNH
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="UNH"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('UNH') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>95</strong>
+                            </td>
+                            <td>
+                                UNG
+                            </td>
+                            <td>
+                                UNG
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="UNG"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('UNG') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>96</strong>
+                            </td>
+                            <td>
+                                BG1
+                            </td>
+                            <td>
+                                INTL BUS MAIL LRG LTR MAX SORT RES PRI
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BG1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BG1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>97</strong>
+                            </td>
+                            <td>
+                                BG2
+                            </td>
+                            <td>
+                                INTL BUS MAIL LRG LTR MAX SORT RES STD
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BG2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BG2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>98</strong>
+                            </td>
+                            <td>
+                                BG3
+                            </td>
+                            <td>
+                                INTL BUS MAIL L LTR MAX SORT RES ECONOMY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BG3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BG3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>99</strong>
+                            </td>
+                            <td>
+                                BP1
+                            </td>
+                            <td>
+                                INTL BUS MAIL LETTERS MAX SORT RES PRI
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BP1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BP1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>100</strong>
+                            </td>
+                            <td>
+                                BP2
+                            </td>
+                            <td>
+                                INTL BUS MAIL LETTERS MAX SORT RES STD
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BP2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BP2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>101</strong>
+                            </td>
+                            <td>
+                                BP3
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR MAX SORT RES ECONOMY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="BP3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('BP3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>102</strong>
+                            </td>
+                            <td>
+                                DP1
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR CTRY SORT HI VOL PRI
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DP1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DP1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>103</strong>
+                            </td>
+                            <td>
+                                DP3
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR CTRY SORT HI VOL ECON
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DP3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DP3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>104</strong>
+                            </td>
+                            <td>
+                                DP4
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR CTRY SORT LO VOL PRI
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DP4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DP4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>105</strong>
+                            </td>
+                            <td>
+                                DP6
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR CTRY SORT LO VOL ECON
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DP6"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DP6') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>106</strong>
+                            </td>
+                            <td>
+                                DW1
+                            </td>
+                            <td>
+                                INTL BUS PARCELS BESPOKE POSTAL
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DW1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DW1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>107</strong>
+                            </td>
+                            <td>
+                                DW2
+                            </td>
+                            <td>
+                                CUSTOMER NESTED MAXSORT
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DW2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DW2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>108</strong>
+                            </td>
+                            <td>
+                                IP1
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR ZONE SORT PRI
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="IP1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('IP1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>109</strong>
+                            </td>
+                            <td>
+                                IP3
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR ZONE SORT ECONOMY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="IP3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('IP3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>110</strong>
+                            </td>
+                            <td>
+                                IP4
+                            </td>
+                            <td>
+                                INTL BUS MAIL LETTERS ZONE SORT PRI MCH
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="IP4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('IP4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>111</strong>
+                            </td>
+                            <td>
+                                IP6
+                            </td>
+                            <td>
+                                INTL BUS MAIL LTR ZONE SRT ECONOMY MCH
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="IP6"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('IP6') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>112</strong>
+                            </td>
+                            <td>
+                                ITLN
+                            </td>
+                            <td>
+                                Import DE Tracked 48 Parcels (TPL) - Non Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="ITLN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('ITLN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>113</strong>
+                            </td>
+                            <td>
+                                ITLS
+                            </td>
+                            <td>
+                                Import DE Tracked 48 Parcels (TPL) - Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="ITLS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('ITLS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>114</strong>
+                            </td>
+                            <td>
+                                ITMN
+                            </td>
+                            <td>
+                                Import DE Tracked 24 Parcels (TPM) - No Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="ITMN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('ITMN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>115</strong>
+                            </td>
+                            <td>
+                                ITMS
+                            </td>
+                            <td>
+                                Import DE tracked 24 Parcels (TPM) - Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="ITMS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('ITMS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>116</strong>
+                            </td>
+                            <td>
+                                ITMS
+                            </td>
+                            <td>
+                                Import DE tracked 24 Parcels (TPM) - Signature
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="ITMS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('ITMS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>117</strong>
+                            </td>
+                            <td>
+                                TC1
+                            </td>
+                            <td>
+                                QM/10 Option 2 over 500g
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TC1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TC1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>118</strong>
+                            </td>
+                            <td>
+                                TC2
+                            </td>
+                            <td>
+                                QM/10 Option 2 Mixed Mail
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TC2"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TC2') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>119</strong>
+                            </td>
+                            <td>
+                                TPA
+                            </td>
+                            <td>
+                                Royal Mail Tracked 24 (HV) - With Signature (AGE)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPA"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPA') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>120</strong>
+                            </td>
+                            <td>
+                                TPB
+                            </td>
+                            <td>
+                                Royal Mail Tracked 48 (HV) - With Signature (AGE)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPB"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPB') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>121</strong>
+                            </td>
+                            <td>
+                                TPC
+                            </td>
+                            <td>
+                                Royal Mail Tracked 24 - With Signature (AGE)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPC"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPC') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>122</strong>
+                            </td>
+                            <td>
+                                TPD
+                            </td>
+                            <td>
+                                Royal Mail Tracked 48 - With Signature (AGE)
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPD"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPD') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>123</strong>
+                            </td>
+                            <td>
+                                TPLN
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 48 (HV) NO SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPLN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPLN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>124</strong>
+                            </td>
+                            <td>
+                                TPLS
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 48 (HV) SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPLS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPLS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>125</strong>
+                            </td>
+                            <td>
+                                TPMN
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 24 (HV) NO SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPMN"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPMN') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>126</strong>
+                            </td>
+                            <td>
+                                TPMS
+                            </td>
+                            <td>
+                                ROYAL MAIL TRACKED 24 (HV) SIGNATURE
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="TPMS"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('TPMS') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>127</strong>
+                            </td>
+                            <td>
+                                WP1
+                            </td>
+                            <td>
+                                INTL BUS MAIL LETTERS ZERO SORT PRIORITY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="WP1"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('WP1') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>128</strong>
+                            </td>
+                            <td>
+                                WP3
+                            </td>
+                            <td>
+                                INTL BUS MAIL LETTERS ZERO SORT ECONOMY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="WP3"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('WP3') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>129</strong>
+                            </td>
+                            <td>
+                                WP4
+                            </td>
+                            <td>
+                                INTL BUS MAIL LETTERS ZERO SORT PRI MCH
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="WP4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('WP4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>130</strong>
+                            </td>
+                            <td>
+                                DE4
+                            </td>
+                            <td>
+                                INT BUS PARCELS ZERO SORT LO VOL PRIORITY
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DE4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DE4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>131</strong>
+                            </td>
+                            <td>
+                                DG4
+                            </td>
+                            <td>
+                                INT BUS PARCELS L LETTER COUNTRY SORT LO VOL
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="DG4"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('DG4') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>132</strong>
+                            </td>
+                            <td>
+                                MTG
+                            </td>
+                            <td>
+                                INT BUS MAIL TRACKED &amp; SIGNED COUNTRY PRICED
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTG"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTG') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>133</strong>
+                            </td>
+                            <td>
+                                MTK
+                            </td>
+                            <td>
+                                INT BUS MAIL TRACKED COUNTRY PRICED
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTK"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTK') > -1" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>134</strong>
+                            </td>
+                            <td>
+                                MTO
+                            </td>
+                            <td>
+                                INT BUS MAIL SIGNED COUNTRY PRICED
+                            </td>
+
+                            <td><input (click)="appendData($event)" name="rmshippinglabelservicecode" value="MTO"
+                                    type="checkbox" [checked]="selectedShippingServices.indexOf('MTO') > -1" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane p-20" id="labelsettings" role="tabpanel">3</div>
+        </div>
+    </div>
+</div>
+
+<div id="royalmail-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h3 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Create Ticket </h3> -->
+
+                <button type="button" class="close" data-dismiss="modal" (click)="royalmailDocclosed()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 col-lg-12">
+                    <h4 style="font-weight: 500;">Getting started</h4>
+                    <br>
+                    <ol>
+                        <li>
+                            <span>Sign up on the <span style="font-weight: 500;">API (<a
+                                        href="https://developer.royalmail.net/" target="_blank">Developer</a>) Portal
+                                    Opens in a new
+                                    window</span> </span>
+                            <br>
+                            <img src="assets/images/royalmail-1.jpg" style="width: 1000px;height: 450px;"
+                                class="img-responsive mt-3 ml-5">
+                        </li>
+                        <br>
+                        <li>
+                            <div class="mt-3">
+                                <span style="font-weight: 500;">Register your application: </span>
+                                <span>Once you've chosen an API, you'll need to register your application in the 'My
+                                    Apps' section of your account. When you register, your application is assigned a
+                                    unique client ID and client secret. These will be used to identify your application
+                                    when you want to integrate to one of our APIs.</span>
+                                <br>
+                                <ul class="ribbon-content" style="color: black;">
+                                    <li>After Login intro API portal need to click on “<span
+                                            style="font-weight: 500;">MyApps</span>” in header section.
+                                        <br>
+                                        <img src="assets/images/royalmail-2.jpg" style="width: 1000px;"
+                                            class="img-responsive mt-3 ml-2">
+                                    </li>
+                                    <li class="mt-2">In My Apps Page click on “Register Your Application” link or “<span
+                                            style="font-weight: 500;">Create new app button</span>”
+                                        <br>
+                                        <img src="assets/images/royalmail-3.jpg" style="width: 1000px;"
+                                            class="img-responsive mt-3 ml-2">
+                                    </li>
+                                    <li class="mt-2">
+                                        <span>In Register Application page:</span>
+                                        <ul>
+                                            <li>
+                                                <span>Enter the Application Name as <span
+                                                        style="font-weight: 500;">ProShip(10
+                                                        digit Royal Mail Account number)</span> . Ex:
+                                                    ProShip1234567890</span>
+                                            </li>
+                                            <li>
+                                                <span>Enter the Description as <span style="font-weight: 500;">Book
+                                                        Shipments
+                                                        through API and print labels</span></span>
+                                            </li>
+                                        </ul>
+                                        <br>
+                                        <img src="assets/images/royalmail-4.jpg" style="width: 1000px;"
+                                            class="img-responsive mt-3 ml-2">
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </li>
+                        <li>
+                            <span style="font-weight: 500;">Subscribe to a Royal Mail API: </span> <span>After you've
+                                registered
+                                your application, simply select and subscribe to the API you want. Some APIs are
+                                subject to approval; this usually takes less than a week. Then you're all set to
+                                integrate the API with your app, website or business system.</span>
+                        </li>
+                        <li>
+                            <span style="font-weight: 500;">Request approval:</span> <span>If you would like to
+                                subscribe to
+                                API Shipping, Tracking API or the Local Collect API please contact your Royal Mail
+                                account manager who will initiate your API integration. If you do not have a Royal
+                                Mail Account Manager, please contact the Business Helpdesk on <span
+                                    style="font-weight: 500;"> 08457 950 950 or
+                                    email:business.customer.service@royalmail.com</span></span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn waves-effect waves-light btn-success"
+                    (click)="createTiketSave()" *ngIf="!isSuccessticketsupport">Save</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>

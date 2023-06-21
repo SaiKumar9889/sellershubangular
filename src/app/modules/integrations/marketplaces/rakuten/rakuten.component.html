@@ -1,0 +1,268 @@
+
+<div  class="container-fluid" style="margin-top: 2px;">
+    <div  class="col-md-12 col-lg-12 text-center m-t-10">
+        <img  src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubrakuten.png" alt="user" class="img-responsive img-fixed img-fluid"></div>
+        <div  class="card-body p-b-0">
+            <ul  role="tablist" class="nav nav-tabs customtab2">
+                <li  class="nav-item">
+                <a  data-toggle="tab" href="#rakuten_1_1" role="tab" aria-selected="false" class="nav-link active">
+                    <span  class="hidden-sm-up"><i  class="ti-home"></i></span>
+                    <span  class="hidden-xs-down"> Integration</span></a></li>
+                    <li  class="nav-item"><a  data-toggle="tab" href="#rakuten_1_2" role="tab" aria-selected="true" class="nav-link">
+                        <span  class="hidden-sm-up"><i  class="ti-user"></i></span>
+                        <span  class="hidden-xs-down"> Listing Templates</span></a></li>
+            </ul>
+            <div  class="tab-content">
+                <div class="tab-pane active in" id="rakuten_1_1">
+                    <div class="portlet">
+                        <div class="portlet-title">
+                            <div class="row margin-bottom-10">
+                                
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                    <a  class="btn btn-smbtn-circle-new btn-success"><i class="fa fa-check"></i> Save</a>
+                                    <a class="btn btn-sm btn-defaultbtn-circle-new"><i class="fa fa-exchange font-red"></i> Test Connection</a>
+                                    <a  class="btn btn-sm btn-defaultbtn-circle-new"><i class="fa fa-download"></i> Download Rakuten Catalog</a>
+                                    <a href="javascript:void(0)" type="button" class="btn btn-sm btn-defaultbtn-circle-new"><i class="fa fa-times font-red"></i> Remove All listings from Sellershub</a>
+                                    <a href="/settings/listchanelsettings" class="btn btn-sm btn-defaultbtn-circle-new"><i class="fa fa-times font-red"></i> Close</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <form class="form-body" role="form">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class=" control-label">Please select a Rakuten Marketplace</label>
+                                            <select onchange="loadrakutentemplate(5981)" class="form-control" id="marketplaceId">
+                                                <option value="-1">Please select</option>
+                                                <option value="us">US</option>
+                                                <option value="uk">UK</option>
+                                                <option value="es">Spain</option>
+                                                <option value="id">Indonesia</option>
+                                                <option value="my">Malaysia</option>
+                                                <option value="sg">Singapore</option>
+                                                <option value="tw">Taiwan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class=" control-label">Channel Name</label>
+                                            <input type="text" value="Rakuten" class="form-control input-lg" id="nameid" placeholder="Name to remember within Sellershub">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class=" control-label">Rakuten Shop Id/Seller Id</label>
+                                            <input type="text" value="" class="form-control input-lg" id="merchantIdentifier" placeholder="Rakuten Seller Id">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                    
+                                    <div class="row form">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label"> <strong>Rakuten API Key</strong></label>
+                                                <input type="text" value="" class="form-control input-lg" id="apiKey" placeholder="Enter Rakuten API Token">
+                                                <p> Please request for a key to either your ECC, MSA or send an email to Merchant.Helpdesk@Rakuten.co.uk to get the API key.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label"> <strong>Rakuten Shop Url</strong> (e.g http://www.rakuten.co.uk/shop/myshop)</label>
+                                                <input type="text" value="" class="form-control input-lg" id="apiusername" placeholder="Shop Id">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                            <label class="control-label"><strong>Default Rakuten Shop Category</strong></label>
+                                            <div class="input-group">
+                                                <input id="storecategoryidone" value="" class="form-control" type="text" name="storecategoryidone" placeholder="Rakuten Shop Category">
+                                                <span class="input-group-btn">
+                                                    <a  class="" type="button">
+                                                        <button class="btn-xs" type="button">Shop Categories</button>
+                                                    </a>
+                                                </span>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                            <label class="control-label"><strong>Default Rakuten Category</strong></label>
+                                            <div class="input-group">
+                                                <input id="storecategoryidtwo" value="" class="form-control" type="text" name="selectedcategorynameid" placeholder="Rakuten  Category">
+                                                <span class="input-group-btn">
+                                                    <a  class="" type="button"><button class="btn-xs" type="button">Rakuten Categories</button></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row form">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Download the catalog into Sellershub</label>
+                                                <div class="mt-checkbox-list">
+                                                    
+                                                        <input id="downloadamazoncatalogid" checked="" type="checkbox" value="">
+                                                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Download Orders into Sellershub</label>
+                                                <div class="mt-checkbox-list">
+                                                    
+                                                        <input id="downloadamazonorderid" type="checkbox" value="">
+                                                        
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group has-success">
+                                          <label class="control-label">Max Listed</label>
+                                          <input type="text"  name="username" class="form-control" placeholder="Max Listed">
+                                          
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group has-success">
+                                          <label class="control-label">Stock Percentage</label>
+                                          <input type="text"  name="username" class="form-control" placeholder="Stock Percentage">
+                                          
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group has-success">
+                                          <label class="control-label">End When</label>
+                                          <input type="text"  name="username" class="form-control" placeholder="End When">
+                                          
+                                        </div>
+                                      </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="rakuten_1_2">
+                                
+
+                    <div class="portlet light" id="maintemplatelist">
+                    
+                    
+                    
+                    <div class="tools">
+                    <button class="btn btn-default btn-smbtn-circle-new pull-right" >New Listing Template <i class="fa fa-angle-right"></i></button>
+                    </div>
+                    
+                    
+                    <div class="portlet-body">
+                    
+                    
+                    <div id="etsylistingtemplatediv1" class="table-scrollable" style="display: none;">
+                    
+                    
+                    <table class="table tableFixHead table-hover order-column v2">
+                    <thead>
+                    <tr>
+                    <th>
+                    Template Name
+                    </th>
+                    <th>
+                    Modified Date
+                    </th>
+                    <th>
+                    Action
+                    </th>
+                    
+                    
+                    </tr>
+                    </thead>
+                    <tbody>
+                    
+                    
+                    
+                    </tbody>
+                    
+                    </table>
+                    
+                    </div>
+                    
+                    <div id="etsylistingtemplatediv2">
+                    
+                    <div class="alert alert-warning">Please enter Rakuten Listing Template details</div>
+                    
+                    <div class="portlet-body form">
+                    <form class="" role="form">
+                    <div class="row form-body">
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                    <label class=" control-label">Template Name</label><br>
+                      <input type="text" value="" class="form-control" id="templatename" placeholder="Enter Template Name">
+                    </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                     <label class="control-label">Rakuten Categories:</label>
+                     <div class="input-group">
+                      <input type="text" class="form-control" id="selectedcategorynameid" value="" placeholder="Rakuten Category Id">
+                      <span class="input-group-btn">
+                        <a  href="javascript:void(0)"><button class="btn-xs" type="button">Show Rakuten Categories</button></a>
+                    </span>
+                      </div>
+                    </div>
+                    </div>
+                    
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                    <label class="control-label">Pricing Rule</label><br>
+                      <input type="text" value="" class="form-control" id="pricingRule" placeholder="Pricing Rule">     
+                    <div class="well">
+                      <!-- <p>e.g  <strong>${cost_price!}*1.6 + 1 </strong></p><p>
+                      </p><p>
+                        This make the selling price by multiplying cost price by 1.6 and add 1
+                        Tags available are  <strong>${cost_price!} and ${selling_price!}</strong>
+                      </p> -->
+                    </div>
+                    </div>
+                    </div>
+                    
+                    
+                    
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                     <div class="pull-right">
+                           <a href="javascript:void(0)"  type="submit" class="btn btn-sm btn-successbtn-circle-new"><i class="fa fa-check"></i> Save</a>
+                           <a href="/settings/findchanneluser?id=5981"  type="button" class="btn btn-sm btn-defaultbtn-circle-new"><i class="fa fa-times font-red"></i> Cancel</a>
+                    </div>
+                    </div>
+                    </div>
+                    </form>
+                    </div>
+                    
+                    
+                    
+                    </div>
+                    
+                    </div>
+                    
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+   </div>         
+           
+

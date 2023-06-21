@@ -1,0 +1,27 @@
+.prod-img{
+    max-height: 40px;
+    max-width: 70px;
+}
+ngb-pagination{
+  float: right;
+}
+.text-style{
+  font-size: 12px;
+    font-weight: 500;
+}
+
+.prod-imgs{
+  width:43% !important
+}
+.flipInY{
+  top: 30px!important;
+  left: -158px!important;
+}
+.title{
+  overflow: hidden !important;
+  width:120px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}

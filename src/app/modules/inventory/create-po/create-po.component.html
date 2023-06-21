@@ -1,0 +1,479 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div id="stepper1" class="bs-stepper">
+        <!-- <div class="bs-stepper-header">
+            <div class="step" data-target="#test-l-1">
+                <button class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">PO Details</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#test-l-2">
+                <button class="step-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">Products</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#test-l-3">
+                <button class="step-trigger">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">View</span>
+                </button>
+            </div>
+        </div> -->
+        <div>
+            <form name="123">
+                <div class="col-md-12">
+                <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                <div id="test-l-1" class=" m-15">
+                    <form action="#">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label>Select Supplier :</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSettings_suppliers"
+                                            [placeholder]="'Select Supplier'" id="supplier" name="supplier"
+                                            [data]="allSuppliers" ngDefaultControl [(ngModel)]="selectedSupplier"
+                                            (onSelect)="onSupplierSelect($event)">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label>Select Warehouse :</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSettings_warehouses"
+                                            [placeholder]="'Select warehouse'" id="warehouse" name="warehouse"
+                                            [data]="allWareHouses" ngDefaultControl [(ngModel)]="selectedWareHouse">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label>Purchase Order No :</label>
+                                        <input name="ponumber" [(ngModel)]="PONumber" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label>Currency :</label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSettings_currency"
+                                            [placeholder]="'Select currency'" id="curencies" name="curencies"
+                                            [data]="curencies" ngDefaultControl [(ngModel)]="selectedCurrency">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label>Reference Number :</label>
+                                        <input [(ngModel)]="refnumber" name="refnumber" type="text"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 " *ngIf="display">
+                                    <div class="form-group">
+                                        <label>Tax Pencentage :</label>
+                                        <input [(ngModel)]="taxper" name="taxpercentage" type="text"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <!-- <label>Stock required Date :</label> -->
+                                        <app-app-date-picker [selectedIpDate]="selectedDate"
+                                            (selectedDate)="stockRequiredDate($event)"
+                                            lable="Stock required Date"></app-app-date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12 col-lg-12">
+                                    <label>Message to Supplier </label>
+                                    <textarea [(ngModel)]="messagetosupplier" name="msgsupplier" class="form-control"
+                                        rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <div class="col-md-12 col-lg-12 text-right">
+                        <button (click)="next('savepodetails')" class="btn btn-primary">Save & Continue</button>
+                    </div> -->
+                </div>
+                <div id="test-l-2" class=" m-15">
+                    <div class="col-lg-12 col-sm-12 col-md-12   align-self-center text-right "
+                        style="padding-right: 0px;">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <ng-multiselect-dropdown (onSelect)="onItemSelect($event)" [settings]="dropdownSettings"
+                                [placeholder]="'Select Filter Type'" id="filter" name="filter" [data]="allFilters"
+                                ngDefaultControl [(ngModel)]="selectedFilter">
+                            </ng-multiselect-dropdown>
+                            <button (click)="openProductsModal()" type="button"
+                                class="btn  btn-success d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Add
+                                Products
+                                To this Order</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive m-t-10">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Sup.Code</th>
+                                    <th>Sup.Barcode</th>
+                                    <th>Image</th>
+                                    <th>Product Title</th>
+                                    <th>Unit Cost</th>
+                                    <th>Quantity</th>
+                                    <th>Tax Rate</th>
+                                    <th>Tax</th>
+                                    <th>Line Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let prod of selectedProducts">
+                                    <td>{{prod.sku}}</td>
+                                    <td>{{prod?.supplierDetails?.supplierCode}}</td>
+                                    <td>{{prod?.supplierDetails?.barcode}}</td>
+                                    <td><img [src]="prod.imageUrl" height="40" /></td>
+                                    <td>{{prod.title}}</td>
+                                    <td><input name="price-{{prod.sku}}" [(ngModel)]="prod.supplierDetails.costPrice"
+                                            *ngIf="prod.supplierDetails" type="text" id="price-{{prod.sku}}"
+                                            class="form-control" (input)="calculateTotal(prod)"></td>
+                                    <td><input name="qty-{{prod.sku}}" [(ngModel)]="prod.qty" type="text"
+                                            id="qty-{{prod.sku}}" class="form-control" (input)="calculateTotal(prod)">
+                                    </td>
+                                    <td><input name="taxper-{{prod.sku}}" [(ngModel)]="prod.taxPercentage" type="text"
+                                            id="taxper-{{prod.sku}}" class="form-control"
+                                            (input)="calculateTotal(prod)"></td>
+                                    <td><span *ngIf="prod.supplierDetails"> {{prod.taxPrice?.toFixed(2)}} </span>
+                                        <span *ngIf="!prod.supplierDetails">0</span>
+                                    </td>
+                                    <td><span *ngIf="prod.supplierDetails">{{prod.lineTotalPrice?.toFixed(2)}}
+                                        </span>
+                                        <span *ngIf="!prod.supplierDetails">0</span>
+                                    </td>
+                                    <td>
+                                        <button (click)="remove(prod)" type="button"
+                                            class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 col-lg-12 row ">
+                        <!-- <div class="col-md-6 text-left">
+                            <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                        </div> -->
+                        <!-- <div class="col-md-6 col-lg-6 row text-right">
+                            <div class="col-md-6 text-left">
+
+                            </div>
+
+                            <div class="col-md-6 text-right">
+                                <button (click)="next('products')" class="btn btn-primary">Save Products</button>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                
+                <div class="col-md-12 col-lg-12 row ">
+                    <div class="col-md-6 text-left">
+
+                    </div>
+                    <div class="col-md-6 text-right">
+
+                        <button (click)="savePo_header()" class="btn btn-primary  btn-success">Submit</button>
+                    </div>
+                </div>
+                <div id="test-l-3" class=" m-15" *ngIf="isEdit">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-body printableArea" id="printableArea">
+                                <h3 class="text-center">
+                                    <b>Purchase Order</b>
+                                    <!-- <span class="pull-right">#5669626</span> -->
+                                </h3>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pull-left">
+                                            <address>
+                                                <h3> &nbsp;<b class="text-danger">Company Name :
+                                                        {{printPo?.user?.companyName}}</b></h3>
+                                                <p class="text-muted m-l-5">
+                                                    {{printPo?.user?.address1}},
+                                                    <br /> {{printPo?.user?.address2}},
+                                                    <br /> {{printPo?.user?.city}},
+                                                    <br /> {{printPo?.user?.state}},
+                                                    <br /> {{printPo?.user?.country}} - {{printPo?.user?.zipCode}}
+                                                    <br /> {{printPo?.user?.phoneNumber}}
+                                                    <br /> {{printPo?.user?.emailAddress}}
+                                                </p>
+                                            </address>
+                                        </div>
+                                        <div class="pull-left">
+                                            <address>
+                                                <h3> &nbsp;<b class="text-danger">P.O.Number :
+                                                        {{printPo?.purchaseOrderHeader?.poId}}</b></h3>
+                                                <p class="text-muted m-l-5">The Above Number Must Appear on all related
+                                                    correspondence, shipping papers, and invoives:</p>
+                                            </address>
+                                        </div>
+                                        <div class="pull-left">
+                                            <address>
+                                                <h3> &nbsp;<b class="text-danger"> Message To Supplier :
+                                                        {{printPo?.purchaseOrderHeader?.messageToSupplier}}</b></h3>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <div class="col-md-6 col-lg-6 pull-left text-left">
+                                            <address>
+                                                <h3>Supplier,</h3>
+                                                <p class="text-muted">{{printPo?.supplier?.addressline1}},
+                                                    <br />{{printPo?.supplier?.addressline1}},,
+                                                    <br />{{printPo?.supplier?.addressline2}},{{printPo?.supplier?.addressline3}},
+                                                    <br /> {{printPo?.supplier?.city}},
+                                                    <br /> {{printPo?.supplier?.state}},
+                                                    <br /> {{printPo?.supplier?.country}}-
+                                                    {{printPo?.supplier?.postcode}},
+                                                    <br /> {{printPo?.supplier?.phone}},
+                                                    <br /> {{printPo?.supplier?.email}}
+                                                </p>
+                                            </address>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 pull-right text-left" style="left: 25%;">
+                                            <address>
+                                                <h3>Deliver to,</h3>
+                                                <p class="text-muted">
+                                                    {{printPo?.purchaseOrderHeader?.shiptoAddressLine1}},
+                                                    <br />
+                                                    {{printPo?.purchaseOrderHeader?.shiptoAddressLine2}},{{printPo?.purchaseOrderHeader?.shiptoAddressLine3}},
+                                                    <br /> {{printPo?.purchaseOrderHeader?.shipToCity}},
+                                                    <br /> {{printPo?.purchaseOrderHeader?.shipToState}},
+                                                    <br /> {{printPo?.purchaseOrderHeader?.shipToCountry}} -
+                                                    {{printPo?.purchaseOrderHeader?.shipToPostCode}}
+                                                    <br /> {{printPo?.purchaseOrderHeader?.shipToState}}
+                                                    <br /> {{printPo?.purchaseOrderHeader?.supplierEmailId}}
+                                                </p>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive  m-t-40" style="clear: both;">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">SKU</th>
+                                                        <th>Description</th>
+                                                        <th class="text-right">Qty</th>
+                                                        <th class="text-right">Unit Price</th>
+                                                        <th class="text-right">Tax (%)</th>
+                                                        <th class="text-right">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let prod of selectedProducts">
+                                                        <td class="text-center">{{prod.sku}}</td>
+                                                        <td>{{prod.title}}</td>
+                                                        <td class="text-right">{{prod.qty}}</td>
+                                                        <td class="text-right"> {{prod?.supplierDetails?.costPrice}}
+                                                        </td>
+                                                        <td class="text-right"> {{prod.taxPercentage}} </td>
+                                                        <td class="text-right"> {{prod.lineTotalPrice?.toFixed(2)}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="pull-right m-t-30 text-right">
+                                            <h3><b>Grand Total :</b> &#163; {{ totalprice?.toFixed(2) }}</h3>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <hr>
+                                        <div class="text-right">
+                                            <button (click)="sendEmail()" class="btn btn-danger btn-outline"
+                                                type="button"> <span><i class="fas fa-envelope"></i> Send Email</span>
+                                            </button>
+                                            <button (click)="print()" class="btn btn-success m-l-10 btn-outline"
+                                                type="button">
+                                                <span><i class="fa fa-print"></i> Print</span> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="search-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Products
+                </h2>
+
+                <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 col-lg-12 row">
+                    <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right "
+                        style="padding-right: 0px;">
+
+                        <div>
+                            <div class=" row m-l-15">
+                                <select class="col-sm-3 form-control custom-select" [(ngModel)]="searchname"
+                                    id="searchname">
+                                    <option class="form-control" value="0">Search By</option>
+                                    <option class="form-control" value="1">SKU</option>
+                                    <option class="form-control" value="3">TITLE</option>
+                                    <!-- <option class="form-control" value="101">VENDOR</option>
+                              <option class="form-control" value="102">TAGS</option>
+                              <option class="form-control" value="103">PRODUCTTYPE</option> -->
+                                    <option class="form-control" value="7">QTY</option>
+                                    <!-- <option class="form-control" value="8">Brand</option> -->
+                                </select>
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <input type="text" [(ngModel)]="searchValue2" class="form-control" id="pass3"
+                                            placeholder="Enter Search Value">
+                                        <!-- <div class="input-group-append"><span class="input-group-text"><i class="ti-search"></i></span>
+              </div> -->
+                                    </div>
+                                </div>
+                                <div class="d-flex ">
+                                    <div class="m-r-15" style="width: 50%;">
+                                        <!-- <label>Country Of Origin:</label> -->
+                                        <ng-multiselect-dropdown (ngModelChange)="onItemSupplier($event)"
+                                            [settings]="dropdownSettings_suppliers" [placeholder]="'Select Supplier'"
+                                            id="supplierProduct" name="supplierProduct" [data]="allSupplier"
+                                            ngDefaultControl [(ngModel)]="selectedSupplierFilter">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                    <!-- <div class="form-group m-r-5" *ngIf="selectedSupplier?.length > 0">
+                              <div class="custom-control custom-checkbox mr-sm-2">
+                                  <input [(ngModel)]="isDefaultSupplier" (click)="isDefaultSupplier=!isDefaultSupplier;getDisplayProducts()" type="checkbox" class="custom-control-input" id="def-spplier" name="def-spplier">
+                                  <label class="custom-control-label" for="def-spplier">Default Supplier</label>
+                              </div>
+                          </div> -->
+                                    <div class="col-md-4 d-flex ">
+                                        <button (click)="refresh()" type="button"
+                                            class="btn btn-success d-lg-block m-l-15 btn-action"><i
+                                                class="fa fa-plus-circle"></i> Apply Filter</button>
+                                        <button (click)="reset()" type="button"
+                                            class="btn btn-warning d-lg-block m-l-15 btn-action"><i
+                                                class="fa fa-plus-circle"></i> Reset</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="table-responsive m-t-10" style="max-height: 60vh;overflow-y: scroll;">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>
+                                                <div class="form-group">
+                                                    <label class="custom-control custom-checkbox m-b-0">
+                                                        <input [checked]="isSelectAll" (click)="checkAll()"
+                                                            type="checkbox" class="custom-control-input">
+                                                        <span class="custom-control-label"></span>
+                                                    </label>
+                                                </div>
+                                            </th>
+                                            <th>ID</th>
+                                            <th>SKU</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let prod of allProducts" class="text-center">
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="custom-control custom-checkbox m-b-0">
+                                                        <input [checked]="prod.selected" (click)="changesSelected(prod)"
+                                                            type="checkbox" class="custom-control-input">
+                                                        <span class="custom-control-label"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td><img [src]="prod.imageUrl" height="40" /></td>
+                                            <td>{{prod.sku}}</td>
+                                            <td>{{prod.title}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+                        <div class="row col-lg-12 col-md-12">
+                            <div class="col-lg-6 col-md-6  m-t-10">
+                                <span>Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of
+                                        {{collectionsize}} entries</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 ">
+                                <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page"
+                                    [maxSize]="3" [rotate]="true" [boundaryLinks]="true"
+                                    (pageChange)="changespage(page);">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button (click)="saveSelectedProd()" type="button" class="btn waves-effect waves-light btn-success"
+                        data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"
+                        (click)="modalclosed()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="email-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Email Order Details</h2>
+                    <button type="button" class="close" data-dismiss="modal" (click)="emailmodalclosed()"
+                        aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 col-lg-12 row">
+                        <div class="col-md-6 col-lg-6">
+
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button (click)="saveSelectedProd()" type="button"
+                            class="btn waves-effect waves-light btn-success" data-dismiss="modal">Email Order
+                            Details</button>
+                        <button type="button" (click)="emailmodalclosed()" class="btn btn-danger waves-effect"
+                            data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

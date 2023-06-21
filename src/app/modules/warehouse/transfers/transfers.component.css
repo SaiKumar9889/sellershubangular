@@ -1,0 +1,22 @@
+ngb-pagination{
+  float: right;
+}
+:host ::ng-deep .multiselect-dropdown .selected-item{
+  max-width: 200px!important;
+}
+.title{
+  overflow: hidden !important;
+  width:120px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}
+.sku{
+  overflow: hidden !important;
+  width:100px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}

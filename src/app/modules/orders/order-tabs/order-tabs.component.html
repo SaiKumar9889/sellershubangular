@@ -1,0 +1,67 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="col-md-12 col-lg-12 col-sm-12">
+    <div class="card">
+      <div class="card-body p-b-0">
+        <h2 class="card-title">Orders</h2>
+        <!-- <h6 class="card-subtitle">Use default tab with class <code>customtab</code></h6> -->
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs customtab2" role="tablist">
+          <li class="nav-item" *ngFor="let tab of selectedTabs;let i = index">
+            <a class="nav-link" [ngClass]="tab.active?'active':''" data-toggle="tab" [href]="'#'+tab.id" role="tab">
+              <!-- <span  class="hidden-sm-up"><i class="ti-user"></i></span>  -->
+              <span class="hidden-xs-down"> {{tab.titlename}} </span>
+              <span class="hidden-sm-up"><i (click)="closeTab(tab)" class="ti-close"></i></span>
+            </a>
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <ng-container *ngFor="let tab of selectedTabs;let i = index">
+            <div class="tab-pane" [ngClass]="tab.active?'active':''" [id]="tab.id" role="tabpanel">
+              <div>
+                <div [ngSwitch]="tab.id">
+                  <div *ngSwitchCase="'mcf_Orders'">
+                    <app-mcf-orders></app-mcf-orders>
+                  </div>
+                  <div *ngSwitchCase="'mange_Orders'">
+                    <app-manage-returns></app-manage-returns>
+                  </div>
+                  <div *ngSwitchCase="'order_summary'">
+                    <app-order-summary></app-order-summary>
+                  </div>
+                  <div *ngSwitchCase="'return_orders'">
+                    <app-return-orders></app-return-orders>
+                  </div>
+                  <div *ngSwitchCase="'sales_orders'">
+                    <app-sales-orders></app-sales-orders>
+                  </div>
+                  <div *ngSwitchCase="'dispatch_console'">
+                    <app-dispatch-console></app-dispatch-console>
+                </div>
+                  <div *ngSwitchCase="'click_collect'">
+                    <app-click-and-collect></app-click-and-collect>
+                  </div>
+                  <div *ngSwitchCase="'ready_to_shipment'">
+                    <app-ready-to-shipment></app-ready-to-shipment>
+                  </div>
+                  <div *ngSwitchCase="'error_labels'">
+                    <app-error-labels></app-error-labels>
+                  </div>
+                  <div *ngSwitchCase="'shipped_Orders'">
+                    <app-shipped-orders></app-shipped-orders>
+                  </div>
+                  <div *ngSwitchCase="'cancelled_Orders'">
+                    <app-cancelled-orders></app-cancelled-orders>
+                  </div>
+                  <div *ngSwitchDefault>
+                    <p>No one is matched</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

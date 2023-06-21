@@ -1,0 +1,55 @@
+<div class="row" id="section-to-print">  
+    <div class="col-md-12 col-lg-12" >
+      <gridster [options]="options" class="page_a4 printableArea">
+        <gridster-item [item]="item" *ngFor="let item of dashboard;let i=index" (itemChange)="itemChange($event)">
+          <div [ngSwitch]="item?.type" class="gridster-item-content col-md-12 col-lg-12">
+            <div *ngSwitchCase="'Image'">
+              <div class="col-md-12 col-lg-12 text-center">
+                <app-print-view-builder [childrens]="item.childs"> </app-print-view-builder>
+              </div>
+            </div>
+            <div *ngSwitchCase="'GeneralDetails'">
+              <div class="col-md-12 col-lg-12">
+                <app-print-view-builder [childrens]="item.childs"> </app-print-view-builder>
+              </div>
+            </div>
+            <div *ngSwitchCase="'Item'">
+              <div class="col-md-12 col-lg-12 m-t-10">
+                <div class="table-responsive">
+                  <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                  <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let ite of item.childs">{{ite.key}}</th>                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of ordersItems">
+                        <td *ngFor="let ite of item.childs">
+                          {{ite.key}}
+                          <span *ngIf="ite.key=='Product'"><img [src]="item.imageUrl"  height="40"> </span>
+                          <span *ngIf="ite.key=='Product'"> {{item.sku}}</span>
+                          <span *ngIf="ite.key=='SKU'">{{item.title}} </span>
+                          <span *ngIf="ite.key=='Title'"> {{item.quantityPurchased}}</span>
+                          <span *ngIf="ite.key=='Qty'">{{item.itemPrice}} </span>
+                          <span *ngIf="ite.key=='Item Price'"> {{item.totalPrice}}</span>
+                        </td>                    
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchCase="'Total'">
+              <div class="col-md-12 col-lg-12 m-t-10 text-right">
+                <h5>Postage & Package Charges : {{currencyCode}} {{taxAmount}} </h5>
+                <h5>VAT : {{currencyCode}} {{vat}} </h5>
+                <h4>Total :{{currencyCode}} {{total}} </h4>
+              </div>
+            </div>
+          </div>
+        </gridster-item>
+      </gridster>
+    </div>
+</div>
+  

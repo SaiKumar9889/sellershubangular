@@ -1,0 +1,213 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-12 col-md-12 row option-alignment">
+            <div class="col-lg-3 col-sm-12 col-md-3">
+              <h4 class="card-title" style="margin-left: 10px;"> Manage Users</h4>
+            </div>
+            <div class="col-lg-9 col-sm-12 col-md-9  align-self-center text-right " style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <button type="button" data-toggle="modal" data-target="#create-newuser-modal" (click)="addUser()"
+                  class="btn btn-warning d-lg-block m-l-15" style="margin-left: 820px;"><i
+                    class=" fas fa-plus-circle"></i>
+                  New</button>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table color-bordered-table success-bordered-table">
+              <thead>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let user of allUser;index as i">
+                  <td class="text-left">{{ user.name }} <span class="badge badge-success" *ngIf="!i"> Sellershub Account
+                      User</span></td>
+                  <td class="text-left">{{ user.emailAddress }}</td>
+                  <td class="text-left"><button type="button" (click)="editUser(user)"
+                      class="btn btn-success d-lg">Edit</button>
+                    <!-- <button *ngIf="i" (click)="userpermission(user)" type="button"
+                      class="btn btn-success d-lg m-l-15">Permission</button> -->
+                    <button *ngIf="i" (click)="removewUser(user)" type="button"
+                      class="btn btn-success d-lg m-l-15">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="create-newuser-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 *ngIf="!isEdit" class="modal-title">Add new User</h2>
+        <h2 *ngIf="isEdit" class="modal-title">Update User</h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-12 col-lg-12 row">
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label class="control-label">Email Address</label>
+                  <input type="text" [(ngModel)]="emailAddress" id="firstName" class="form-control"
+                    placeholder="Email Address">
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input type="text" [(ngModel)]="name" id="name" class="form-control" placeholder="Name">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12 row">
+              <div class="col-md-6 col-lg-6" *ngIf="isEdit">
+                <div class="form-group">
+                  <label class="control-label">Current Password</label>
+                  <input type="password" [(ngModel)]="currentpassword" id="firstName" class="form-control"
+                    placeholder="Current Password">
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label class="control-label">New Password</label>
+                  <input [(ngModel)]="newpassword" type="password" id="firstName" class="form-control"
+                    placeholder="New Password">
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label class="control-label">Re-enter New Password</label>
+                  <input [(ngModel)]="password" type="password" id="firstName" class="form-control"
+                    placeholder="Re-enter New Password">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" *ngIf="!isEdit" (click)="saveOrUpdateUser()"
+          class="btn waves-effect waves-light btn-success">Save</button>
+        <button type="button" *ngIf="isEdit" (click)="updateUser()"
+          class="btn waves-effect waves-light btn-success">Update</button>
+        <button type="button" (click)="modalclosed()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="removeuser-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-l">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Remove User
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeremoveuserModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <p>Are your sure for remove?</p>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="removeUserDetails()" class="btn waves-effect waves-light btn-success">Ok</button>
+        <button type="button" (click)="closeremoveuserModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="userpermission-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Please apply permissions
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" (click)="closepermissionModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <p>Please select permissions</p>
+          <br><br>
+        </div>
+        <div class="col-md-12 col-lg-12 row">
+
+          <div class="form-group m-b">
+            <input type="checkbox" [(ngModel)]="admin" id="firstName" class="form-control"
+              style="width: 25px; margin-left: 10px;" />
+          </div>
+          <label class="control-label p-l">Admin</label>
+
+          <div class="form-group m-b">
+            <input type="checkbox" [(ngModel)]="dashboard" id="firstName" class="form-control"
+              style="width: 25px; margin-left: 10px;" />
+          </div>
+          <label class="control-label p-l">Dashboard</label>
+
+          <div class="form-group m-b">
+            <input type="checkbox" [(ngModel)]="inventory" id="firstName" class="form-control"
+              style="width: 25px; margin-left: 10px;" />
+          </div>
+          <label class="control-label p-l">Inventory</label>
+
+          <div class="form-group m-b">
+            <input type="checkbox" [(ngModel)]="order" id="firstName" class="form-control"
+              style="width: 25px; margin-left: 10px;" />
+          </div>
+          <label class="control-label p-l">Order</label>
+
+
+          <div class="form-group m-b">
+            <input type="checkbox" [(ngModel)]="customer" id="firstName" class="form-control"
+              style="width: 25px; margin-left: 10px;" />
+          </div>
+          <label class="control-label p-l">Customer</label>
+
+          <div class="form-group m-b">
+            <input type="checkbox" [(ngModel)]="stockrepricer" id="firstName" class="form-control"
+              style="width: 25px; margin-left: 10px;" />
+          </div>
+          <label class="control-label p-l">Stock Rericer</label>
+
+          <div class="form-group m-b">
+            <input type="checkbox" [(ngModel)]="reports" id="firstName" class="form-control"
+              style="width: 25px; margin-left: 10px;" />
+          </div>
+          <label class="control-label p-l">Reports</label>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="saveuserpermission()"
+          class="btn waves-effect waves-light btn-success">Save</button>
+        <button type="button" (click)="closepermissionModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

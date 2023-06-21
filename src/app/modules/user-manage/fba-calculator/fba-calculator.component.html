@@ -1,0 +1,686 @@
+<!-- <div class="col-md-12 m-t-20">
+    <div class="card">
+        <div class="card-body row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Amazon Store</label>
+                    <select id="select-type-basic" class="form-control custom-select"
+                        [(ngModel)]="selectedCountryvalue">
+                        <option *ngFor="let list of country" value="{{list.country_code}}">
+                            {{list.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label">Search for product on Amazon </label>
+                <input type="text" class="form-control" placeholder="Search SKU, title, ISBN, UPC, EAN or ASIN">
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn waves-effect waves-light btn-success m-t-30">Search</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="col-md-12  m-t-20 row">
+    <div class=" col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <h4 style="font-weight: bold;">Amazon FBA Costing</h4>
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-md-6 control-label text-left mb-3"
+                                title="Price charged to the customer. Amazon adds the item price and shipping when assessing competitiveness across sellers.">Sales
+                                Price </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="salePrice" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <hr>
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Amazon
+                                Fees</label>
+                            <div class="col-md-6 control-label">
+                                <span class="col-md-6 text-left  mb-2"
+                                    style="font-weight: bold;">£{{amazonFee?.toFixed(2)}}</span>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Referral Fee</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="referalPercent"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{referfee?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="referfee" [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <span class="col-md-6 text-left  mb-2">£{{referfee?.toFixed(2)}}</span>
+                            </div> -->
+                            <label class="col-md-6 control-label text-left mb-3">Per-Item Fee</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="peritemFee" [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <!-- <label class="col-md-6 text-left mb-2">£{{peritemFee?.toFixed(2)}}</label> -->
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Variable Closing Fee</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="closingFee" [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <!-- <label class="col-md-6 text-left mb-2">£{{closingFee?.toFixed(2)}}</label> -->
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Fulfilment /
+                                Shipping
+                                cost</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left  mb-2" style="font-weight: bold;">£0.00</label>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">FBA Fulfilment Fees</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="fbafulfilmentfee" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Service add-ons</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="servcaddon" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <div class="col-md-12 row">
+                                <label class="col-md-6 custom-control control-label custom-checkbox text-left mb-3">
+                                    <input name="downInven" type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label">Opaque bagging</span>
+                                </label>
+                                <div class="col-md-6 control-label">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+    
+                                        <input type="number" class="col-md-6 text-left form-control"
+                                            aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                            [(ngModel)]="opaquebagging" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <label class="col-md-6 custom-control control-label custom-checkbox text-left mb-3">
+                                    <input name="downInven" type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label">Tape</span>
+                                </label>
+                                <div class="col-md-6 control-label">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+    
+                                        <input type="number" class="col-md-6 text-left form-control"
+                                            aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                            [(ngModel)]="tape" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <label class="col-md-6 custom-control control-label custom-checkbox text-left mb-3">
+                                    <input name="downInven" type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label">Label</span>
+                                </label>
+                                <div class="col-md-6 control-label">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+    
+                                        <input type="number" class="col-md-6 text-left form-control"
+                                            aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                            [(ngModel)]="label" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <label class="col-md-6 custom-control control-label custom-checkbox text-left mb-3">
+                                    <input name="downInven" type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label">Bagging</span>
+                                </label>
+                                <div class="col-md-6 control-label">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+    
+                                        <input type="number" class="col-md-6 text-left form-control"
+                                            aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                            [(ngModel)]="bagging" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <label class="col-md-6 custom-control control-label custom-checkbox text-left mb-3">
+                                    <input name="downInven" type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-label">Bubble wrap</span>
+                                </label>
+                                <div class="col-md-6 control-label">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+    
+                                        <input type="number" class="col-md-6 text-left form-control"
+                                            aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                            [(ngModel)]="bubblewrap" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3"
+                                title="Cost of delivering the item to an Amazon fulfilment centre. You may use an average to account for zone differences.">Dispatching
+                                to amazon </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="dispatch" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <hr>
+                            <label class="col-md-6 control-label text-left mb-3">Payment Processing Fee </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onAmazonFulfilment()"
+                                        [(ngModel)]="paymentFee" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Storage
+                                Cost</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left mb-2"
+                                    style="font-weight: bold;">£{{storageCost?.toFixed(2)}}</label>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Monthly Storage Cost Per Unit
+                            </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onAmazonFulfilment()" [(ngModel)]="monthlyCost"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Average Inventory Units Stored
+                            </label>
+                            <div class="col-md-6 control-label">
+                                <input type="number" class="col-md-6 text-left form-control mb-2"
+                                    (input)="onAmazonFulfilment()" [(ngModel)]="averageInventory"
+                                    [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <!-- <label class="col-md-6 control-label text-left mb-3">Estimated monthly units sold</label>
+                            <div class="col-md-6 control-label">
+                                <input type="text" class="col-md-6 text-left form-control mb-2" value="1">
+                            </div> -->
+                            <!-- <label class="col-md-6 control-label text-left mb-3"
+                                title="The estimated amount that you'll pay in storage for the product per unit sold. This amount is calculated by dividing the total estimated storage cost (monthly storage cost per unit multiplied by average inventory units stored) by the estimated monthly units sold for each fulfilment channel.">Storage
+                                cost per unit sold</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left  mb-2">£0.67</label>
+                            </div> -->
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Other
+                                costs</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left  mb-2"
+                                    style="font-weight: bold;">£{{otherCost?.toFixed(2)}}</label>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3"
+                                title="The VAT value provided is an estimate based on the standard rate. You can edit the percentage if you know the reduced or super-reduced rate for this product.">Estimated
+                                VAT</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onAmazonFulfilment()" [(ngModel)]="VAT"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{estVAT?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Cost of goods sold</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onAmazonFulfilment()" [(ngModel)]="costOfGoods"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Miscellaneous cost</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onAmazonFulfilment()" [(ngModel)]="miscellaneousCost"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <div class="card card1">
+                                <div class="card-body row">
+                                    <label class="col-md-6 control-label text-left mb-3">Estimated Cost Per
+                                        Unit</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2">£{{estCostPerUnit?.toFixed(2)}}</label>
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3">Net Profit Per Unit</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2">£{{netProfitPerUnit?.toFixed(2)}}</label>
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3">Estimated Sales</label>
+                                    <div class="col-md-6 control-label">
+                                        <input type="number" class="col-md-6 text-left form-control mb-2"
+                                            (input)="onAmazonFulfilment()" [(ngModel)]="estSales"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Net
+                                        Profit</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2"
+                                            style="font-weight: bold;">£{{netProfit?.toFixed(2)}}</label>
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Profit in Percentage</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2" style="font-weight: bold;">{{netMargin?.toFixed(2)}}%</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class=" col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <h4 style="font-weight: bold;">Your Fulfilment</h4>
+                        <hr>
+                        <div class="form-group row">
+                            <span class="col-md-6 control-label text-left mb-3">Sales Price </span>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        aria-label="Amount (to the nearest dollar)" (input)="onFulfilment()"
+                                        [(ngModel)]="saleprice" [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+
+
+                            
+                            <hr>
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Amazon / Ebay / Marketplace
+                                Fees</label>
+                            <div class="col-md-6 control-label">
+                                <span class="col-md-6 text-left  mb-2"
+                                    style="font-weight: bold;">£{{amazonfee?.toFixed(2)}}</span>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Referral Fee</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="referalpercent"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{referFee?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <!-- <label class="col-md-6 control-label text-left mb-3">Referral Fee</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="referFee"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <span class="col-md-6 text-left  mb-2">£{{referFee?.toFixed(2)}}</span>
+                            </div> -->
+                            <label class="col-md-6 control-label text-left mb-3">Per-Item Fee</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="peritemfee"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <!-- <label class="col-md-6 text-left mb-2">£{{peritemfee?.toFixed(2)}}</label> -->
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Variable Closing Fee</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="closingfee"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <!-- <label class="col-md-6 text-left mb-2">£{{closingfee?.toFixed(2)}}</label> -->
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Fulfilment /
+                                Shipping
+                                Cost</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left  mb-2"
+                                    style="font-weight: bold;">£{{fulfilmentcost?.toFixed(2)}}</label>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3"
+                                title="Price charged to the customer for shipping. For seller-fulfilled orders, the seller collects this amount as revenue. For FBA orders, since shipping is already included, this amount is zero and doesn't affect FBA fulfilment fees.">Delivery
+                                Charge </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="deliverCharge"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">VAT on Delivery </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="deliveryvat"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{estvatondelivery?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Packing Material </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="packingmat"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Dispatching To Customer</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="disptocust"
+                                        [ngModelOptions]="{standalone: true}">
+
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Customer Service </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="custserv"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Payment Processing Fee </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="paymentfee"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Storage
+                                Cost</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left mb-2"
+                                    style="font-weight: bold;">£{{storagecost?.toFixed(2)}}</label>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Monthly Storage Cost Per Unit
+                            </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="monthlycost"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Average Inventory Units Stored
+                            </label>
+                            <div class="col-md-6 control-label">
+                                <input type="number" class="col-md-6 text-left form-control mb-2"
+                                    (input)="onFulfilment()" [(ngModel)]="averageinventory"
+                                    [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <!-- <label class="col-md-6 control-label text-left mb-3">Estimated Monthly Units Sold</label>
+                            <div class="col-md-6 control-label">
+                                <input type="number" class="col-md-6 text-left form-control mb-2" (input)="onFulfilment()" [(ngModel)]="monthlyunits" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Storage Cost Per Unit Sold</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left mb-2">£{{storagecostunit?.toFixed(2)}}</label>
+                            </div> -->
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Other
+                                costs</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left  mb-2"
+                                    style="font-weight: bold;">£{{othercost?.toFixed(2)}}</label>
+                            </div>
+                            <!-- <label class="col-md-6 control-label text-left mb-3"
+                                title="The VAT value provided is an estimate based on the standard rate. You can edit the percentage if you know the reduced or super-reduced rate for this product.">Estimated
+                                VAT</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="vat"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{estvat?.toFixed(2)}}</label>
+                                </div>
+                            </div> -->
+                            <label class="col-md-6 control-label text-left mb-3">Cost of goods sold</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="costofgoods"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3"
+                                title="The VAT value provided is an estimate based on the standard rate. You can edit the percentage if you know the reduced or super-reduced rate for this product.">
+                                VAT On Purchase</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="purchasevat"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{estvatonpurchase?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">Miscellaneous cost</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">£</span>
+                                    </div>
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="miscellaneouscost"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">VAT Elements</label>
+                            <div class="col-md-6 control-label">
+                                <label class="col-md-6 text-left  mb-2"
+                                    style="font-weight: bold;">£{{vatelements?.toFixed(2)}}</label>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3"
+                                title="The VAT value provided is an estimate based on the standard rate. You can edit the percentage if you know the reduced or super-reduced rate for this product.">
+                                VAT On Sales</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="vat"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{estvat?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3">VAT on Delivery </label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="deliveryvat"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{estvatondelivery?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <label class="col-md-6 control-label text-left mb-3"
+                                title="The VAT value provided is an estimate based on the standard rate. You can edit the percentage if you know the reduced or super-reduced rate for this product.">
+                                VAT On Purchase</label>
+                            <div class="col-md-6 control-label">
+                                <div class="input-group mb-3">
+                                    <input type="number" class="col-md-6 text-left form-control"
+                                        (input)="onFulfilment()" [(ngModel)]="purchasevat"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <label class="control-label ml-1 mt-2"> £{{estvatonpurchase?.toFixed(2)}}</label>
+                                </div>
+                            </div>
+                            <div class="card card1">
+                                <div class="card-body row">
+                                    <label class="col-md-6 control-label text-left mb-3">Estimated Cost Per
+                                        Unit</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2">£{{estcostperunit?.toFixed(2)}}</label>
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3">Net Profit Per Unit</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2">£{{netprofitperunit?.toFixed(2)}}</label>
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3">Estimated Sales</label>
+                                    <div class="col-md-6 control-label">
+                                        <input type="number" class="col-md-6 text-left form-control mb-2"
+                                            (input)="onFulfilment()" [(ngModel)]="estsales"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Net
+                                        Profit</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2"
+                                            style="font-weight: bold;">£{{netprofit?.toFixed(2)}}</label>
+                                    </div>
+                                    <label class="col-md-6 control-label text-left mb-3" style="font-weight: bold;">Profit in Percentage</label>
+                                    <div class="col-md-6 control-label">
+                                        <label class="col-md-6 text-left mb-2" style="font-weight: bold;">{{netmargin?.toFixed(2)}}%</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+        <div id="printOnly" *ngIf="selectedOrderData">
+            <div  *ngFor="let selectedOrderDa of selectedOrderData" style="page-break-after: always;">
+               <app-print-orders [printTemplate]="selectedOrderDa" ></app-print-orders>
+            </div>
+         </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+.color-bordered {
+    color: #4F5467;
+    background-color: #e9ecef;
+    border-color: #e9ecef
+}
+.color-header {
+    color: #fff;
+    background-color: #424141b3;
+    border-color: #424141b3
+}
+.color-bordered:hover,
+.color-colored:hover {
+    background-color: #e9ecef
+}
+.color-colored {
+    color: #4F5467;
+    background-color: #fff;
+    border-color: #fff
+}

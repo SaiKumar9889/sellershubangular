@@ -1,0 +1,24 @@
+<div *ngFor="let chaild of childrens;let j=index" class="ui-padding m-t-5">
+  <form>
+    <div [ngSwitch]="chaild?.type">
+      <div *ngSwitchCase="'image'">
+        <img src="{{chaild.file}}" class="img-responsive radius">
+      </div>
+      <div *ngSwitchCase="'field'" class="gridster-item-content">
+        <label>{{chaild.text?chaild.text:chaild.key}}</label>
+      </div> 
+      <div *ngSwitchCase="'image'" class="gridster-item-content">
+        <img class="img-responsive" [src]="chaild?.text"/>
+      </div>   
+      <div *ngSwitchCase="'label'" class="gridster-item-content" style="position: absolute;">
+        <img class="img-responsive" [src]="chaild?.text"/>
+      </div>    
+      <div *ngSwitchCase="'editor'">
+        <div class="showoptions">         
+          <angular-editor id="{{chaild.id+'-'+chaild.pid+'-tview-builder'}}"  name="editor1" [(ngModel)]="chaild.text" [config]="editorConfig_disable"></angular-editor>
+        </div>
+      </div>  
+      <div *ngSwitchDefault>This is Default</div>
+    </div>
+  </form>
+</div>

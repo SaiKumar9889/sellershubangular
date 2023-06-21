@@ -1,0 +1,198 @@
+<!-- <div class="login-register overflow-auto"
+  style="background-image:url(assets/images/login-bg2.jpeg); background-color: #364150 !important;"> -->
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-md-7 padding">
+      <img [src]="'assets/images/sign up1.jpg'" alt="" class="images" />
+    </div>
+    <div class="col-md-5 padding">
+      <div class="login-box card">
+        <div class="card-body">
+          <div class="row">
+            <!-- <div class="col-md-6" style="    margin: auto;        ">
+          <img class='img-responsive' src='assets/images/popup-register-image-1.png' />
+          <img class='img-responsive' src='assets/images/popup-register-image-1.png' />
+        </div> -->
+            <div class="col-md-12">
+              <form class="form-horizontal" id="loginform" autocomplete="off">
+                <h4 class="text-gradient text-center" style="font-weight: 600;">BEST MULTICHANNEL ECOMMERCE SOFTWARE</h4>
+                <h4 class="mt-2 text-center" style="font-weight: 400;">"Sellershub has changed the world of Multichannel Selling forever in so many ways, start your journey with us" </h4>
+                <div class="row mt-4">
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="control-label">First Name <span style="color:red">*</span></label>
+                      <input autocomplete="off" [(ngModel)]="name" type="text" name="name" id="name"
+                        class="form-control" placeholder="First Name" required="">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group ">
+                      <label class="control-label">Last Name <span style="color:red">*</span></label>
+                      <input autocomplete="off" [(ngModel)]="lastname" type="text" name="name" id="name"
+                        class="form-control" placeholder="Last Name" required="">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 p-0">
+                  <div class="form-group">
+                    <label for="email" class="control-label">Email <span style="color:red">*</span></label>
+                    <input autocomplete="off" [(ngModel)]="email" email="true" type="email" name="email" id="email"
+                      class="form-control" placeholder="Email" required="">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Password <span style="color:red">*</span></label>
+                      <input autocomplete="off" [(ngModel)]="password" type="password" name="password" id="password"
+                        class="form-control" placeholder="Password" required="">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Phonenumber <span style="color:red">*</span></label>
+                      <input autocomplete="off" [(ngModel)]='phonenumber' name='phonenumber' class="form-control"
+                        type="text" required="" placeholder="Contact Number">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 p-0">
+                  <div class="form-group">
+                    <label class="control-label">Company Name<span style="color:red">*</span></label>
+                    <input autocomplete="off" [(ngModel)]='companyname' name='Company Name' class="form-control"
+                      type="text" required="" placeholder="Company Name">
+                  </div>
+                </div>
+                <div class="col-md-12 p-0">
+                  <div class="form-group">
+                    <label class="control-label">VAT Number</label>
+                    <input autocomplete="off" [(ngModel)]='vat' name='VAT Number' class="form-control" type="text"
+                      required="" placeholder="VAT Number">
+                  </div>
+                </div>
+                <div class="col-md-12 form-group  p-0">
+                  <label class="control-label">Country <span style="color:red">*</span></label>
+                  <select class="form-control custom-select" [(ngModel)]="country" (change)="onCountryChange()"
+                    name='contactnumber' class="form-control" required="">
+                    <option value="">--Select Country--</option>
+                    <option *ngFor="let row of countryList" value={{row.country_code}}>{{ row.name }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-12 col-lg-12 p-0 m-t-10">
+                  <label>Select the Channel You have: <span style="color:red">*</span></label><br>
+                  <div class="d-flex no-block align-items-center">
+                    <ng-multiselect-dropdown (onSelect)="onItemSelect($event)" [settings]="dropdownSettings_channel"
+                      [placeholder]="'Select Channel'" id="channel" name="channel" style="width: 100%;"
+                      [data]="allChannels" ngDefaultControl [(ngModel)]="selectedChannle">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+                <!-- <div class="form-group ">
+              <div class="col-xs-12">
+                <h6 align="right">Separated by comma (Onbuy,Walmart)</h6>
+                <input autocomplete="off" [(ngModel)]='other1' name='other' class="form-control" type="text" required=""
+                  placeholder="Others">
+              </div>
+            </div> -->
+                <div class="col-md-12  p-0 m-t-10">
+                  <label>Select the Couriers You have: <span style="color:red">*</span></label><br>
+                  <div class="d-flex no-block align-items-center">
+                    <ng-multiselect-dropdown (onSelect)="onItemSelectCourior($event)"
+                      [settings]="dropdownSettings_courier" [placeholder]="'Select Couriers'" id="channel"
+                      name="channel" style="width: 100%;" [data]="allCourier" ngDefaultControl
+                      [(ngModel)]="selectedCourier">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+                <!-- <div class="form-group ">
+              <div class="col-xs-12">
+                <h6 align="right">Seperated by comma (DHL,Hermes)</h6>
+                <input autocomplete="off" [(ngModel)]='other2' name='other' class="form-control" type="text" required=""
+                  placeholder="Others">
+              </div>
+            </div> -->
+                <div class="col-md-12 col-lg-12 row p-r-0 p-l-0 m-t-5 m-l-0">
+                  <div class="col-md-6 col-lg-6  form-group  p-l-0  m-l-0">
+                    <label class="control-label">Number of Orders Per Month <span style="color:red">*</span></label>
+                    <input autocomplete="off" [(ngModel)]='orders' name='orders' class="form-control" type="text"
+                      required="" placeholder="Number of Orders Per Month">
+                  </div>
+                  <div class="col-md-6 col-lg-6  form-group  p-r-0  m-l-0">
+                    <label class="control-label">No. of SKU's <span style="color:red">*</span></label>
+                    <input autocomplete="off" [(ngModel)]='sku' name='sku' class="form-control" type="text" required=""
+                      placeholder="No. of SKU's">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label class="control-label">Promotional Code</label>
+                  <input autocomplete="off" [(ngModel)]='promotioncode' name='pramotioncode' class="form-control"
+                    type="text" required="" placeholder=" Promotional Code">
+                </div>
+                <div class="form-group text-center">
+                  <div class="col-xs-12">
+                    <button (click)="registerNewUser()" class="btn btn-block btn-lg btn-gradient btn-rounded"
+                      type="submit">GET
+                      STARTED NOW</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div>
+            <div class="form-group m-b-0">
+              <div class="col-sm-12 text-center">
+                Already have an account? <a href="javascript:void(0)" (click)="gotToSignIn()"
+                  class="text-info m-l-5"><b>Sign in to
+                    Sellershub </b></a>
+              </div>
+            </div>
+            <div class="form-group m-b-0">
+              <div class="col-sm-12 text-center">
+                You can upgrade, downgrade or cancel your plan at any time.
+              </div>
+            </div>
+            <div class="form-group m-b-0">
+              <div class="col-sm-12 text-center">
+                By clicking on 'Get Started Now' you are accepting our terms of usage and <a
+                  href="http://www.sellershub.io/privacy-policy/" class="text-info m-l-5"><b>privacy policy</b></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+
+<div id="search-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">
+        </h2>
+
+        <button type="button" class="close" data-dismiss="modal" routerLink="/login" (click)="modalclosed()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="info">
+          Please click on the "Confirm Registration" link, that we have sent to your registered email Id, to
+          start using this System.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn waves-effect waves-light btn-success">Save</button> -->
+        <button type="button" class="btn btn-danger waves-effect" routerLink="/login"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-apploader [Uloading]="loading"></app-apploader>

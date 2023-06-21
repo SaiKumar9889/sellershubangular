@@ -1,0 +1,19 @@
+ngb-pagination{
+  float: right;
+}
+.title{
+  overflow: hidden !important;
+  width:120px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}
+.sku{
+  overflow: hidden !important;
+  width:90px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}

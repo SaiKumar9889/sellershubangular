@@ -1,0 +1,1773 @@
+<div class="portlet-body">
+  <div class="col-md-12 col-lg-12 text-right m-b-10">
+    <button *ngIf="!isEditTemplate" type="button" (click)="newTemplateOpen()" class="btn btn-primary mr-1">
+      <i class="fa fa-times-circle-o"></i>New Template
+    </button>
+    <button *ngIf="!isEditTemplate" type="button" class="btn btn-danger ng-star-inserted" (click)="closeEbay()">
+      <i class="fa fa-times font-red"></i> Close </button>
+  </div>
+  <div class="portlet-body">
+    <div>
+      <div class="col-md-12">
+        <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>
+                Template Name
+              </th>
+              <th>
+                eBay Site
+              </th>
+              <th>
+                Modified Date
+              </th>
+              <th>
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of templates">
+              <td>
+                {{item.templateName}}
+              </td>
+              <td>
+                <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/UK.png">
+              </td>
+              <td>
+                {{item.modifiedDate | date: short}}
+              </td>
+              <td>
+                <button class="btn btn-sm btn-success btn-circle-new" (click)="editTemplate(item)">Edit</button>
+                <button class="btn btn-sm btn-success btn-circle-new"
+                  (click)="duplicateTemplate(item)">Duplicate</button>
+                <button class="btn btn-sm btn-danger btn-circle-new" (click)="removeTemplate(item)">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="newTemplate || isEditTemplate">
+    <div class="row" id="newTemplatepage">
+      <div class="col-md-12 ">
+        <div class="portlet light">
+          <div class="portlet-title">
+            <div class="col-md-12 col-lg-12 text-right m-b-10">
+              <div class="row">
+                <div class="caption col-md-6 text-left">
+                  <h4>Edit eBay Template</h4>
+                </div>
+                <div class="actions col-md-6 text-right">
+                  <button type="button" (click)="newTemplate= true" (click)="saveTemplate()"
+                    class="btn btn-primary mr-1 btn-success">
+                    <i class="fa fa-times-circle-o"></i>Save
+                  </button>
+                  <button (click)="close()" type="button" class="btn btn-danger ng-star-inserted">
+                    <i class="fa fa-times font-red"></i> Close </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="portlet-body form" #tabsebaylist>
+            <div class="card card-body ">
+              <ul class="nav nav-tabs ">
+                <li class="active lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.general}"
+                    (click)="updateTabs(true, false, false, false, false, false, false, false)" role="tab"
+                    aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> General</span></a>
+                </li>
+                <li class="lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.listing}"
+                    (click)="updateTabs(false, true, false, false, false, false, false, false)" role="tab"
+                    aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> Listing Features</span></a>
+                </li>
+                <li class="lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.shopping}"
+                    (click)="updateTabs(false, false, true, false, false, false, false, false)" role="tab"
+                    aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> Shipping &amp; Payment </span></a>
+                </li>
+                <li class="lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.pricing}"
+                    (click)="updateTabs(false, false, false, true, false, false, false, false)" role="tab"
+                    aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> Pricing Discounts</span></a>
+                </li>
+                <li class="lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.rules}"
+                    (click)="updateTabs(false, false, false, false, true, false, false, false)" role="tab"
+                    aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> Rules</span></a>
+                </li>
+                <li class="lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.productattribute}"
+                    (click)="updateTabs(false, false, false, false, false, true, false, false)" role="tab"
+                    aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> Product Attributes</span></a>
+                </li>
+                <li class="lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.taxdetails}"
+                    (click)="updateTabs(false, false, false, false, false, false, true, false)" role="tab"
+                    aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> Tax Details</span></a>
+                </li>
+                <li class="lics">
+                  <a data-toggle="tab" [ngClass]="{'selected' : tabs.htmldesign}"
+                    (click)="updateTabs(false, false, false, false, false, false, false, true)" role="tab"
+                    (click)="openCKeditor()" aria-selected="false" class="nav-link"><span class="hidden-sm-up">
+                    </span><span class="hidden-xs-down"> HTML Design</span></a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane" [ngClass]="{'active' : tabs.general}" id="editebaytemplatetab_1">
+                  <div class="well">
+                    <form class="form-horizontal" role="form">
+                      <div class="form-body">
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Template Name</label>
+                          <div class="col-md-9">
+                            <input type="text" id="ebaytemplatename" [(ngModel)]="ebayList.templateName" name="name"
+                              class="form-control" placeholder="Enter template name"
+                              [ngModelOptions]="{standalone: true}">
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">eBay Site</label>
+                          <div class="col-md-9">
+                            <select class="form-control" id="ebaysite" name="site" [(ngModel)]="ebayList.site"
+                              [ngModelOptions]="{standalone: true}">
+                              <option value="{{item.country_code}}" *ngFor="let item of allCountries">{{item.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Listing Format</label>
+                          <div class="col-md-9">
+                            <select id="editebaylistingformat" class="form-control" name="format"
+                              [(ngModel)]="ebayList.listingFormat">
+                              <option selected="" value="StoresFixedPrice">Shop Inventory Item(s)</option>
+                              <option value="FixedPriceItem">Fixed Price</option>
+                              <option value="Chinese">Auction</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Listing Duration</label>
+                          <div class="col-md-9">
+                            <select id="editebaylistingduration" class="form-control" name="listindur"
+                              [(ngModel)]="ebayList.listingDuration" [ngModelOptions]="{standalone: true}">
+                              <option value="GTC">GTC</option>
+                              <option value="Days_30">30 Days</option>
+                              <option value="Days_10">10 Days</option>
+                              <option value="Days_7">7 Days</option>
+                              <option value="Days_5">5 Days</option>
+                              <option value="Days_3">3 Days</option>
+                              <option value="Days_1">1 Days</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Default Auction Start Price (For Auction Items
+                            only)</label>
+                          <div class="col-md-9">
+                            <input [(ngModel)]="ebayList.auctionStartPrice" [ngModelOptions]="{standalone: true}"
+                              name="aucionprice" type="text" class="form-control" id="editebaylistingauctionstartprice">
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Listing Quantity</label>
+                          <div class="col-md-3">
+                            <input class="form-control" [(ngModel)]="ebayList.listingQty"
+                              [ngModelOptions]="{standalone: true}" name="quante" type="text" id="editebaylistingqty">
+                          </div>
+                          <div class="col-md-6">
+                            If empty full available quantity will be listed.
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Item Location</label>
+                          <div class="col-md-9">
+                            <select class="form-control" id="editebaylistingtemplatecountrycode"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="ebayList.itemLocationCountry"
+                              name="countrycode"> &gt;
+                              <option *ngFor="let item of countryCodes" [ngValue]="item.country_code">{{item?.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Postcode</label>
+                          <div class="col-md-9">
+                            <input type="text" [(ngModel)]="ebayList.itemLocationPostcode"
+                              [ngModelOptions]="{standalone: true}" name="location" id="ebaypostcode"
+                              class="form-control" placeholder="Enter Postcode">
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Location Display</label>
+                          <div class="col-md-6">
+                            <div class="radio-list">
+                              <label class="radio-inline">
+                                <input type="radio" name="locaitondisplay" id="locaitondisplaycity" value="postcode"
+                                  checked=""> City, State -Based on Postcode </label>&nbsp;&nbsp;
+                              <label class="radio-inline">
+                                <input type="radio" name="locaitondisplay" id="locaitondisplaycustom" value="custom">
+                                Custom (not recommended by eBay)
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <input type="text" [(ngModel)]="ebayList.locationsOne" [ngModelOptions]="{standalone: true}"
+                              id="customlocationtext" name="location" class="form-control" placeholder="Enter location">
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Default eBay Primary Category (Optional)</label>
+                          <div class="col-md-6">
+                            <input type="text" id="primarycategory" [(ngModel)]="ebayList.ebayCategoryId"
+                              [ngModelOptions]="{standalone: true}" name="primarycategory" class="form-control"
+                              placeholder="Primary Category">
+                          </div>
+                          <div class="col-md-3">
+                            <button (click)="categoryIndex = 1;openCategories();" class="btn btn-success">
+                              Categories
+                            </button>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Default eBay Secondary Category (Optional)</label>
+                          <div class="col-md-6">
+                            <input type="text" id="secondarycategory" [(ngModel)]="ebayList.ebayCategoryId2"
+                              [ngModelOptions]="{standalone: true}" name="ebayCategoryId2" value="" class="form-control"
+                              placeholder="Secondary Category">
+                          </div>
+                          <div class="col-md-3">
+                            <button (click)="categoryIndex = 2;openCategories();" class="btn btn-success">
+                              Categories
+                            </button>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Default Item Specifics (Optional)</label>
+                          <div class="col-md-9">
+                            <a class="btn btn-success" href="javascript:void(0)" (click)="openItemSpecs()">Item
+                              Specifics</a>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Default eBay Store Category One (Optional)</label>
+                          <div class="col-md-6">
+                            <input type="text" id="templateebaystorecategoryid123"
+                              [(ngModel)]="ebayList.ebayStoreCategoryId" name="ebayStoreCategoryName"
+                              [ngModelOptions]="{standalone: true}" class="form-control"
+                              placeholder="eBay Store Category One">
+                          </div>
+                          <div class="col-md-3">
+                            <a href="javascript:void(0)" class="btn btn-info"
+                              (click)="categoryIndex = 3;openCategories();">
+                              Store Category One
+                            </a>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">Default eBay Store Category Two (Optional) </label>
+                          <div class="col-md-6">
+                            <input type="text" id="templateebaystorecategory2id123"
+                              [(ngModel)]="ebayList.ebayStoreCategory2Id" name="ebayStoreCategoryTwo"
+                              [ngModelOptions]="{standalone: true}" class="form-control"
+                              placeholder="eBay Store Category Two">
+                          </div>
+                          <div class="col-md-3">
+                            <a href="javascript:void(0)" class="btn btn-info"
+                              (click)="categoryIndex = 4;openCategories();">
+                              Store Category Two
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="portlet light">
+                        <div class="portlet-title">
+                          <div class="caption ml-2">
+                            <span class="caption-subject font-green-sharp bold uppercase">Discount Pricing Information
+                              to Buyers</span>
+                          </div>
+                          <div class="actions">
+                          </div>
+                        </div>
+                        <div class="portlet-body form">
+                          <div class="well">
+                            <p>The Strikethrough Pricing and Minimum Advertised Price display treatments are available
+                              to only those sellers who have qualified to participate in the Discount Pricing program by
+                              eBay. If you are interested in becoming a member of this program, please contact your eBay
+                              account manager or your eBay Customer Service representative.
+                            </p>
+                            <form class="form-horizontal" role="form">
+                              <div class="form-body">
+                                <div class="form-group has-success">
+                                  <label class="col-md-3 control-label">&nbsp;</label>
+                                  <div class="col-md-9">
+                                    <div class="checkbox-list">
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" name="displaystrikethroughprice"
+                                          [(ngModel)]="ebayList.displayStrikeThroughPricing"
+                                          [ngModelOptions]="{standalone: true}"> Display Strikethrough
+                                        Pricing </label>&nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" id="soldonebaybefore" [(ngModel)]="ebayList.soldOnEbay"
+                                          [ngModelOptions]="{standalone: true}" name="soldOnEbay"> Sold on eBay Before
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" [ngClass]="{'active' : tabs.listing}" id="editebaytemplatetab_2">
+                  <div class="well">
+                    <p>The listing upgrade options is applicable based on the eBay site you use and your seller status
+                      (casual, Top-rated seller, or PowerSeller) on that site</p>
+                    <form class="form-horizontal" role="form">
+                      <div class="form-body">
+                        <div class="form-group has-success row">
+                          <label class="col-md-3 control-label">&nbsp;</label>
+                          <div class="col-md-9">
+                            <div class="checkbox-list">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="galleryplus" [(ngModel)]="ebayList.galleryPlus"
+                                  [ngModelOptions]="{standalone: true}" name="galleryplus"> Gallery Plus
+                              </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="valuepack" [(ngModel)]="ebayList.valuepack" name="valuepack"
+                                  [ngModelOptions]="{standalone: true}">
+                                Value Pack </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="featuredfirst" [(ngModel)]="ebayList.featureFirst"
+                                  [ngModelOptions]="{standalone: true}" name="feauteredfirst"> Featured First
+                              </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="intsitevisibility"
+                                  [(ngModel)]="ebayList.internationalSiteVisibility"
+                                  [ngModelOptions]="{standalone: true}" name="galleryplusTests"> International Site
+                                Visibility </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="picturepack" [(ngModel)]="ebayList.picturePack"
+                                  [ngModelOptions]="{standalone: true}" name="picture"> Picture Pack
+                              </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="externalproduct" name="external"> Include external product id
+                                (UPC, EAN, ISBN) in eBay listing </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="subtitle" [(ngModel)]="ebayList.subtitle" name="Subtitle"
+                                  [ngModelOptions]="{standalone: true}">
+                                Subtitle </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="privatelisting" [(ngModel)]="ebayList.privateListing"
+                                  [ngModelOptions]="{standalone: true}" name="Privatelistnig"> Private Listing </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="supersize" [(ngModel)]="ebayList.supersize"
+                                  [ngModelOptions]="{standalone: true}" name="supersize"> Supersize </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="freeshipping" name="freeshipping"> Free Shipping Applies
+                              </label>
+                              &nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="pictureservice" value="true"> Use eBay Picture Service for
+                                Images
+                              </label>
+                              &nbsp;&nbsp;
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-3 control-label">&nbsp;</label>
+                          <div class="col-md-9">
+                            <div class="checkbox-list">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="bestofferenable" [(ngModel)]="ebayList.bestOfferEnabled"
+                                  [ngModelOptions]="{standalone: true}" name="bestofer" value="true"> Best Offer Enable
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-3 control-label">Minimum Best Offer Amount (Rule)</label>
+                          <div class="col-md-4">
+                            <input type="text" id="bestOfferAmountRule" class="form-control"
+                              [(ngModel)]="ebayList.ebaySettingPostageOption.bestOfferAmount"
+                              [ngModelOptions]="{standalone: true}">
+                          </div>
+                          <div class="col-md-5"
+                            [innerHTML]="'<p>e.g  <strong>${selling_price!} - 10 </strong></p><p></p><p>This make the best offer minimum amount by selling price less 10 Tags available are  <strong>$ ${selling_price!}</strong></p>'">
+                            <!--  -->
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-3 control-label">Automatically Accept Best offer Minimum Value</label>
+                          <div class="col-md-4">
+                            <input type="text" id="automaticbestOfferAmountRule" class="form-control"
+                              [(ngModel)]="ebayList.ebaySettingPostageOption.automaticBestOfferAmountRule"
+                              [ngModelOptions]="{standalone: true}">
+                          </div>
+                          <div class="col-md-5" [innerHTML]="'<p>e.g  <strong>${selling_price!} - 10 </strong></p><p>
+                            </p><p>
+                                This make the automatic best offer minimum amount by selling price less 10
+                                Tags available are  <strong>$ ${selling_price!}</strong>
+                            </p>'">
+                            <!--  -->
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane" [ngClass]="{'active' : tabs.shopping}" id="editebaytemplatetab_3">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="portlet light">
+                        <div class="portlet-title">
+                          <div class="caption ml-2">
+                            <span class="caption-subject font-green-sharp bold uppercase">Enter Shipping Details</span>
+                          </div>
+                          <div class="actions">
+                          </div>
+                        </div>
+                        <div class="portlet-body form">
+                          <div class="well">
+                            <form class="form-horizontal" role="form">
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Shipping Policy Profile</label>
+                                  <div class="col-md-7">
+                                    <select id="shippingpolicyid" class="form-control mb-2"
+                                      [(ngModel)]="ebayList.ebaySettingPostageOption.shippingPolicyId"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <option value="-1">Please select</option>
+                                      <option *ngFor="let item of shippingProfiles" [ngValue]="item.id">{{item.name}}
+                                      </option>
+                                    </select>
+                                    <span class="help-block">(If opted into eBay Business Policy)</span>
+                                  </div>
+                                  <div class="col-md-2">
+                                    <a class="btn btn-sm purple-plum btn-success" (click)="downloadPolices()">Download
+                                      Latest
+                                      Policies</a>
+                                  </div>
+                                </div>
+                                <div class="form-group has-success row">
+                                  <label class="col-md-3 control-label">Domestic Shipping Options</label>
+                                  <div class="col-md-9">
+                                    <!-- <select class="form-control" name="ishippginid" id="domesticshippingoptionid" [(ngModel)]="ebayList.shippingOptions">
+                                      <option *ngFor="let item of shippingOptions" [ngValue]="item">{{item.name}}</option>
+</select> -->
+                                    <select class="form-control" id="domesticshippingoptionid" name="doemtisgsdgs"
+                                      [(ngModel)]="ebayList.ebaySettingPostageOption.domesticOption"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <ng-container *ngIf="ebayList.site == 'UK'">
+                                        <option value="Flat">Flat - Same Cost to all buyers</option>
+                                        <option value="Local">No Postage - Collection in Person Only</option>
+                                        <option value="Courier">Frieght - Large Items over 150lbs</option>
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'US'">
+                                        <option value="Flat">Flat - Same Cost to all buyers</option>
+                                        <option value="Local">No Postage - Collection in Person Only</option>
+                                        <option value="Courier">Frieght - Large Items over 150lbs</option>
+                                        <option value="Calculated">Calculated - Cost varies by buyer location</option>
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'CA' || ebayList.site == 'CANADA'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'FR' || ebayList.site == 'FRANCE'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'DE' || ebayList.site == 'GERMANY'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'IT' || ebayList.site == 'ITALY'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'ES' || ebayList.site == 'SPAIN'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'IN' || ebayList.site == 'INDIA'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'SG' || ebayList.site == 'SINGAPORE'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'MY' || ebayList.site == 'MALAYSIA'">
+                                      </ng-container>
+                                      <ng-container *ngIf="ebayList.site == 'AUS' || ebayList.site == 'AUSTRALIA'">
+                                      </ng-container>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success row">
+                                  <label class="col-md-3 control-label">Domestic Shipping Services</label>
+                                  <div class="col-md-9">
+                                    <table class="table-striped table-bordered">
+                                      <thead style="background: #d9e0e0 !important;">
+                                        <tr>
+                                          <th>
+                                            Shipping Options
+                                          </th>
+                                          <th>
+                                            Shipping Cost
+                                          </th>
+                                          <th>
+                                            Shipping Cost (For each Additional Item)
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="domesticshippingoptionone"
+                                              name="hippassssdg"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceOne"
+                                              [ngModelOptions]="{standalone: true}">
+                                              {{ebayList.ebaySettingPostageOption.domesticServiceOne}}
+                                              <option value="-1">Please Select a domestic shipping option</option>
+                                              <option *ngFor="let item of shippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text" id="domesticshippingoptiononecost" name="domestadcost"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceOneValue"
+                                              [ngModelOptions]="{standalone: true}" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text" id="domesticshippingoptiononeadditionalcost"
+                                              name="additionalCostTest"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceOneValueAdditional"
+                                              [ngModelOptions]="{standalone: true}" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="domesticshippingoptionone" name="tssss"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceTwo"
+                                              [ngModelOptions]="{standalone: true}">
+                                              {{ebayListSetting.domesticServiceTwo}}
+                                              <option value="-1">Please Select a domestic shipping option</option>
+                                              <option *ngFor="let item of shippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text" id="domesticshippingoptiononecost" name="domestadcost2"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceTwoValue"
+                                              [ngModelOptions]="{standalone: true}" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text" id="domesticshippingoptiononeadditionalcost"
+                                              name="additionalCost333"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceTwoValueAdditional"
+                                              [ngModelOptions]="{standalone: true}" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="domesticshippingoptionone" name="hippasdg"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceThree"
+                                              [ngModelOptions]="{standalone: true}">
+                                              {{ebayListSetting.domesticServiceThree}}
+                                              <option value="-1">Please Select a domestic shipping option</option>
+                                              <option *ngFor="let item of shippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text" id="domesticshippingoptiononecost" name="domestadcost3"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceThreeValue"
+                                              [ngModelOptions]="{standalone: true}" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text" id="domesticshippingoptiononeadditionalcost"
+                                              name="additionalCosssst"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticServiceThreeValueAdditional"
+                                              [ngModelOptions]="{standalone: true}" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success row">
+                                  <label class="col-md-3 control-label">International Shipping Options</label>
+                                  <div class="col-md-9">
+                                    <select class="form-control" id="internationalOption"
+                                      [(ngModel)]="ebayList.ebaySettingPostageOption.internationalOption"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <option selected="" value="Flat">Flat - Same Cost to all buyers</option>
+                                      <option value="Calculated">Calculated - Cost varies by buyer location</option>
+                                      <option value="NoInternationalShipping">No International Shipping</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success row">
+                                  <label class="col-md-3 control-label">International Shipping Services</label>
+                                  <div class="col-md-9">
+                                    <table class="table-striped table-bordered">
+                                      <thead style="background: #d9e0e0 !important;">
+                                        <tr>
+                                          <th>
+                                            Shipping Options
+                                          </th>
+                                          <th>
+                                            Shipping Cost
+                                          </th>
+                                          <th>
+                                            Shipping Cost (For each Additional Item)
+                                          </th>
+                                          <th>
+                                            Ship To Locations
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="internationalshippingoptionone"
+                                              name="shippingoption1"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceOne"
+                                              [ngModelOptions]="{standalone: true}">
+                                              <option value="-1">Please Select an international shipping option</option>
+                                              <option *ngFor="let item of intShippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceOneValue"
+                                              [ngModelOptions]="{standalone: true}" name="internationalServiceOneValue3"
+                                              id="internationalshippingoptiononecost" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceOneValueAdditional"
+                                              [ngModelOptions]="{standalone: true}"
+                                              name="internationalServiceOneValueAdditional1"
+                                              id="internationalshippingoptiononeadditionalcost" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                          <td>
+                                            <a class="btn btn-success btn-sm" (click)="shiptoLocation()">Ship To
+                                              Locations</a>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="internationalshippingoptionone"
+                                              name="shippingoption2"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceTwo"
+                                              [ngModelOptions]="{standalone: true}">
+                                              <option value="-1">Please Select an international shipping option</option>
+                                              <option *ngFor="let item of intShippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceTwoValue"
+                                              [ngModelOptions]="{standalone: true}"
+                                              name="internationalServiceOneValue444"
+                                              id="internationalshippingoptiononecost" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceTwoValueAdditional"
+                                              [ngModelOptions]="{standalone: true}"
+                                              name="internationalServiceOneValueAdditional2"
+                                              id="internationalshippingoptiononeadditionalcost" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                          <td>
+                                            <a class="btn btn-success btn-sm" (click)="shiptoLocation()">Ship To
+                                              Locations</a>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="internationalshippingoptionone"
+                                              name="shippingoption3"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceThree"
+                                              [ngModelOptions]="{standalone: true}">
+                                              <option value="-1">Please Select an international shipping option</option>
+                                              <option *ngFor="let item of intShippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceThreeValue"
+                                              [ngModelOptions]="{standalone: true}"
+                                              name="internationalServiceOneValue55"
+                                              id="internationalshippingoptiononecost" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceThreeValueAdditional"
+                                              [ngModelOptions]="{standalone: true}"
+                                              name="internationalServiceOneValueAdditional4"
+                                              id="internationalshippingoptiononeadditionalcost" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                          <td>
+                                            <a class="btn btn-success btn-sm" (click)="shiptoLocation()">Ship To
+                                              Locations</a>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="internationalshippingoptionone"
+                                              name="shippingoption5"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceFour"
+                                              [ngModelOptions]="{standalone: true}">
+                                              <option value="-1">Please Select an international shipping option</option>
+                                              <option *ngFor="let item of intShippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceFourValue"
+                                              [ngModelOptions]="{standalone: true}" name="internationalServiceOneValue6"
+                                              id="internationalshippingoptiononecost" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceFourValueAdditional"
+                                              [ngModelOptions]="{standalone: true}"
+                                              name="internationalServiceOneValueAdditional5"
+                                              id="internationalshippingoptiononeadditionalcost" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                          <td>
+                                            <a class="btn btn-success btn-sm" (click)="shiptoLocation()">Ship To
+                                              Locations</a>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="internationalshippingoptionone"
+                                              name="shippingoption7"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceFive"
+                                              [ngModelOptions]="{standalone: true}">
+                                              <option value="-1">Please Select an international shipping option</option>
+                                              <option *ngFor="let item of intShippingOptions" [ngValue]="item.code">
+                                                {{item.name}}</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceFiveValue"
+                                              [ngModelOptions]="{standalone: true}" name="internationalServiceOneValue2"
+                                              id="internationalshippingoptiononecost" class="form-control"
+                                              placeholder="Shipping Cost">
+                                          </td>
+                                          <td>
+                                            <input type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalServiceFiveValueAdditional"
+                                              [ngModelOptions]="{standalone: true}"
+                                              name="internationalServiceOneValueAdditional77"
+                                              id="internationalshippingoptiononeadditionalcost" class="form-control"
+                                              placeholder="Shipping Cost for additional items">
+                                          </td>
+                                          <td>
+                                            <a class="btn btn-success btn-sm" (click)="shiptoLocation()">Ship To
+                                              Locations</a>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Domestic Handling Time</label>
+                                  <div class="col-md-9">
+                                    <select class="form-control" id="domestichHandlingTime"
+                                      [(ngModel)]="ebayList.ebaySettingPostageOption.domesticHandlingTime"
+                                      [ngModelOptions]="{standalone: true}" name="domestichandligtime">
+                                      <option value="1">1 Working Days</option>
+                                      <option value="2">2 Working Days</option>
+                                      <option value="3">3 Working Days</option>
+                                      <option value="4">4 Working Days</option>
+                                      <option value="5">5 Working Days</option>
+                                      <option value="10">10 Working Days</option>
+                                      <option value="15">15 Working Days</option>
+                                      <option value="20">20 Working Days</option>
+                                      <option value="25">25 Working Days</option>
+                                      <option value="30">30 Working Days</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Domestic Insurance</label>
+                                  <div class="col-md-9">
+                                    <table>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="domesticinsuranceoptionid"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticInsurance"
+                                              name="domesticInsurance" [ngModelOptions]="{standalone: true}">
+                                              <option selected="selected" value="NotOffered">Insurance not offered
+                                              </option>
+                                              <option value="Optional">Insurance optional</option>
+                                              <option value="IncludedInShippingHandling">Included In Shipping Handling
+                                              </option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input class="form-control" type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.domesticInsuranceValue"
+                                              name="domesticInsurancevalue" [ngModelOptions]="{standalone: true}"
+                                              id="domesticInsuranceValue">
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">International Insurance</label>
+                                  <div class="col-md-9">
+                                    <table>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <select class="form-control" id="internationalinsuranceoptionid"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalInsurance"
+                                              [ngModelOptions]="{standalone: true}" name="insuranceInternational">
+                                              <option selected="selected" value="Insurnace_Not_Offered">Insurance not
+                                                Offered</option>
+                                              <option value="Insurnace_Required">Insurance required</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <input class="form-control" type="text"
+                                              [(ngModel)]="ebayList.ebaySettingPostageOption.internationalInsuranceValue"
+                                              [ngModelOptions]="{standalone: true}" name="insuranceInternationalValue"
+                                              id="internationalInsuranceValue">
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Enable Global Shipping</label>
+                                  <div class="col-md-9">
+                                    <input type="checkbox" id="globalshippingid43"
+                                      [(ngModel)]="ebayList.ebaySettingPostageOption.globalShipping"
+                                      [ngModelOptions]="{standalone: true}">
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="portlet light">
+                        <div class="portlet-title">
+                          <div class="caption ml-2">
+                            <span class="caption-subject font-green-sharp bold uppercase">Enter Payment Details</span>
+                          </div>
+                          <div class="actions">
+                          </div>
+                        </div>
+                        <div class="portlet-body form">
+                          <div class="well">
+                            <form class="form-horizontal" role="form">
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Payment Policy Profile</label>
+                                  <div class="col-md-9">
+                                    <select id="paymentpolicyid" class="form-control mb-2"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.paymentPolicyId"
+                                      [ngModelOptions]="{standalone: true}" name="policyid">
+                                      <option value="-1">Please select</option>
+                                      <option *ngFor="let item of paymentProfiles" [ngValue]="item.id"> {{item.name}}
+                                      </option>
+                                    </select>
+                                    <span class="help-block">(If opted into eBay Business Policy)</span>
+                                  </div>
+                                </div>
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">&nbsp;</label>
+                                  <div class="col-md-9">
+                                    <div class="checkbox-list">
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" id="acceptpaypal" name="paypalchecked"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.paypalChecked"
+                                          [ngModelOptions]="{standalone: true}"> Accept Paypal </label>&nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" name="imeadplicy"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.immediatePayment"
+                                          [ngModelOptions]="{standalone: true}" id="immediatepaymentrequired"> Immediate
+                                        Payment is required when using paypal </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Paypal Email Address</label>
+                                  <div class="col-md-9">
+                                    <input [(ngModel)]="ebayList.ebaySettingPaymentOption.paypalEmail"
+                                      [ngModelOptions]="{standalone: true}" name="paypalEmail" type="text"
+                                      class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">&nbsp;</label>
+                                  <div class="col-md-9">
+                                    <div class="checkbox-list">
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.bankDeposit"
+                                          [ngModelOptions]="{standalone: true}" name="bankDeposit"
+                                          id="ebaypaymentoptionbankdeposit" value="true"> Bank
+                                        Deposit </label>&nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.moneyOrder" name="moneyOrder"
+                                          [ngModelOptions]="{standalone: true}" id="ebaypaymentoptionmoneyorder"
+                                          value="true"> Money
+                                        Order / Bank Cheque </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" [(ngModel)]="ebayList.ebaySettingPaymentOption.cheque"
+                                          [ngModelOptions]="{standalone: true}" id="ebaypaymentoptionchequeid"
+                                          value="true"> Personal
+                                        Cheque </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" [(ngModel)]="ebayList.ebaySettingPaymentOption.COD"
+                                          name="paypalemail" [ngModelOptions]="{standalone: true}" id="cashondelivery">
+                                        Cash On Delivery
+                                      </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" id="ebaypaymentoptionotherid" value="true"
+                                          [ngModelOptions]="{standalone: true}"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.other"> Other / See
+                                        Item Description </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" value="true"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.creditcard"
+                                          [ngModelOptions]="{standalone: true}"
+                                          id="ebaypaymentoptionmerchantccvisamastercardid">
+                                        Merchant Credit Card:Visa/MasterCard
+                                      </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" value="true" id="ebaypaymentoptionpaymateid"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.escrow"
+                                          [ngModelOptions]="{standalone: true}">
+                                        Escrow
+                                      </label>&nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" value="true" id="ebaypaymentoptionpaymateid"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.payMate"
+                                          [ngModelOptions]="{standalone: true}">
+                                        Paymate
+                                      </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" value="true" id="ebaypaymentoptionpropayid"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.proPay"
+                                          [ngModelOptions]="{standalone: true}">
+                                        ProPay
+                                      </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox" [ngModelOptions]="{standalone: true}"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.moneyBookers"
+                                          name="moneybookers" id="ebaypaymentoptionmoneybookersid">
+                                        Moneybookers
+                                      </label>
+                                      &nbsp;&nbsp;
+                                      <label class="checkbox-inline">
+                                        <input type="checkbox"
+                                          [(ngModel)]="ebayList.ebaySettingPaymentOption.payonpickup" name="payonpickup"
+                                          [ngModelOptions]="{standalone: true}" value="true"
+                                          id="ebaypaymentoptionpayonpickupid">
+                                        Pay on Pickup
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="portlet light">
+                        <div class="portlet-title">
+                          <div class="caption ml-2">
+                            <span class="caption-subject font-green-sharp bold uppercase">Return Policy Details</span>
+                          </div>
+                          <div class="actions">
+                          </div>
+                        </div>
+                        <div class="portlet-body form">
+                          <div class="well">
+                            <form class="form-horizontal" role="form">
+                              <div class="form-group has-success  row">
+                                <label class="col-md-3 control-label ml-2">Return Policy Profile</label>
+                                <div class="col-md-9">
+                                  <select id="returnpolicyid" class="form-control  mb-2"
+                                    [(ngModel)]="ebayList.ebaySettingPostageOption.returnPolicyId"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <option value="-1">Please select</option>
+                                    <option *ngFor="let item of returnProfiles" [ngValue]="item.id">{{item.name}}
+                                    </option>
+                                  </select>
+                                  <span class="help-block">(If opted into eBay Business Policy)</span>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Return Policy</label>
+                                  <div class="col-md-9">
+                                    <input type="radio" name="returnaccepted" value="true"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.returnAccepted"
+                                      [ngModelOptions]="{standalone: true}">&nbsp;
+                                    Returns Accepted
+                                    &nbsp;&nbsp;
+                                    <input type="radio" checked="" name="returnaccepted" value="false">
+                                    &nbsp;
+                                    Returns Not Accepted
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Items must be returned within</label>
+                                  <div class="col-md-9">
+                                    <select class="form-control" id="returnDurationSelected"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.returnDurationSelected"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <option selected="selected" value="Days_14">14 Days</option>
+                                      <option value="Days_30">30 Days</option>
+                                      <option value="Days_60">60 Days</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Refund will be given as</label>
+                                  <div class="col-md-9">
+                                    <select class="form-control" id="refundMethodSelected"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.refundMethodSelected"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <option selected="selected" value="MoneyBack" id="MoneyBack">Money Back</option>
+                                      <option value="MoneyBackOrExchange" id="MoneyBackOrExchange ">MoneyBack Or
+                                        Exchange </option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Return Shipping will be paid by</label>
+                                  <div class="col-md-9">
+                                    <select class="form-control" id="returnPaidBySelected"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.returnPaidBySelected"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <option selected="selected" value="Buyer">Buyer</option>
+                                      <option value="Seller">Seller</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Restocking Fee Value</label>
+                                  <div class="col-md-7">
+                                    <input type="text" class="form-control"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.restockingFee" id="restockingfeeid"
+                                      [ngModelOptions]="{standalone: true}">
+                                  </div>
+                                  <div class="col-md-2">
+                                    Only for eBay US
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Restocking Fee Option</label>
+                                  <div class="col-md-7">
+                                    <select class="form-control" id="restockingfeeoption"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.restockingFeeOption"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <option value="-1">Please select</option>
+                                      <option value="NoRestockingFee">No RestockingFee</option>
+                                      <option value="Percent_10">10%</option>
+                                      <option value="Percent_15">15%</option>
+                                      <option value="Percent_20">20%</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-2">
+                                    Only for eBay US
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group has-success  row">
+                                  <label class="col-md-3 control-label">Return Policy Text</label>
+                                  <div class="col-md-9">
+                                    <textarea class="form-control" rows="4" id="returnpolicytextid"
+                                      [(ngModel)]="ebayList.ebaySettingPaymentOption.returnPolicyText"
+                                      [ngModelOptions]="{standalone: true}"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="portlet light">
+                        <div class="portlet-title">
+                          <div class="caption ml-2">
+                            <span class="caption-subject font-green-sharp bold uppercase">Item Weight/Dimension Details
+                              (For Calculated Shipping Only)</span>
+                          </div>
+                          <div class="actions">
+                          </div>
+                        </div>
+                        <div class="portlet-body form">
+                          <div class="well">
+                            <div class="row-fluid">
+                              <div class="span12">
+                                <table class="table-striped table-bordered">
+                                  <tbody>
+                                    <tr>
+                                      <th style="background: #d9e0e0 !important;">
+                                        Weight (lbs)
+                                      </th>
+                                      <th style="background: #d9e0e0 !important;">
+                                        Weight (Oz)
+                                      </th>
+                                      <th style="background: #d9e0e0 !important;">
+                                        Handling Cost
+                                      </th>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <input class="form-control" type="text" id="weightLbs"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.weightLbs"
+                                          [ngModelOptions]="{standalone: true}">
+                                      </td>
+                                      <td>
+                                        <input class="form-control" type="text" id="weightOz"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.weightOz"
+                                          [ngModelOptions]="{standalone: true}">
+                                      </td>
+                                      <td>
+                                        <input class="form-control" type="text" id="weightHandlingCost"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.weightHandlingCost"
+                                          [ngModelOptions]="{standalone: true}">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th style="background: #d9e0e0 !important;">
+                                        Depth(Inches)
+                                      </th>
+                                      <th style="background: #d9e0e0 !important;">
+                                        Width (Inches)
+                                      </th>
+                                      <th style="background: #d9e0e0 !important;">
+                                        Length (Inches)
+                                      </th>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <input class="form-control" id="depth" value=""
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.depth"
+                                          [ngModelOptions]="{standalone: true}">
+                                      </td>
+                                      <td>
+                                        <input class="form-control" id="width" value=""
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.width"
+                                          [ngModelOptions]="{standalone: true}">
+                                      </td>
+                                      <td>
+                                        <input class="form-control" id="length" value=""
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.length"
+                                          [ngModelOptions]="{standalone: true}">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        Package Type
+                                      </td>
+                                      <td>
+                                        <select class="form-control" id="itemdimensionpackagetypeid"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.packageType"
+                                          [ngModelOptions]="{standalone: true}">
+                                          <option selected="" value="Letter">Letter</option>
+                                          <option value="LargeEnvelope">Large Envelope</option>
+                                          <option value="PackageThickEnvelope">Package</option>
+                                        </select>
+                                      </td>
+                                      <td>
+                                        <input type="checkbox" id="iregularPackage" class="ml-5"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.iregularPackage"
+                                          [ngModelOptions]="{standalone: true}">
+                                        <br>
+                                        <span class="help-block">Iregular or Unsual Package
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="portlet light">
+                        <div class="portlet-title">
+                          <div class="caption ml-2">
+                            <span class="caption-subject font-green-sharp bold uppercase">Exclude Shipping
+                              Locations</span>
+                          </div>
+                          <div class="actions">
+                          </div>
+                        </div>
+                        <div class="portlet-body form">
+                          <div class="well">
+                            <div class="row-fluid">
+                              <div class="span12">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" [ngClass]="{'active' : tabs.htmldesign}" id="editebaytemplatetab_4">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <div class="portlet light">
+                        <div class="col-md-12 col-lg-12 text-right m-b-10">
+                          <div class="row">
+                            <div class="caption col-md-6 text-left">
+                              <span class="caption-subject font-green-sharp bold uppercase ml-2">HTML Template
+                                Text</span>
+                            </div>
+                            <div class="actions col-md-6 text-right">
+                              <button class="btn btn-info rounded-pill mr-2 btn-sm" (click)="openHtmlModal()">Edit HTML
+                                Source</button>
+                              <button class="btn btn-success rounded-pill mr-2 btn-sm" (click)="saveHtmlDesign()">Save
+                                HTML Template</button>
+                              <button href="javascript:void(0)" class="btn purple-plum rounded-pill mr-2 btn-sm">Select
+                                a
+                                Theme</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="portlet-body">
+                          <!-- <form class="form-horizontal" role="form">
+                          </form> -->
+                          <ckeditor #ckeditorObj name="editor" [data]="ebayList.htmltext" [config]="config"></ckeditor>
+                          <!-- <div class="container">
+                            <button (click)="exportHtml()">Export</button>
+                            <email-editor
+                              (loaded)="editorLoaded($event)"
+                              (ready)="editorReady($event)"
+                            ></email-editor>
+                          </div> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" [ngClass]="{'active' : tabs.rules}" id="editebaytemplatetab_5">
+                  <div class="well">
+                    <form class="form-horizontal" role="form">
+                      <div class="form-group has-success  row">
+                        <label class="col-md-3 control-label">Post Listing Rules</label>
+                        <div class="col-md-6">
+                          <select class="form-control" name="editebaylistingtemplatepostlistingrules"
+                            [(ngModel)]="ebayList.listingRule" [ngModelOptions]="{standalone: true}"> &gt;
+                            <option value="-1">Please select</option>
+                            <option *ngFor="let item of postlistingrules">{{item?.name}}</option>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
+                          Define rules to execute when a listing ends
+                        </div>
+                      </div>
+                      <div class="form-group has-success  row">
+                        <label class="col-md-3 control-label">Pricing Rules</label>
+                        <div class="col-md-6">
+                          <input class="form-control" [(ngModel)]="ebayList.pricingrule"
+                            [ngModelOptions]="{standalone: true}" name="pricingrule" type="text"
+                            id="editebaylistingtemplatepricingrule" value="">
+                        </div>
+                        <div class="col-md-3" [innerHTML]="' <p>e.g  <strong>${cost_price!}*1.6 + 1 </strong></p><p>
+                                        </p><p>
+                                        This make the selling price by multiplying cost price by 1.6 and add 1<br>
+                                        Tags available are  <strong>${cost_price!} and ${selling_price!}</strong>
+                                        </p>'">
+                        </div>
+                      </div>
+                      <div class="form-group has-success  row">
+                        <label class="col-md-3 control-label">Round the value to</label>
+                        <div class="col-md-6">
+                          <input class="form-control" [(ngModel)]="ebayList.pricingruleroundvalue"
+                            [ngModelOptions]="{standalone: true}" name="valesss" type="text" placeholder="99"
+                            id="editebaylistingtemplatepricingruleroundvalue">
+                        </div>
+                        <div class="col-md-3">
+                          <p>This allows you to round the calculated selling price' decimal value into pre-defined
+                            value. e.g if you enter 99 and selling price is 59.87 this will make the selling price to
+                            59.99</p>
+                          <p>
+                          </p>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane" [ngClass]="{'active' : tabs.taxdetails}" id="editebaytemplatetab_6">
+                  <div class="well">
+                    <form class="form-horizontal" role="form">
+                      <div class="form-body">
+                        <div class="form-group has-success  row">
+                          <label class="col-md-3 control-label">&nbsp;</label>
+                          <div class="col-md-9">
+                            <div class="checkbox-list">
+                              <label class="checkbox-inline">
+                                <div id="uniform-inlineCheckbox21">
+                                  <span>
+                                    <input [(ngModel)]="ebayList.businessSeller" [ngModelOptions]="{standalone: true}"
+                                      name="businessrule" type="checkbox" id="businessseller" value="true">
+                                  </span>
+                                </div> Business Seller
+                              </label>&nbsp;&nbsp;
+                              <label class="checkbox-inline">
+                                <div id="uniform-inlineCheckbox22">
+                                  <span>
+                                    <input type="checkbox" [(ngModel)]="ebayList.restrictedToBusiness"
+                                      [ngModelOptions]="{standalone: true}" name="businessrule"
+                                      id="restrictedtobusinesscustomers" value="true">
+                                  </span>
+                                </div> Restricted to Business Customers
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-3 control-label">Tax Percent (e.g enter 17.5 for 17.5%)</label>
+                          <div class="col-md-6">
+                            <input type="text" value="" id="taxpercent" class="form-control"
+                              placeholder="Enter Tax amount e.g name">
+                          </div>
+                          <div class="col-md-3">&nbsp;
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="tab-pane" [ngClass]="{'active' : tabs.pricing}" id="editebaytemplatetab_7">
+                  <div>
+                    <div class="row">
+                      <div class="col-md-12 ">
+                        <div class="portlet light">
+                          <div class="portlet-title">
+                            <div class="col-md-12 col-lg-12 text-right m-b-10">
+                              <div class="row">
+                                <div class="caption col-md-6 text-left">
+                                  <span class="ml-2 caption-subject font-green-sharp bold uppercase">Shipping Discount
+                                    Profiles</span>
+                                </div>
+                                <div class="actions col-md-6 text-right">
+                                  <a href="javascript:void(0)" class="btn btn-info btn-sm  rounded-pill  mr-2">Download
+                                    Latest
+                                    Profiles from eBay</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="shippingdiscountprofiledivid" class="portlet-body form">
+                            <div class="row-fluid">
+                              <div class="span12">
+                                <form class="form-horizontal" role="form">
+                                  <div class="form-body">
+                                    <div class="form-group has-success row">
+                                      <label class="col-md-3 control-label"> Domestic Shipping Profile </label>
+                                      <div class="col-md-6">
+                                        <select id="domesticshippingdiscountoptionid" class="form-control">
+                                          <option id="-1">Please select</option>
+                                        </select>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <input value="" class="form-control" type="text"
+                                          id="domesticshippingdiscountoptioninputid"
+                                          [ngModelOptions]="{standalone: true}"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.domesticShippingDiscountProfileId">
+                                      </div>
+                                    </div>
+                                    <div class="form-group has-success row">
+                                      <label class="col-md-3 control-label">International Shipping Proflie</label>
+                                      <div class="col-md-6">
+                                        <select id="internationalshippingdiscountoptionid" class="form-control"
+                                          [ngModelOptions]="{standalone: true}"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.internationalShippingDiscountProfileId">
+                                          <option id="-1">Please select</option>
+                                        </select>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <input value="" class="form-control" type="text"
+                                          id="internationalshippingdiscountoptioninputid">
+                                      </div>
+                                    </div>
+                                    <div class="form-group has-success row">
+                                      <label class="col-md-3 control-label">Promotional Discount Profile</label>
+                                      <div class="col-md-6">
+                                        <select id="shippingprofilepromotionalDiscountProfile" class="form-control"
+                                          [ngModelOptions]="{standalone: true}"
+                                          [(ngModel)]="ebayList.ebaySettingPostageOption.promotionalDiscountProfile">
+                                          <option value="-1">Please select</option>
+                                        </select>
+                                      </div>
+                                      <div class="col-md-3">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 ">
+                        <div class="portlet light">
+                          <div class="portlet-title">
+                            <div class="col-md-12 col-lg-12 text-right m-b-10">
+                              <div class="row">
+                                <div class="caption col-md-6 text-left ">
+                                  <span class="ml-2 caption-subject font-green-sharp bold uppercase">Promotional
+                                    Sales</span>
+                                </div>
+                                <div class="actions col-md-6 text-right">
+                                  <a class="btn btn-sm btn-info  rounded-pill mr-2" href="javascript:void(0)">Download
+                                    Promotional Sales
+                                    From
+                                    eBay</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="ebaypromotionalsalesid" class="portlet-body form">
+                            <div class="table-scrollable">
+                              <table class="table table-bordered table-hover">
+                                <thead style="background: #d9e0e0 !important;">
+                                  <tr>
+                                    <th>
+                                      Promotional Sale Name
+                                    </th>
+                                    <th>
+                                      eBay Promotional Id
+                                    </th>
+                                    <th>
+                                      Select
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" [ngClass]="{'active' : tabs.productattribute}" id="editebaytemplatetab_8">
+                  <div class="well">
+                    <p>Please selct a product attribute set. You can assign product attributes/item specifics to items
+                      listed via this listing template </p>
+                  </div>&nbsp;&nbsp;
+                  Product Attribute Set:
+                  <div class="form-group col-md-6">
+                    <select class="form-control" id="productattributesselectid" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="ebayList.ebaySettingPaymentOption.attributeSetId">
+                      <option value="-1">Please select</option>
+                      <option value="3">Live Discussions</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title"></h3>
+    <a class="prev"> </a>
+    <a class="next"> </a>
+    <a class="close">x</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+    <div class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="alert alert-warning">
+            <button type="button" class="close" aria-hidden="true">×</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body next"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left prev">
+              <i class="glyphicon glyphicon-chevron-left"></i>
+              Previous
+            </button>
+            <button type="button" class="btn btn-primary next">
+              Next
+              <i class="glyphicon glyphicon-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="edithtmltemplatedivid" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <a href="javascript:void(0)" type="button" data-dismiss="modal" aria-hidden="true"></a>
+          <h4 class="modal-title">Edit HTML Source</h4>
+        </div>
+        <div class="modal-body">
+          <textarea class="form-control" rows="20" [(ngModel)]="ebayList.htmltext" name="htmlsts"
+            id="ebayhtmltemplateidbody" [ngModelOptions]="{standalone: true}"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-default  btn-circle-new" data-dismiss="modal"><i
+              class="fa fa-times font-red"></i> Close</button>
+          <a href="javascript:void(0)" (click)="udpateCkeditor()" type="button" class="btn blue">Save changes</a>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade" id="openCategories" tabindex="-1" role="basic" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="alert alert-warning colormode">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Manage eBay Categories</h4>
+        </div>
+        <div class="modal-body" *ngIf="categoriesData">
+          <div class="selectedCategory">
+            <div class="row">
+              <div class="col-md-4" style="font-size: 20px;">
+                <strong>Selected Category</strong>
+              </div>
+              <div class="col-md-4">
+                <input class="form-control" name="caetsa" [(ngModel)]="categoryID" id="categoryid" type="text"
+                  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+          </div>
+          <app-categories *ngIf="treeUpdate" (getItem)="getItemValue($event)" [categories]="categoriesData"
+            [categoryIndex]="categoryIndex"></app-categories>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (close)="closeJsTree()" class="btn btn-sm btn-default  btn-circle-new"
+            data-dismiss="modal"><i class="fa fa-times font-red"></i> Close</button>
+          <a href="javascript:void(0)" (click)="closeJsTree()" type="button" class="btn blue">Save changes</a>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade bs-modal-lg" id="updatebaylistingtemplateupdateid" tabindex="-1" role="dialog"
+    aria-hidden="true">
+  </div>
+  <div class="modal fade in bs-modal-lg" id="shiptolocationonedivid" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Select Ship to Locations</h4>
+        </div>
+        <div class="modal-body">
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="worldwide" name="world"
+            [ngModelOptions]="{standalone: true}">&nbsp;World Wide
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="EuropeanUnion" name="EuropeanUnion"
+            [ngModelOptions]="{standalone: true}">&nbsp;European Union
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="European" name="European"
+            [ngModelOptions]="{standalone: true}">&nbsp;European
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="Asia" name="Asia"
+            [ngModelOptions]="{standalone: true}">&nbsp;Asia
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="America" name="America"
+            [ngModelOptions]="{standalone: true}">&nbsp;N. and S. America
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="US" name="US"
+            [ngModelOptions]="{standalone: true}">&nbsp;US
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="CA" name="CA"
+            [ngModelOptions]="{standalone: true}">&nbsp;CA
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="IE" name="IE"
+            [ngModelOptions]="{standalone: true}">&nbsp;IE
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="FR" name="FR"
+            [ngModelOptions]="{standalone: true}">&nbsp;FR
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="DE" name="DE"
+            [ngModelOptions]="{standalone: true}">&nbsp;DE
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="AU" name="AU"
+            [ngModelOptions]="{standalone: true}">&nbsp;AU
+          <input name="locationoneshiptolocation" type="checkbox" [(ngModel)]="JP" name="JP"
+            [ngModelOptions]="{standalone: true}">&nbsp;JP
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-default btn-circle-new" data-dismiss="modal"><i
+              class="fa fa-times font-red"></i> Close</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade bs-modal-lg" id="editattributemodal" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content model-lg">
+        <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Edit Item Specifics</h4>
+        </div>
+        <div class="modal-body" *ngIf="itemSpecs">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="portlet light">
+                <div class="portlet-body">
+                  <div class="table-scrollable">
+                    <table class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Value
+                          </th>
+                          <th>
+                            Available Values
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let listVar of itemSpecs.attributes">
+                          <td>
+                            <input readonly class="form-control" type="text" [ngModelOptions]="{standalone: true}"
+                              [(ngModel)]="listVar.name" name="attributename" />
+                          </td>
+                          <td>
+                            <input class="form-control" type="text" [ngModelOptions]="{standalone: true}"
+                              [(ngModel)]="listVar.value" name="attributevalue" />
+                          </td>
+                          <td>
+                            <select id="ebayitemspecificattributeselect" [ngModelOptions]="{standalone: true}"
+                              [(ngModel)]="listVar.value" class="form-control">
+                              <option value="">Please select an item</option>
+                              <option [value]="value" *ngFor="let value of listVar.values">{{value}}</option>
+                            </select>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="saveattributes()" class="btn btn-sm btn-default btn-circle-new"><i
+              class="fa fa-check"></i> Save</button>
+          <button type="button" class="btn btn-sm btn-default btn-circle-new" data-dismiss="modal"><i
+              class="fa fa-times font-red"></i> Close</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+  </div>

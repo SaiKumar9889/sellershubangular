@@ -1,0 +1,71 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+		<div class="col-md-10 col-sm-10 col-xs-12">
+		  <p>Please add tax rates applicable for your products.</p>
+		</div>
+		<div class="col-md-2 col-sm-2 col-xs-12">
+			<div class="pull-right">
+                <button (click)="getEdittaxrate('-1');auditTrack(1)" type="button" class="btn btn-sm btn-success">New <i class="fa fa-angle-right font-blue"></i></button>
+			</div>
+		</div>
+	    <hr>
+    </div>
+    <!-- <button (click)="getEdittaxrate()" type="button" class="btn btn-sm btn-success">New <i class="fa fa-angle-right font-blue"></i></button> -->
+<div class="table-responsive">
+
+    <table id="printabletable" class="display nowrap table table-hover table-striped table-bordered"
+    cellspacing="0" width="100%">
+    <thead class="text-center">
+        <tr>
+        <th>Tax Name</th>
+        <th>Rate</th>
+        <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        <tr *ngFor="let tax of allTax">
+        <td>{{ tax.name }}</td>
+        <td>{{ tax.rate }}</td>
+        <td><button (click)="getEdittaxrate(tax.id);auditTrack(2)" type="button" class="btn btn-sm btn-success"><i class="fa fa-edit font-blue"></i></button> &nbsp;&nbsp; <button (click)="removetaxrate(tax.id);auditTrack(3)" type="button" class="btn btn-sm btn-danger"><i class="fa fa-times font-red"> </i></button></td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+</div>
+<!-- <div class="col-lg-12 col-md-12  align-self-center text-right">
+    <ngb-pagination [collectionSize]="120" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+    </div> -->
+
+    <div id="taxrate-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title text-center">Tax Rate</h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body modal-body-min-height">
+        <div class="row">
+          <!-- <div  class="col-md-6 col-lg-6 col-xl-4"> -->
+          <div class="card card-body">
+              <div class="form-group">
+                <label class="control-label">Tax Name</label>
+                <input type="text" id="taxname" placeholder="Enter Tax Rate Name" [(ngModel)]="taxname" name="taxname"  class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="control-label">Tax Rate</label>
+                <input appNumber type="text" id="taxrate" placeholder="0.0" [(ngModel)]="taxrate" name="taxrate"  class="form-control">
+              </div>
+          </div>
+          <!-- </div> -->
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button (click)="savetaxrate(taxid)" data-dismiss="modal" type="button" class="btn waves-effect waves-light btn-success"> Save</button>
+        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- <app-apploader [Uloading]="loading"></app-apploader> -->

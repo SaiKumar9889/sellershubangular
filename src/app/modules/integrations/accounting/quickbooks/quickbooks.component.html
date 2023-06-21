@@ -1,0 +1,206 @@
+<div class="row">
+
+    <div class="col-md-12">
+
+        
+            
+
+            
+
+                <div class="portlet transparent">
+                    <div class="portlet box blue">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-book"></i>Manage Accounting Settings
+                            </div>
+                            <div class="actions">
+
+                                
+
+                            </div>
+                        </div>
+
+                        <div class="portlet-body">
+                            <div class="portlet transparent">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <img style="height:50px;" src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubquickbooks.png">
+                                    </div>
+                                    <div class="actions">
+                                        <a onclick="savekashflow()" class="btn btn-success">Save</a>
+                                        <!--
+                                        <a onclick="testconnection('quickbooks')" class="btn btn-warning">Test Connection</a>
+                                        -->
+                                        <a href="/accounting/index" class="btn red-mint">Close</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <h4>Please click on "Connect to QuickBooks" Button to fill the following fields</h4>
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label">QuickBooks Authorise Token</label>
+                                                        <div class="col-md-8">
+                                                            <div class="input-group">
+                                                                <input id="kashflowloginid" type="text" readonly="" value="" class="form-control">
+                                                                <span class="input-group-btn">
+                                                                    <a href="javascript:void(0)" onclick="$('#quickintegrationstepid').modal('show')">
+                                                                        <button class="btn-xs" type="button">Connect to QuickBooks</button>
+                                                                    </a>	
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label">Quickbook Main Currency</label>
+                                                        <div class="col-md-8">
+                                                            <select id="currencyid" class="form-control">
+                                                                
+                                                                    <option value="USD">USD</option>
+                                                                
+                                                                    <option value="GBP">GBP</option>
+                                                                
+                                                                    <option value="CAD">CAD</option>
+                                                                
+                                                                    <option value="EUR">EUR</option>
+                                                                
+                                                                    <option value="CNY">CNY</option>
+                                                                
+                                                                    <option value="INR">INR</option>
+                                                                
+                                                                    <option value="AUD">AUD</option>
+                                                                
+                                                                    <option value="SGD">SGD</option>
+                                                                
+                                                                    <option value="THB">THB</option>
+                                                                
+                                                                    <option value="MYR">MYR</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+
+                                    <h4>Please select channels to enable for QuickBooks Integration</h4>
+
+                                    <div class="alert alert-warning">
+                                        <p>Please note that only Quickbooks Online System is supported</p>
+                                    </div>
+
+                                    <div class="table-scrollable">
+                                        <table class="table table-responsive table-striped table-bordered table-hover order-column dataTable no-footer">
+                                            <thead>
+                                                <tr>
+                                                    <th>Enable</th>
+                                                
+                                                    <th>Channel</th>
+                                                    <th>Payment Method</th>
+                                                    <th>Deposit To</th>
+
+                                                    <th>Tax Code (Sales)</th>
+                                                    <th>Tax Code (Shipping)</th>
+
+                                                    <th>Item Type(Sales)</th>
+                                                    <th>Item Type (Shipping)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                        <tr>
+                                                            <td>
+                                                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                    <input type="checkbox" onclick="enableaccountingforchannel(6401, 'quickbooks')" id="6401channel">
+                                                                    <span></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <img src=" https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubtelesale.png" height="35"><br>
+
+                                                                telesale -  Telesales_Demo
+                                                                <input type="hidden" value="6401" name="channelid">
+
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" id="paymentmethodidinput6401" value="" name="paymentmethod">
+                                                                <select id="paymentmethodid6401" onclick="applyvalue(6401,'paymentmethodid','paymentmethodidinput' )" onchange="applyvalue(6401,'paymentmethodid','paymentmethodidinput' )" class="form-control">
+                                                                    <option value="1">Please select</option>
+                                                                    
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" id="bankaccountidinput6401" value="" name="bankaccount">
+                                                                <select id="bankaccountid6401" onchange="applyvalue(6401,'bankaccountid','bankaccountidinput' )" class="form-control">
+                                                                    <option value="1">Please select</option>
+                                                                    
+                                                                </select>
+                                                            </td>
+
+                                                            <td>
+                                                                    <input type="hidden" id="taxcodeidinput6401" value="" name="taxcodeidinput">
+                                                                    <select id="taxcodeid6401" onchange="applyvalue(6401,'taxcodeid','taxcodeidinput' )" class="form-control">
+                                                                        <option value="1">Please select</option>
+                                                                        
+
+                                                                    </select>
+
+                                                            </td>
+
+                                                            <td>
+                                                                <input type="hidden" id="taxcodeidinputshipping6401" value="" name="taxcodeidinputshipping">
+                                                                <select id="taxcodeidshipping6401" onchange="applyvalue(6401,'taxcodeidshipping','taxcodeidinputshipping' )" class="form-control">
+                                                                    <option value="1">Please select</option>
+                                                                    
+
+                                                                </select>
+
+                                                            </td>
+
+                                                            <td>
+                                                                <input type="hidden" id="itemtypeidinput6401" value="" name="itemtypeidinput">
+                                                                <select id="itemtypesales6401" onchange="applyvalue(6401,'itemtypesales','itemtypeidinput' )" class="form-control">
+                                                                    <option value="1">Please select</option>
+                                                                    
+
+                                                                </select>
+
+                                                            </td>
+
+                                                            <td>
+                                                                <input type="hidden" id="itemtypeidinputshipping6401" value="" name="itemtypeidinputshipping">
+                                                                <select id="itemtypesalesshipping6401" onchange="applyvalue(6401,'itemtypesalesshipping','itemtypeidinputshipping' )" class="form-control">
+                                                                    <option value="1">Please select</option>
+                                                                    
+
+                                                                </select>
+
+                                                            </td>
+                                                        </tr>
+                                                
+                                                       
+                                                       
+
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            
+        
+
+    </div>
+
+</div>

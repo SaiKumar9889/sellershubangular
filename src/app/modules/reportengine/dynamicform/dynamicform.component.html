@@ -1,0 +1,6 @@
+<div class="col-md-12 col-lg-12" *ngFor="let uielement of UIelements" style="padding: 0px;margin-top: 20px">
+    <app-textarea *ngIf="uielement.type==='Text Area'" [obj]="uielement" (output)="emitEvent($event)"></app-textarea>
+    <app-text-field *ngIf="uielement.type==='Text Field'" [obj]="uielement" (output)="emitEvent($event)"></app-text-field>
+    <app-table *ngIf="uielement.type==='Table'" [obj]="uielement" (output)="emitEvent($event)"></app-table>
+    <app-image *ngIf="uielement.type==='Image'" [obj]="uielement" (output)="emitEvent($event)"></app-image>
+</div>

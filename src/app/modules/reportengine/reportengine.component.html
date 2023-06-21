@@ -1,0 +1,156 @@
+<div class="skin-default fixed-layout">
+    <div id="main-wrapper" style="color: black;">
+        <div class="row" style="padding: 5px;" cdkDropListGroup>
+            <div class="col-md-4 col-lg-4">
+                <div class="card scrollbar" id="style-3">
+                    <div class="card-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down"> Pages</span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile1" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down"> Dragable</span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down"> Report</span></a> </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content tabcontent-border">
+                            <div class="tab-pane active  p-20" id="home" role="tabpanel">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#pages" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down"> Pages</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#template" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down"> Template</span></a> </li>
+                                </ul>
+                                <div class="tab-content tabcontent-border">
+                                    <div class="tab-pane active  p-20" id="pages" role="tabpanel">
+                                        <div *ngIf="template.pages.length>0">
+                                            <div class="col-md-12 col-lg-12" *ngFor="page of template.pages;let i = index">
+                                                <button (click)="movetoPage(i)" style="width:100%;text-align: left;cursor:pointer;margin-bottom: 10px;" type="button" class="btn btn-success"><i class=" far fa-save"></i> <span> Page-</span>{{i+1}}</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12  p-20">
+                                            <button (click)="addpage()" style="text-align: left;cursor:pointer;margin-bottom: 10px;" type="button" class="btn btn-info"><i class="fas fa-plus-circle fa-lg"></i> Add Page</button>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane  p-20" id="template" role="tabpanel">
+                                        <div class="col-md-12 col-lg-12">
+                                            <div class="form-group ">
+                                                <label for="template" class="control-label lable-weight">Template Name :</label>
+                                                <input type="text" [(ngModel)]="template.templatename" name="template" class="form-control" id="template" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12">
+                                            <div class="form-group ">
+                                                <label for="cby" class="control-label lable-weight">Created By :</label>
+                                                <input type="text" [(ngModel)]="template.createdby" name="cby" class="form-control" id="cby" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12">
+                                            <button (click)="saveReport()" style="width:100%;text-align: left;cursor:pointer;" type="button" class="btn btn-success"><i class=" far fa-save"></i> Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane p-20" id="profile1" role="tabpanel">
+                                <div cdkDropList #todoList="cdkDropList" class="example-list" (cdkDropListDropped)="drop($event)">
+                                    <div [cdkDragData]="item" class="col-md-12 col-lg-12" *ngFor="let item of dragableItems" style="padding-bottom: 5px;padding-top: 5px;" cdkDrag>
+                                        <button style="width:100%;text-align: left;cursor: move;" type="button" class="btn btn-info"><i class="fa fa-plus-circle"></i> {{item}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane p-20" id="profile" role="tabpanel">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Reports :</label>
+                                        <select (change)="loadColumns($event)" name="role" class="form-control custom-select" id="report">
+                                          <option value="0" > Please Select Report </option>
+                                          <option value="{{report.reportid}}" *ngFor="let report of allreports">{{report.reportName}}</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div *ngIf="selectedReport!=null">
+                                    <div cdkDropList id="tableList" class="example-list" [cdkDropListConnectedTo]="getTableIds()">
+                                        <div [cdkDragData]="columns" class="col-md-12 col-lg-12" *ngFor="let columns of selectedReport.columns" style="padding-bottom: 5px;padding-top: 5px;" cdkDrag>
+                                            <button style="width:100%;text-align: left;cursor: move;" type="button" class="btn btn-warning"><i class="fa fa-plus-circle"></i> {{columns.columnDisplayname}}</button>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-12 col-lg-12" *ngFor="let columns of selectedReport.columns">
+                                        <p>{{columns.columnDisplayname}}</p>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-8 card scrollbar" id="style-3">
+                <div class="col-md-12 col-lg-12">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#builder" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down"> Builder</span></a> </li>
+                        <li (click)="getTableReportPreview()" class="nav-item"> <a class="nav-link" data-toggle="tab" href="#preview" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down"> Preview</span></a> </li>
+                    </ul>
+                    <div class="tab-content tabcontent-border">
+                        <div class="tab-pane active" id="builder" role="tabpanel">
+                            <div id="Page-{{i}}" class="page" *ngFor="let page of template.pages;let i = index">
+                                <div cdkDropList class="showoptions example-list" [id]="getId(div.divposition,div.pageno)" [cdkDropListData]="draggetItems" [cdkDropListConnectedTo]="['todoList']" (cdkDropListDropped)="drop1($event,div.divposition,div.pageno)" *ngFor="let div of page.divs;let k = index">
+                                    <div class="col-md-12 col-lg-12 hide text-right">
+                                        <button type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm mr-1" title="Hide & Show" data-toggle="collapse" data-target="#demo"><i style="color:rgb(18, 180, 126) !important" class="far fa-sun"></i></button>
+                                        <button (click)="moveTop(page.divs,k)" type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm mr-1" title="Hide & Show" data-toggle="collapse" data-target="#demo"><i style="color:rgb(60, 121, 212) !important" class=" fas fa-long-arrow-alt-up"></i></button>
+                                        <button (click)="movedown(page.divs,k)" type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm mr-1" title="Hide & Show" data-toggle="collapse" data-target="#demo"><i style="color:rgb(60, 121, 212) !important" class=" fas fa-long-arrow-alt-down"></i></button>
+                                        <button (click)="removeDragDrop(div)" type="button" class="btn btn-icon btn-outline-secondary btn-outline-secondary btn-sm" title="Delete"><i class="fa fa-trash" style="color:red !important " ></i></button>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12" style="padding-bottom: 5px;padding-top: 5px;">
+                                        <!-- <button style="width:100%;text-align: left;cursor: move;" type="button" class="btn btn-info">{{item.type}}</button> -->
+                                        <app-dynamicform [UIelements]="div.UIelements"> </app-dynamicform>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 text-right" style="padding-top: 10px;">
+                                    <!-- <i (click)="removeDiv(page)" class=" fas fa-trash-alt imgAdd" title="Remove div"></i> -->
+                                    <i (click)="addDiv(page)" class="fa fa-plus imgAdd" title="Add div"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane p-20" id="preview" role="tabpanel">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="page" *ngFor="let page of template.pages">
+                                    <div class="col-md-12 col-lg-12" *ngFor="let div of page.divs">
+                                        <div class="col-md-12 col-lg-12 p-0" *ngFor="let ui of div.UIelements">
+                                            <div *ngIf="ui!=null && ui!=undefined">
+                                                <div *ngIf="ui.type=='Text Field'">
+                                                    <p [ngStyle]="getStyleObj(ui)">{{ui.value}}</p>
+                                                </div>
+                                                <div *ngIf="ui.type=='Text Area'">
+                                                    <p [ngStyle]="getStyleObj(ui)">{{ui.value}}</p>
+                                                </div>
+                                                <div *ngIf="ui.type=='Image' ">
+                                                    <div class=" form-group row imgUp">
+                                                        <div class="col-sm-4" [style.margin-left]="getposition(ui)">
+                                                            <div [id]="getImagePreview(ui.id)" class="imagePreview"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="ui.type=='Table' ">
+                                                    <div class="table-responsive">
+                                                        <table class="text-center display wrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th *ngFor="let column of ui.columns">{{column}}</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let rep of ui.response">
+                                                                    <td *ngFor="let colres of rep">{{colres}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

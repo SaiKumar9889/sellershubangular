@@ -1,0 +1,1124 @@
+<div id="maindivid">
+
+  <div class="row">
+    <div class="col-md-12" *ngIf="true">
+      <div class="portlet transparent">
+        <!-- portlet-box blue start -->
+        <div class="portlet box blue">
+          <div class="portlet-title titles">
+            <div class="caption ml-3">
+              <!-- <i class="fa fa-amazon"></i> -->
+              Manage Stock Repricer Items
+            </div>
+            <div class="actions">
+
+            </div>
+          </div>
+          
+          <!-- BEGIN PORTLET-BODY -->
+          <div class="portlet-body">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs">
+                <li class="nav-item" style="margin-right: 14px;">
+                  <a href="#tab1" style="font-size: 15px;"
+                  class="nav-link active pointer"  (click)="showPage(true, false, false);clearPagination();stockfindAllItems()" data-toggle="tab"
+                    aria-expanded="true"> All Items </a>
+                </li>
+                <li class="nav-item" style="margin-right: 14px;">
+                  <a href="#tab2" style="font-size: 15px;"
+                  class="nav-link pointer"  (click)="showPage(false, true, false);clearPagination();findStockRepriceItems()" data-toggle="tab"
+                    aria-expanded="false"> Items to Reprice</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#tab3" style="font-size: 15px;"
+                  class="nav-link pointer"  (click)="showPage(false, false, true);clearPagination();findNotReseterItems()" data-toggle="tab"
+                    aria-expanded="true"> Not Set to Reprice </a>
+                </li>
+
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active in" id="tab1" *ngIf="allItemsPage">
+                  <!------------------------------------------------------------------------->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="portlet transparent">
+                        <div class="portlet box blue">
+                          <div class="portlet-title">
+                            <div class="caption">
+                              <i class="fa fa-cogs ml-2  mt-2"></i> 
+                              <span class="text-white ml-3" style="font-size: 15px;">All Items</span> 
+                            </div>
+                            <div class="" style="margin-top: -45px; text-align:right">
+                              <button type="button" class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                              color: black; background-color: white;" (click)="onBulkupdate()">Bulk Update</button>
+                              <button type="button" (click)="updatesallproducts()"
+                                class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                              color: black; background-color: white;">Update Lowest/Highest Price</button>
+                            </div>
+                          </div>
+                          <!-- <div class="portlet-title">
+                            <div class="row">
+                              <div class="caption col-md-6 text-left">
+                                <div class="row">
+                                <div class="col-md-3 ml-2">
+                                <i class="fa fa-cogs text-white"></i> 
+                              </div>
+                              <div class="col-md-3">
+                                <span class="text-white ml-5" style="font-size: 15px;">All Items</span> 
+                                </div>
+                              </div>
+                              </div>
+                              <div class="actions col-md-6 text-right">
+                                <button type="button" class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                                color: black; background-color: white;">Bulk Update</button>
+                                <button type="button" (click)="updatesallproducts()"
+                                  class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                                color: black; background-color: white;">Update Lowest/Highest Price</button>
+                              </div>
+                            </div>
+                            <div class="row">
+                            <div class="caption">
+                              <i class="fa fa-cogs ml-2"></i> &nbsp;&nbsp;
+                              All Items
+                            </div>
+
+                            <div class="" id="updateAllButton" style="margin-top: -45px; text-align:right">
+                              <button type="button" class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                              color: black; background-color: white;">Bulk Update</button>
+                              <a type="button" (click)="updatesallproducts()"
+                                class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                              color: black; background-color: white;">Update Lowest/Highest Price</a>
+                            </div>
+                          </div>
+                          </div> -->
+
+                          <div class="portlet-body">
+                            <div class="allorderdivid">
+                              <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-left mb-3">
+                                <div class="d-flex  align-items-center">
+                                    
+                                    <div class=" row">
+                                      <div class="col-sm-3">
+                                      <label>Order By:</label>
+                                      <select id="repricingchannelid" class="form-control form-filter input-sm">
+                      
+                                        <option value="all">All Channels</option>
+                      
+                                        <option value="6435">amazon -Amazon_Demo</option>
+                      
+                      
+                                      </select>
+                                    </div>
+                                        <div class="col-sm-3">
+                                          <label>Search Text:</label>
+                                          <input type="text" class="form-control"
+                                          id="repricingsearchtext">
+                                         </div>
+                                   
+                                    
+                                    
+                                      <div class="col-sm-3">
+                                        <label>Filter:</label>
+                                      <select onchange="findstockrepriceritems(1,1)" id="repricingitemsfilter"
+                                      class="form-control form-filter input-sm">
+                                      <option value="None">None</option>
+                                      <option value="instock">In Stock</option>
+                                      <option value="outofstock">Out of Stock</option>
+                      
+                      
+                                    </select>
+                                    </div>
+                                    
+                                      <div class="col-sm-3">
+                                        <label>Page Size:</label>
+                                      <select id="allrepricingpagesize" class="form-control form-filter input-sm">
+                      
+                                        <option value="100">100</option>
+                                        <option value="50">50</option>
+                                        <option value="25">25</option>
+                                        <option value="5">5</option>
+                      
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                              <!-- <table class="table table-striped table-bordered table-hover dataTable no-footer"
+                                id="datatable_orders" aria-describedby="datatable_orders_info" role="grid">
+                                <thead>
+                                  <tr role="row" class="heading">
+                                    <th class="sorting_disabled" rowspan="1" colspan="1">
+                                      Order By
+
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable_orders" rowspan="1"
+                                      colspan="1">
+                                      Search Text&nbsp;#
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable_orders" rowspan="1"
+                                      colspan="1">
+                                      Filter&nbsp;#
+                                    </th>
+
+                                    <th class="sorting" tabindex="0" aria-controls="datatable_orders" rowspan="1"
+                                      colspan="1">
+                                      Channel&nbsp;
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable_orders" rowspan="1"
+                                      colspan="1">
+                                      Page Size&nbsp;
+                                    </th>
+
+                                    <th class="sorting" tabindex="0" aria-controls="datatable_orders" rowspan="1"
+                                      colspan="1">
+                                      Actions
+                                    </th>
+
+                                  </tr>
+
+
+                                  <tr role="row" class="filter">
+                                    <td rowspan="1" colspan="1">
+                                      <select id="repricingchannelid" class="form-control form-filter input-sm">
+
+                                        <option value="all">All Channels</option>
+
+                                        <option value="6435">amazon -Amazon_Demo</option>
+
+
+                                      </select>
+                                    </td>
+
+
+                                    <td rowspan="1" colspan="1">
+                                      <input type="text" class="form-control form-filter input-sm"
+                                        id="repricingsearchtext">
+                                    </td>
+                                    <td rowspan="1" colspan="1">
+                                      <select onchange="findstockrepriceritems(1,1)" id="repricingitemsfilter"
+                                        class="form-control form-filter input-sm">
+                                        <option value="None">None</option>
+                                        <option value="instock">In Stock</option>
+                                        <option value="outofstock">Out of Stock</option>
+
+
+                                      </select>
+                                    </td>
+                                    <td rowspan="1" colspan="1">
+                                      <select id="orderby1" class="form-control form-filter input-sm">
+                                        <option value="None">None</option>
+                                        <option value="sku">SKU</option>
+
+
+                                      </select>
+
+                                    </td>
+
+                                    <td rowspan="1" colspan="1">
+                                      <select id="allrepricingpagesize" class="form-control form-filter input-sm">
+
+                                        <option value="100">100</option>
+                                        <option value="50">50</option>
+                                        <option value="25">25</option>
+                                        <option value="5">5</option>
+
+                                      </select>
+                                    </td>
+                                    <td rowspan="1" colspan="1">
+                                      <div class="margin-bottom-5">
+                                        <button class="btn btn-sm yellow filter-submit margin-bottom"><i
+                                            class="fa fa-search"></i> Search</button>
+                                      </div>
+
+                                    </td>
+                                  </tr>
+
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table> -->
+
+
+
+
+                              <div id="allproducttabledivid" class="table-responsive">
+                                <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+
+                                <table id="allproducts_table" class="table table-striped table-bordered table-hover">
+                                  <thead>
+                                    <tr role="row" class="heading">
+                                      <th>
+                                        <input id="checkalllistcheckid" (click)="checkallitems()" type="checkbox"
+                                          class="group-checkable" data-set="#allproducts_table .checkboxes">
+                                      </th>
+                                      <th>
+                                        Image
+                                      </th>
+                                      <th>
+                                        Title
+                                      </th>
+                                      <th>
+                                        SKU
+                                      </th>
+
+
+                                      <th>
+                                        Qty
+                                      </th>
+                                      <th>
+                                        ASIN
+                                      </th>
+
+                                      <th>
+                                        Selling Price
+                                      </th>
+                                      <!--th>
+                                                                        Shipping Cost
+                                                                    </th-->
+
+                                      <th>
+                                        Repricer Lowest <br>Price
+                                      </th>
+
+                                      <th>
+                                        Repricer Highest <br>Price
+                                      </th>
+
+                                      <th>
+                                        Lowest Price/Shipping
+                                        in Amazon
+                                      </th>
+                                      <!--th>
+                                                                        Buy Box Price
+                                                                    </th-->
+                                    </tr>
+
+                                  </thead>
+                                  <tbody>
+
+                                    <tr *ngFor="let item of products">
+
+                                      <td>
+
+                                        <input type="checkbox" name="allitemsselect" id="24019allproductsselect"
+                                          value="24019" class="group-checkable"
+                                          data-set="#allproducts_table .checkboxes">
+
+                                      </td>
+
+                                      <td>
+                                        <img [src]="item.imageUrl" width="100px">
+                                      </td>
+                                      <td>
+                                        {{item.title}}
+                                      </td>
+                                      <td>
+                                        {{item.sku}}
+                                      </td>
+
+                                      <td>
+                                        {{item.qty}}
+
+                                      </td>
+                                      <td>
+                                        <a target="_blank">{{item.asin}}</a>
+                                      </td>
+
+                                      <td>
+
+                                        <input class="form-control" type="text" [value]="item.sellingPrice">
+
+                                      </td>
+                                      <!--td>
+
+
+                                                                        </td-->
+
+                                      <td>
+                                        <input class="form-control" type="text" id="24019allrepricerlowest"
+                                          [value]="item.lowestPrice">
+                                      </td>
+
+                                      <td>
+                                        <input class="form-control" type="text" id="24019allrepricerhighest"
+                                          [value]="item.highestPrice">
+                                      </td>
+
+                                      <td>
+
+
+
+                                        &nbsp;
+
+
+
+                                      </td>
+
+                                      <!--td>
+
+
+
+
+
+
+
+                                                                        </td-->
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+
+                                <div class="row">
+                                  <div class="col-lg-9 col-md-9"></div>
+                                  <div class="col-lg-3 col-md-3 text-right">
+                                    <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize"
+                                      [(page)]="page" [maxSize]="3" [rotate]="true" [boundaryLinks]="true"
+                                      (pageChange)="changespage(page);">
+                                    </ngb-pagination>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!------------------------------------------------------------------------->
+                </div>
+                <div class="tab-pane fade" id="tab2" *ngIf="itemToRepairPage">
+                  <div class="portlet box blue">
+                    <div class="portlet-title">
+                      <div class="caption">
+                        <i class="fa fa-tags ml-2 mt-2"></i>
+                        <span class="text-white ml-3" style="font-size: 15px;">Items to Reprice</span> 
+                        
+                      </div>
+                      <div class="" style="margin-top: -45px; text-align:right">
+                        <button type="button" href="javascript:void(0)" (click)="updatesallproducts()"
+                          class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                        color: black; background-color: white;">Run Repricer</button>
+                        <a type="button" href="javascript:void(0)" (click)="updatesallproducts()"
+                          class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2" style="
+                        color: black; background-color: white;">Update Lowest/Highest Price</a>
+                      </div>
+                    </div>
+                    <div class="portlet-body">
+                      <div id="allorderdivid" class="row">
+                        <div class="col-md-12">
+
+
+                          <div class="portlet transparent">
+                            <div class="portlet-body" style="margin-top: 40px;">
+                              <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-left mb-3">
+                                <div class="d-flex  align-items-center">
+                                    
+                                    <div class=" row">
+                                      <div class="col-sm-3">
+                                      <label>Order By:</label>
+                                      <select id="repricingchannelid" class="form-control form-filter input-sm">
+                      
+                                        <option value="all">All Channels</option>
+                      
+                                        <option value="6435">amazon -Amazon_Demo</option>
+                      
+                      
+                                      </select>
+                                    </div>
+                                        <div class="col-sm-3">
+                                          <label>Search Text:</label>
+                                          <input type="text" class="form-control"
+                                          id="repricingsearchtext">
+                                         </div>
+                                   
+                                    
+                                    
+                                      <div class="col-sm-3">
+                                        <label>Filter:</label>
+                                      <select onchange="findstockrepriceritems(1,1)" id="repricingitemsfilter"
+                                      class="form-control form-filter input-sm">
+                                      <option value="None">None</option>
+                                      <option value="instock">In Stock</option>
+                                      <option value="outofstock">Out of Stock</option>
+                      
+                      
+                                    </select>
+                                    </div>
+                                    
+                                      <div class="col-sm-3">
+                                        <label>Page Size:</label>
+                                      <select id="allrepricingpagesize" class="form-control form-filter input-sm">
+                      
+                                        <option value="100">100</option>
+                                        <option value="50">50</option>
+                                        <option value="25">25</option>
+                                        <option value="5">5</option>
+                      
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                              <!-- <div class="table-scrollable">
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer"
+                                  id="datatable_orders" aria-describedby="datatable_orders_info" role="grid">
+                                  <thead>
+                                    <tr role="row" class="heading">
+                                      <th width="2%" class="sorting_disabled" rowspan="1" colspan="1">
+                                        Channel
+
+                                      </th>
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Search Text&nbsp;
+                                      </th>
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Filter#&nbsp;#
+                                      </th>
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Order By&nbsp;
+                                      </th>
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Page Size&nbsp;
+                                      </th>
+
+                                      <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Actions
+                                      </th>
+
+                                    </tr>
+                                    <tr role="row" class="filter">
+                                      <td rowspan="1" colspan="1">
+                                        <select onchange="findstockrepriceritems(1,1)" id="repricingchannelid"
+                                          class="form-control form-filter input-sm">
+
+                                          <option value="all">All Channels</option>
+
+                                          <option value="6435">amazon -Amazon_Demo</option>
+
+
+                                        </select>
+                                      </td>
+
+
+                                      <td rowspan="1" colspan="1">
+                                        <input type="text" class="form-control form-filter input-sm"
+                                          id="repricingsearchtext">
+                                      </td>
+                                      <td rowspan="1" colspan="1">
+                                        <select onchange="findstockrepriceritems(1,1)" id="repricingitemsfilter"
+                                          class="form-control form-filter input-sm">
+                                          <option value="None">None</option>
+                                          <option value="instock">In Stock</option>
+                                          <option value="outofstock">Out of Stock</option>
+
+
+                                        </select>
+                                      </td>
+                                      <td rowspan="1" colspan="1">
+                                        <select id="orderby1" class="form-control form-filter input-sm">
+                                          <option value="None">None</option>
+                                          <option value="sku">SKU</option>
+
+
+                                        </select>
+
+                                      </td>
+
+                                      <td rowspan="1" colspan="1">
+                                        <select onchange="findstockrepriceritems(1,1)" id="allrepricingpagesize"
+                                          class="form-control form-filter input-sm">
+
+                                          <option value="100">100</option>
+                                          <option value="50">50</option>
+                                          <option value="25">25</option>
+                                          <option value="5">5</option>
+
+                                        </select>
+                                      </td>
+                                      <td rowspan="1" colspan="1">
+                                        <div class="margin-bottom-5">
+                                          <button (click)="findstockrepriceritems(1,1)"
+                                            class="btn btn-sm yellow filter-submit margin-bottom"><i
+                                              class="fa fa-search"></i> Search</button>
+                                        </div>
+
+                                      </td>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  </tbody>
+                                </table>
+                              </div> -->
+
+
+
+                              <div id="repricingproducttabledivid" class="table-responsive">
+
+
+                                <table id="allrepricer_table" class="table table-striped table-bordered table-hover">
+                                  <thead>
+                                    <tr role="row" class="heading">
+                                      <th>
+
+                                        <input id="checkallrepricerlistcheckid" (click)="checkallrepriceritems()"
+                                          type="checkbox" class="group-checkable"
+                                          data-set="#allproducts_table .checkboxes">
+
+                                      </th>
+                                      <th>
+                                        Image
+                                      </th>
+                                      <th>
+                                        Title
+                                      </th>
+                                      <th>
+                                        SKU
+                                      </th>
+
+
+                                      <th>
+                                        QTY
+                                      </th>
+                                      <th>
+                                        ASIN
+                                      </th>
+                                      <th>
+                                        SITE
+                                      </th>
+                                      <th>
+                                        Selling Price
+                                      </th>
+                                      <!--th>
+                                                                                Shipping Cost
+                                                                            </th-->
+
+                                      <th>
+                                        Repricer Lowest Price
+                                      </th>
+
+                                      <th>
+                                        Repricer
+                                        Highest Price
+                                      </th>
+
+                                      <th>
+                                        Lowest Price/Shipping
+                                        in Amazon
+                                      </th>
+                                      <!--th>
+                                                                                Buy Box Price
+                                                                            </th-->
+                                    </tr>
+
+                                  </thead>
+                                  <tbody>
+
+
+                                    <tr *ngFor="let item of stockRepricerItems">
+
+                                      <td>
+
+                                        <input type="checkbox" name="allitemsselect" id="24019allproductsselect"
+                                          value="24019" class="group-checkable"
+                                          data-set="#allproducts_table .checkboxes">
+
+                                      </td>
+
+                                      <td>
+                                        <img [src]="item.imageUrl" width="100px">
+                                      </td>
+                                      <td>
+                                        {{item.title}}
+                                      </td>
+                                      <td>
+                                        {{item.sku}}
+                                      </td>
+
+                                      <td>
+                                        {{item.qty}}
+
+                                      </td>
+                                      <td>
+                                        <a target="_blank">{{item.asin}}</a>
+                                      </td>
+
+                                      <td>
+
+                                        <input class="form-control" type="text" [value]="item.sellingPrice">
+
+                                      </td>
+                                      <!--td>
+
+
+                                                                                    </td-->
+
+                                      <td>
+                                        <input class="form-control" type="text" id="24019allrepricerlowest"
+                                          [value]="item.lowestPrice">
+                                      </td>
+
+                                      <td>
+                                        <input class="form-control" type="text" id="24019allrepricerhighest"
+                                          [value]="item.highestPrice">
+                                      </td>
+
+                                      <td>
+
+
+
+                                        &nbsp;
+                                      </td>
+
+                                      <!--td>
+
+                                                                                    </td-->
+                                    </tr>
+
+
+
+                                  </tbody>
+                                </table>
+
+                                <div class="row">
+
+                                  <div class="col-lg-9 col-md-9"></div>
+                                  <div class="col-lg-3 col-md-3 text-right">
+                                    <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize"
+                                      [(page)]="page" [maxSize]="3" [rotate]="true" [boundaryLinks]="true"
+                                      (pageChange)="changesItempage(page);">
+                                    </ngb-pagination>
+                                  </div>
+
+                                </div>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          <!-- End: life time stats -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="tab3" *ngIf="itemNotResetPage">
+                  <div class="portlet box blue">
+                    <div class="portlet-title">
+                      <div class="caption">
+                        <i class="fa fa-cogs ml-2 mt-2"></i>
+                        <span class="text-white ml-3" style="font-size: 15px;">Not Set to Reprice</span> 
+                        
+                      </div>
+                      <div style="margin-top: -45px; text-align:right">
+                        <button type="button" href="javascript:void(0)" (click)="updatesallproducts()"
+                          class="btn btn-default rounded-pill btn-xs mt-3 mb-2 mr-2"
+                          style="color: black; background-color: white;">Update Lowest/Highest Price</button>
+                      </div>
+                    </div>
+                    <div class="portlet-body">
+
+                      <div id="allorderdivid" class="row">
+                        <div class="col-md-12">
+
+
+                          <div class="portlet transparent">
+                            <div class="portlet-body">
+                              <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-left mb-3">
+                                <div class="d-flex  align-items-center">
+                                    
+                                    <div class=" row">
+                                      <div class="col-sm-3">
+                                      <label>Order By:</label>
+                                      <select id="repricingchannelid" class="form-control form-filter input-sm">
+                      
+                                        <option value="all">All Channels</option>
+                      
+                                        <option value="6435">amazon -Amazon_Demo</option>
+                      
+                      
+                                      </select>
+                                    </div>
+                                        <div class="col-sm-3">
+                                          <label>Search Text:</label>
+                                          <input type="text" class="form-control"
+                                          id="repricingsearchtext">
+                                         </div>
+                                   
+                                    
+                                    
+                                      <div class="col-sm-3">
+                                        <label>Filter:</label>
+                                      <select onchange="findstockrepriceritems(1,1)" id="repricingitemsfilter"
+                                      class="form-control form-filter input-sm">
+                                      <option value="None">None</option>
+                                      <option value="instock">In Stock</option>
+                                      <option value="outofstock">Out of Stock</option>
+                      
+                      
+                                    </select>
+                                    </div>
+                                    
+                                      <div class="col-sm-3">
+                                        <label>Page Size:</label>
+                                      <select id="allrepricingpagesize" class="form-control form-filter input-sm">
+                      
+                                        <option value="100">100</option>
+                                        <option value="50">50</option>
+                                        <option value="25">25</option>
+                                        <option value="5">5</option>
+                      
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                              <!-- <div class="table-scrollable">
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer"
+                                  id="datatable_orders" aria-describedby="datatable_orders_info" role="grid">
+                                  <thead>
+                                    <tr role="row" class="heading">
+                                      <th width="2%" class="sorting_disabled" rowspan="1" colspan="1">
+                                        Channel
+
+                                      </th>
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Search Text&nbsp;#
+                                      </th>
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Filter&nbsp;#
+                                      </th>
+
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Order By&nbsp;
+                                      </th>
+                                      <th width="5%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Page Size&nbsp;
+                                      </th>
+
+                                      <th width="10%" class="sorting" tabindex="0" aria-controls="datatable_orders"
+                                        rowspan="1" colspan="1">
+                                        Actions
+                                      </th>
+
+                                    </tr>
+                                    <tr role="row" class="filter">
+                                      <td rowspan="1" colspan="1">
+                                        <select onchange="findnotresetitems(1,1)" id="notrepricingchannelid"
+                                          class="form-control form-filter input-sm">
+
+                                          <option value="all">All Channels</option>
+
+                                          <option value="6435">amazon -Amazon_Demo</option>
+
+
+                                        </select>
+                                      </td>
+
+
+                                      <td rowspan="1" colspan="1">
+                                        <input type="text" class="form-control form-filter input-sm"
+                                          id="notrepricingsearchtext">
+                                      </td>
+                                      <td rowspan="1" colspan="1">
+                                        <select onchange="findnotresetitems(1,1)" id="notrepricingitemsfilter"
+                                          class="form-control form-filter input-sm">
+                                          <option value="None">None</option>
+                                          <option value="instock">In Stock</option>
+                                          <option value="outofstock">Out of Stock</option>
+
+
+                                        </select>
+                                      </td>
+
+                                      <td rowspan="1" colspan="1">
+                                        <select onchange="findnotresetitems(1,1)" id="orderby1"
+                                          class="form-control form-filter input-sm">
+                                          <option value="None">None</option>
+                                          <option value="sku">SKU</option>
+
+
+                                        </select>
+
+                                      </td>
+
+                                      <td rowspan="1" colspan="1">
+                                        <select onchange="findnotresetitems(1,1)" id="allnotrepricingpagesize"
+                                          class="form-control form-filter input-sm">
+
+                                          <option value="100">100</option>
+                                          <option value="50">50</option>
+                                          <option value="25">25</option>
+                                          <option value="5">5</option>
+
+                                        </select>
+                                      </td>
+                                      <td rowspan="1" colspan="1">
+                                        <div class="margin-bottom-5">
+                                          <button (click)="findnotresetitems(1,1)"
+                                            class="btn btn-sm yellow filter-submit margin-bottom"><i
+                                              class="fa fa-search"></i> Search</button>
+                                        </div>
+
+                                      </td>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  </tbody>
+                                </table>
+                              </div> -->
+                              <div id="notrepriceproducttabledivid" class="table-responsive">
+                                <table id="notrepricer_table" class="table table-striped table-bordered table-hover">
+                                  <thead>
+                                    <tr role="row" class="heading">
+                                      <th>
+
+                                        <input id="checkallnotrepricerlistcheckid" (click)="checkallnotrepriceritems()"
+                                          type="checkbox" class="group-checkable"
+                                          data-set="#notrepricer_table .checkboxes">
+                                      </th>
+                                      <th>
+                                        Image
+                                      </th>
+                                      <th>
+                                        Title
+                                      </th>
+                                      <th>
+                                        SKU
+                                      </th>
+
+
+                                      <th>
+                                        QTY
+                                      </th>
+                                      <th>
+                                        ASIN
+                                      </th>
+                                      <th>
+                                        SITE
+                                      </th>
+                                      <th>
+                                        Selling Price
+                                      </th>
+                                      <!--th>
+                                                                                            Shipping Cost
+                                                                                        </th-->
+
+                                      <th>
+                                        Repricer Lowest Price
+                                      </th>
+
+                                      <th>
+                                        Repricer
+                                        Highest Price
+                                      </th>
+
+
+                                    </tr>
+
+                                  </thead>
+                                  <tbody>
+
+
+                                    <tr *ngFor="let item of notReseterItems">
+
+                                      <td>
+
+                                        <input type="checkbox" name="allitemsselect" id="24019allproductsselect"
+                                          value="24019" class="group-checkable"
+                                          data-set="#allproducts_table .checkboxes">
+
+                                      </td>
+
+                                      <td>
+                                        <img [src]="item.imageUrl" width="100px">
+                                      </td>
+                                      <td>
+                                        {{item.title}}
+                                      </td>
+                                      <td>
+                                        {{item.sku}}
+                                      </td>
+
+                                      <td>
+                                        {{item.qty}}
+
+                                      </td>
+                                      <td>
+                                        <a target="_blank">{{item.asin}}</a>
+                                      </td>
+
+                                      <td>
+
+                                        <input class="form-control" type="text" [value]="item.sellingPrice">
+
+                                      </td>
+                                      <!--td>
+
+
+                                                                                                </td-->
+
+                                      <td>
+                                        <input class="form-control" type="text" id="24019allrepricerlowest"
+                                          [value]="item.lowestPrice">
+                                      </td>
+
+                                      <td>
+                                        <input class="form-control" type="text" id="24019allrepricerhighest"
+                                          [value]="item.highestPrice">
+                                      </td>
+
+                                      <td>
+
+
+
+                                        &nbsp;
+                                      </td>
+
+                                      <!--td>
+
+                                                                                                </td-->
+                                    </tr>
+
+
+                                  </tbody>
+                                </table>
+                                <div class="row">
+                                  <div class="col-lg-9 col-md-9"></div>
+                                  <div class="col-lg-3 col-md-3 text-right">
+                                    <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize"
+                                      [(page)]="page" [maxSize]="3" [rotate]="true" [boundaryLinks]="true"
+                                      (pageChange)="changesResetpage(page);">
+                                    </ngb-pagination>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          <!-- End: life time stats -->
+                        </div>
+                      </div>
+
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END PORTLET-BODY -->
+
+
+      </div>
+    </div>
+    <!-- <h2 style="padding: 2%;">Coming soon..</h2> -->
+
+  </div>
+
+</div>
+<div id="bulk-update-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400;padding-left: 100px;">Bulk revise of Lowest/Highest price
+             for selected products </h2>
+
+              <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+          </div>
+          <div class="modal-body">
+              <form class="form-horizontal" role="form">
+                  <div class="form-body">
+                      <div class="form-group">
+                          <div class="col-md-12 row">
+                           <span> Set lowest price by -</span>
+                            <div class="col-md-1">
+                              <input type="text" value="" class="form-control form-control-xs">
+                            </div>
+                             <span> % and highest price by +</span>
+                             <div class="col-md-1">
+                              <input type="text" value="" class="form-control form-control-xs">
+                            </div>
+                             <span>% of selling price</span> 
+                             <div class="col-md-4">
+                              <button type="button" class="btn btn-success rounded-pill btn-xs ml-2" >Update By Percentage</button>
+                              <button type="button" class="btn btn-danger rounded-pill btn-xs ml-2" >Cancel</button>
+                            </div>
+                          </div>
+                          <!-- <label class="col-md-3 control-label">Message Content </label>
+                          <div class="col-md-6 control-label">
+                              <textarea class="form-control" rows="5" id="replycontent" [ngModelOptions]="{standalone: true}" [(ngModel)]="msgContent"></textarea>
+                          </div>
+                           -->
+
+
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-12 row">
+                         <span> Set lowest price by </span>
+                          <div class="col-md-1">
+                            <input type="text" value="" class="form-control form-control-xs">
+                          </div>
+                           <span> and highest price by </span>
+                           <div class="col-md-1">
+                            <input type="text" value="" class="form-control form-control-xs">
+                          </div>
+                           <span> of selling price</span> 
+                           <div class="col-md-4">
+                            <button type="button" class="btn btn-success rounded-pill btn-xs ml-2" >Update By Amount</button>
+                            <button type="button" class="btn btn-danger rounded-pill btn-xs ml-2" >Cancel</button>
+                          </div>
+                        </div>
+                        <!-- <label class="col-md-3 control-label">Message Content </label>
+                        <div class="col-md-6 control-label">
+                            <textarea class="form-control" rows="5" id="replycontent" [ngModelOptions]="{standalone: true}" [(ngModel)]="msgContent"></textarea>
+                        </div>
+                         -->
+
+
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12 row">
+                       <span> Set lowest price by</span>
+                        <div class="col-md-1">
+                          <input type="text" value="" class="form-control form-control-xs">
+                        </div>
+                         <span> and highest price by</span>
+                         <div class="col-md-1">
+                          <input type="text" value="" class="form-control form-control-xs">
+                        </div>
+                         <span> of number</span> 
+                         <div class="col-md-4">
+                          <button type="button" class="btn btn-success rounded-pill btn-xs ml-2" >Update By Percentage</button>
+                          <button type="button" class="btn btn-danger rounded-pill btn-xs ml-2" >Cancel</button>
+                        </div>
+                      </div>
+                      <!-- <label class="col-md-3 control-label">Message Content </label>
+                      <div class="col-md-6 control-label">
+                          <textarea class="form-control" rows="5" id="replycontent" [ngModelOptions]="{standalone: true}" [(ngModel)]="msgContent"></textarea>
+                      </div>
+                       -->
+
+
+                  </div>
+                  </div>
+              </form>
+          </div>
+          
+      </div>
+  </div>
+</div>

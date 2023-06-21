@@ -1,0 +1,99 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="col-lg-12 col-md-12 row option-alignment">
+            <div class="col-lg-12 col-sm-12 col-md-12 row" style="padding: 0px">
+              <h4 class="card-title" style="padding-top:5px">Low Stock Report</h4>
+              <button title="Description" (click)="toggleDesc()" type="button"
+                class="btn-sm m-l-15 btn btn-dark btn-circle"><i class=" fas fa-info"></i> </button>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 " *ngIf="isDescEnables">
+            <div class="card">
+              <div class="card-body  box bg-warning">
+                <h5 class="text-left text-white">Description : </h5>
+                <p class="text-left"> This report contains a summary of all products that are low in stock. To calculate
+                  a low stock alert the available stock level must be lower than the set low stock alert level for a
+                  given SKU. If the low stock alert is empty, then all stock with quantity less than or equal to 1 will
+                  be returned.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <div class="form-group m-r-15">
+                  <!-- <label for="exampleInputuname">User Name</label> -->
+                  <div class="input-group">
+                    <input type="text" [(ngModel)]="search" class="form-control" placeholder="sku or product title"
+                      aria-label="Username">
+                    <!-- <div class="input-group-append">
+                      <span (click)="searchField()" class="input-group-text"><i class="ti-search"></i></span>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="m-l-15 m-r-15">
+                  <button title="Clear" (click)="clear()" type="button" class="btn btn-success btn-circle mr-2">
+                    <i class="fas fa-times-circle"></i></button>
+                  <button title="Search" (click)="searchField()" type="button" class="btn btn-primary btn-circle mr-2"><i
+                      class="fas fa-search"></i></button>
+                  <button title="Download" (click)="download()" type="button" class="btn btn-warning btn-circle"><i
+                      class="fas fa-download"></i> </button>
+                  <!-- <button title="Description" (click)="toggleDesc()" type="button" class="btn btn-dark btn-circle"><i
+                      class=" fas fa-question"></i> </button> -->
+                </div>
+
+                <!-- <label class="control-label">Page Size</label> -->
+                <select style="width: 7%;" class="form-control custom-select" [(ngModel)]="pageSize"
+                  (change)="changePageSize()">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                <!-- <small class="form-control-feedback"> Select your gender </small> -->
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive mt-2">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table class="table table color-bordered-table success-bordered-table table-bordered">
+              <thead class="text-center">
+                <th>ID</th>
+                <th>SKU </th>
+                <th>PRODUCT </th>
+                <th>AVAILABLE STOCK</th>
+                <th>LOW ALERT LEVEL</th>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let lowstock of allReports;let i=index">
+                  <td>{{ lowstock.id }}</td>
+                  <td>{{ lowstock.sku }}</td>
+                  <td><span class="title">{{ lowstock.title }}</span></td>
+                  <td>{{ lowstock.qty }}</td>
+                  <td>{{ lowstock.minimumQty }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-12 col-md-12 row">
+            <div class="col-lg-6 col-md-6">
+              <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+              </ngb-pagination>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+              <span>Showing {{pageSize}} of {{collectionsize}} entries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

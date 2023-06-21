@@ -1,0 +1,169 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-12 col-md-12 row option-alignment">
+            <div class="col-lg-6 col-sm-12 col-md-6">
+              <h4 class="card-title">FBA Orders</h4>
+            </div>
+            <div class="col-lg-6 col-sm-12 col-md-6  align-self-center text-right " style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <!-- <button type="button"
+                    class="btn btn-info d-lg-block m-l-15"><i class=" fas fa-file-excel"></i> Export To CSV</button> -->
+                <!-- <button type="button" data-toggle="modal" data-target="#responsive-modal"
+                    class="btn btn-warning d-lg-block m-l-15"><i class=" fas fa-print"></i> Print</button> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 col-sm-12 col-md-12 row" style="padding-right: 0px;">
+            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <div class="mr-2">
+                  <div class="btn-group mr-1">
+                    <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
+                      (click)="bulkemail()">
+                      <i class="far fa-envelope"></i>
+                      Bulk email </button>
+                  </div>
+                </div>
+                <div>
+                  <!-- <select class="form-control custom-select" placeholder="filter By">
+                      <option value="">Male</option>
+                      <option value="">Female</option>
+                    </select> -->
+                </div>
+                <div class="mr-1">
+                  <!-- <label class="control-label">First Name</label> -->
+                  <!-- <input type="text" id="firstName" class="form-control" placeholder=""> -->
+                </div>
+                <div>
+                  <!-- <label class="control-label">Page Size</label> -->
+                  <select (change)="getOrders()" class="form-control custom-select" [(ngModel)]="pageSize">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                  <!-- <small class="form-control-feedback"> Select your gender </small> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12 row">
+            <div class="col-lg-6 col-md-6 text-left ">
+              <div *ngIf="selectedItemsLength > 0">
+                <span style="font-size: 11px;font-weight: bold;"
+                  *ngIf="selectedItemsLength == 1">{{selectedItemsLength}}
+                  order selected</span>
+                <span style="font-size: 11px;font-weight: bold;" *ngIf="selectedItemsLength > 1">{{selectedItemsLength}}
+                  orders selected</span>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right ">
+              <span style="font-size: 11px;font-weight: bold;">Showing {{pageSize <= collectionsize ? pageSize :
+                  collectionsize}} of {{collectionsize}} entries</span>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table class="table table color-bordered-table success-bordered-table table-bordered">
+              <thead class="text-center">
+                <th>
+                  <div class="custom-control custom-checkbox">
+                    <!-- <input type="checkbox" id="checkall" name="checkall" class="custom-control-input checkallP">
+                    <label class="custom-control-label" for="checkall"></label> -->
+                    <input type="checkbox" id="checkall" [checked]="!isAllChecked" name="checkall"
+                      class="custom-control-input checkallP">
+                    <label (click)="selectall($event)" class="custom-control-label" for="checkall"></label>
+                  </div>
+                </th>
+                <th>Channel
+                  <!-- <app-filter></app-filter> -->
+                </th>
+                <th>Order Date <span class="fas fa-sort"></span> </th>
+                <th>Order Id/Transaction Id <span class="fas fa-sort"></span></th>
+                <th>Item <span class="fas fa-sort"></span></th>
+                <th>Qty<span class="fas fa-sort"></span></th>
+                <th>Order Status<span class="fas fa-sort"></span></th>
+                <th>Shipped Date <span class="fas fa-sort"></span></th>
+                <th>Buyer <span class="fas fa-sort"></span></th>
+                <th>Shipped Country <span class="fas fa-sort"></span></th>
+                <!-- <th>Action<span class="fas fa-sort"></span></th> -->
+              </thead>
+              <tbody class="text-center">
+                <tr (click)="individualselection(order)" *ngFor="let order of allOrders">
+                  <td>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" (change)="individualselection(order)"
+                        class="custom-control-input checkallP" [checked]="order.selected" type="checkbox"
+                        [id]="order.id" [value]="order.selected">
+                      <label class="custom-control-label" for="{{order.id}}"></label>
+                    </div>
+                  </td>
+                  <td>{{ order.channel }}</td>
+                  <td>{{ order.purchaseDate | date: 'dd MMM yyyy, h:mm a' }}</td>
+                  <td>{{ order.orderId }}
+                    <br> <img class="imgscss" height="40"
+                      src="https://s3-us-west-1.amazonaws.com/khubweb/web/{{order.site}}.png" *ngIf="order.site" />
+                  </td>
+                  <td style="font-size: 10px;font-weight:400 ;">{{ order.title }} <br /> {{'sku: ' +order.sku}}
+                    <br />{{ 'Item Id: '+ order.orderItemId}}
+                    <br />{{ 'Label Printed: : '+ order.labelPrinted}}
+                    <br /> {{ 'Invoice Printed: '+ order.invoicePrinted}}
+                    <div class="row ml-2">
+                      <!-- <img class="imgcss" height="40"
+                        src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhub{{order.channel}}.png" /> -->
+                    </div>
+                  </td>
+                  <td>{{ order.quantityShipped }}</td>
+                  <td>{{ order.orderStatus }}</td>
+                  <td>{{ order.shippedDate | date: 'dd MMM yyyy' }}</td>
+                  <td>{{ order.buyerName }}</td>
+                  <td>{{ order.shipCountry }}</td>
+                  <!-- <td>
+                      <button type="button" class="btn btn-success d-lg-block m-l-15">Action</button>
+                    </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 ">
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+              <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+              </ngb-pagination>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="responsive-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 600">Divison Registartion
+        </h4>
+
+        <!-- <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button> -->
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success">Save</button>
+        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

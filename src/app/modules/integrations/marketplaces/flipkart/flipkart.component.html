@@ -1,0 +1,103 @@
+<div  class="container-fluid" style="margin-top: 2px;">
+    <div  class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right">
+        <div  class="d-flex justify-content-end align-items-center"><button 
+                type="button" class="btn btn-warning d-lg-block m-l-15"><i 
+                    class="fas fa-arrow-left"></i> Back To List</button></div>
+    </div>
+    <div  class="col-md-12 col-lg-12 text-center m-t-10"><img 
+            src="https://s3-us-west-1.amazonaws.com/khubweb/images/channels/Flipkart_logo.png" alt="user"
+            class="img-responsive img-fixed img-fluid"></div>
+    <div  class="card-body p-b-0">
+        <ul  role="tablist" class="nav nav-tabs customtab2">
+            <li  class="nav-item"><a  data-toggle="tab" role="tab"
+                    aria-selected="true" class="nav-link active"><span  class="hidden-sm-up"><i
+                             class="ti-home"></i></span><span 
+                        class="hidden-xs-down"> Integration</span></a></li>
+          
+        </ul>
+        <div  class="tab-content">
+            <div class="tab-pane active" *ngIf="!listing" role="tabpanel">
+                <div class="portlet-body form">
+                            
+
+
+                    <form id="channeluser" role="form" class="form-horizontal" action="/settings/saveflipkartdetails" method="POST">
+                     <div class="form-body">
+                        <input type="hidden" value="" id="id" name="id">
+                        <input type="hidden" value="2358" id="kartzhubUserId" name="kartzhubUserId">
+                             <div class="form-group has-success">
+                                        <label class="col-md-3 control-label">Channel Name</label>
+                                        <div class="col-md-9">
+                    
+                                            <input type="text" value="Flipkart Account" readonly="" id="name" class="form-control input-inline input-medium" placeholder="Name to remember within KartzHub">
+                    
+                    
+                                        </div>
+                                    </div>
+                    
+                             <div class="form-group has-success">
+                                        <label class="col-md-3 control-label">Flipkart API Key</label>
+                                        <div class="col-md-9">
+                    
+                                            <input type="text" value="" id="apiKey" name="apiKey" class="form-control input-inline input-medium" placeholder="Flipkart API Key">
+                    
+                    
+                                        </div>
+                                    </div>
+                    
+                            <div class="form-group has-success">
+                                <label class="col-md-3 control-label">Flipkart API Secret</label>
+                                <div class="col-md-9">
+                    
+                                    <input type="text" value="" id="apipassword" name="apipassword" class="form-control input-inline input-medium" placeholder="Flipkart API Secret">
+                    
+                    
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-9">
+                    
+                                    <button type="submit" style="margin-right: 5px;" class="btn btn-info btn-success">Submit</button>
+                                    <button type="reset" class="btn btn-danger btn-danger">Reset</button>
+                    
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                    
+                    
+                            </div>
+                    
+                            <!-- <div class="col-md-6">
+                                <div class="form-group has-success">
+                                  <label class="control-label">Max Listed</label>
+                                  <input type="text"  name="username" class="form-control" placeholder="Max Listed">
+                                  
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group has-success">
+                                  <label class="control-label">Stock Percentage</label>
+                                  <input type="text"  name="username" class="form-control" placeholder="Stock Percentage">
+                                  
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group has-success">
+                                  <label class="control-label">End When</label>
+                                  <input type="text"  name="username" class="form-control" placeholder="End When">
+                                  
+                                </div>
+                              </div> -->
+                     </div>
+                     </form>
+                    
+                                           </div>
+          
+            </div>
+
+            
+         
+        </div>
+    </div>
+</div>

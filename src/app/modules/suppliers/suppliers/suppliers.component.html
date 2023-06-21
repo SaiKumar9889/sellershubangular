@@ -1,0 +1,467 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <h4 class="card-title mt-3 ml-3">Suppliers</h4>
+    <a title="Description" href="https://www.sellershub.io/userguide/supplier-management/" target="_blank" data-close-others="true" class="mt-2 mb-3 btn-sm m-l-15 btn btn-dark btn-circle text-white"><i
+        class=" fas fa-info"></i> </a>
+    </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <button type="button" data-toggle="modal" data-target="#search-modal" (click)="addsupplier();auditTrack(1)"
+                class="btn btn-warning d-lg-block m-l-15" data-backdrop="static" data-keyboard="false"><i class=" fas fa-plus-circle"></i> Add New
+                Supplier</button>
+                <!-- <button type="button" data-toggle="modal" data-target="#feed-modal"
+                  class="btn btn-warning d-lg-block m-l-15" data-backdrop="static" data-keyboard="false"><i class=" fas fa-plus-circle"></i> Add Feed</button> -->
+              </div>
+            </div>
+          </div>
+
+
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table id="printabletable" class="display nowrap table table-hover table-striped table-bordered"
+              cellspacing="0" width="100%">
+              <thead class="text-center">
+                <tr>
+                  <th>Supplier Name</th>
+                  <th>Supplier Email</th>
+                  <th>Suppliers country</th>
+                  <th>Suppliers City</th>
+                  <th>Suppliers Phone</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let supp of allSupl">
+                  <td>{{ supp.firstName }}</td>
+                  <td>{{ supp.email }}</td>
+                  <td>{{ supp.country }}</td>
+                  <td>{{ supp.city }}</td>
+                  <td>{{ supp.phone }}</td>
+                  <td>
+                    <div class="row justify-content-center  align-items-center">
+                      <div>
+                        <i  title="Edit" (click)="editSupplier(supp);auditTrack(2)" style="cursor: pointer;color: #00c292;" class="fa-lg fas fa-edit"></i>
+                      </div>
+                      <div class="m-l-15">
+                        <i title="Remove" (click)="removeSuppliers(supp);auditTrack(3)" style="cursor: pointer;color: #e46a76;" class=" fa-lg fas fa-window-close"></i>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="search-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2  *ngIf="!isEdit" class="modal-title">Add Supplier</h2>
+        <h2  *ngIf="isEdit" class="modal-title">Update Supplier</h2>
+        <button type="button" class="close"  (click)="modalclosed()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card border-primary">
+              <div class="card-header bg-primary">
+                <h4 class="m-b-0 text-white" *ngIf="isEdit">Update Supplier Details</h4>
+                <h4 class="m-b-0 text-white"  *ngIf="!isEdit">Create Supplier</h4>
+              </div>
+              <div class="card-body">
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Name</label>
+                      <input type="text" [(ngModel)]="name" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Address Line 1</label>
+                      <input type="text" [(ngModel)]="address1" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">code</label>
+                      <input type="text" disabled="true" [(ngModel)]="code" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Address Line 2</label>
+                      <input type="text" [(ngModel)]="address2"  id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Email</label>
+                      <input type="text"  [(ngModel)]="email" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Address Line 3</label>
+                      <input type="text" [(ngModel)]="address3" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Phone</label>
+                      <input [(ngModel)]="phone" appNumber   type="text" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">City</label>
+                      <input [(ngModel)]="city"  type="text" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">State</label>
+                      <input [(ngModel)]="state" type="text" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Postcode</label>
+                      <input [(ngModel)]="postcode" type="text" id="firstName" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Country</label>
+                      <ng-multiselect-dropdown [settings]="dropdownSettings" [placeholder]="'Select Country'" id="country" name="parameters" [data]="countries" ngDefaultControl [(ngModel)]="selectedCountry" (onSelect)="onItemSelect($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6">
+                    <div class="form-group">
+                      <label class="control-label">Account Number</label>
+                      <input type="text" [(ngModel)]="accountnumber"   id="accountnumber" class="form-control" placeholder="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" *ngIf="!isEdit"  (click)="saveOrUpdateUser()" class="btn waves-effect waves-light btn-success">Save</button>
+        <button type="button"  *ngIf="isEdit" (click)="updateUser()" class="btn waves-effect waves-light btn-success">Update</button>
+        <button type="button" (click)="modalclosed()" class="btn btn-danger waves-effect" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="feed-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+        <h2 class="modal-title">Add Feed</h2>
+        <button title="Description" (click)="toggleDesc()" type="button" class="btn-sm m-l-15 btn btn-dark btn-circle"><i
+          class=" fas fa-info"></i> </button>
+        <!-- <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button> -->
+      </div>
+
+      </div>
+      <div class="modal-body">
+        <div class="row" *ngIf="isDescEnables">
+          <div class="card">
+              <div class="card-body  box bg-warning text-center">
+                  <p class="text-left">Please enter a http feed with inventory details from your supplier/dropshipper to keep your stock levels in synch with your supplier quantity. This feed runs every 24 hours</p>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table color-bordered-table primary-bordered-table">
+              <thead class="text-left">
+                <tr  class="text-left">
+                  <th>Feed Url</th>
+                  <th>Feed Format</th>
+                  <th>Rules</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody  class="text-left">
+                <tr>
+                  <td><input type="text" class="form-control" placeholder="FEED URL" [(ngModel)]=" feedURL "
+                    aria-label="Username"></td>
+                <td>{{ feedFormat }}</td>
+                <td><i data-target="#feed-edit-modal"
+                   data-backdrop="static" data-keyboard="false" style="color:#fec107;cursor: pointer;" class="fa-lg fas fa-edit"></i></td>
+                <td>{{ feedStatus }}</td>
+                <td><button type="button" class="btn btn-sm btn-success d-lg-block m-l-15">Save</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success">Save</button>
+        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="feed-edit-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+        <h2 class="modal-title">Please enter column mapping for Quantity and SKU fields from your http feed csv file
+        </h2>
+
+        <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+      </div>
+
+      </div>
+      <div class="modal-body">
+        <div class="row" >
+          <div class="card">
+              <div class="card-body  box bg-warning text-center">
+                  <p class="text-left">e.g if the csv file has column names supplierquantity for the stock levels and 'product code' for the SKU (stock keeping unit), please enter the mapping as quantity=supplierquantity|sku=product code</p>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="table-responsive">
+            <input type="text" class="form-control" placeholder="FEED URL" [(ngModel)]=" feedURLEdit "
+                    aria-label="Username">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success" data-dismiss="modal" (click)="feedURL = feedURLEdit">Save</button>
+        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="modal-body">
+  <div id="stepper1" class="bs-stepper">
+    <div class="bs-stepper-header">
+      <div class="step" data-target="#test-l-1">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">1</span>
+          <span class="bs-stepper-label">Supplier Details</span>
+        </button>
+      </div>
+        <div class="line"></div>
+      <div class="step" data-target="#test-l-3">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">2</span>
+          <span class="bs-stepper-label">Purchase orders</span>
+        </button>
+      </div>
+    </div>
+    <div class="bs-stepper-content">
+      <form (ngSubmit)="onSubmit()">
+        <div id="test-l-1" class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card border-primary">
+                <div class="card-header bg-primary">
+                  <h4 class="m-b-0 text-white">Update Supplier Details</h4>
+                </div>
+                <div class="card-body">
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Address Line 1</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">code</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Address Line 2</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Email</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Address Line 3</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Phone</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">City</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">State</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Postcode</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <label class="control-label">Country</label>
+                        <input type="text" id="firstName" class="form-control" placeholder="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="card border-primary">
+                <div class="card-header bg-primary">
+                  <h4 class="m-b-0 text-white">Customer Information</h4>
+                </div>
+                <div class="card-body">
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <label>Grand Total:</label>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <label>Customer Name: </label>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <label>Email:</label>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-6 col-lg-6">
+                      <label>Phone Number:</label>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button (click)="next()" class="btn btn-primary">Next</button>
+        </div>
+        <div id="test-l-3" class="content text-center">
+          <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+            style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+              <button type="button" class="btn btn-success d-lg-block m-l-15"><i class="fas fa-plus-circle"></i> Create PO</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table color-bordered-table primary-bordered-table">
+              <thead>
+                <tr>
+                  <th>Order No#</th>
+                  <th>Supplier Email</th>
+                  <th>Order Status</th>
+                  <th>Reference No</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Nigam</td>
+                  <td>Eichmann</td>
+                  <td>@Sonu</td>
+                  <td>@Sonu</td>
+                  <td>@Sonu</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="submit" class="btn btn-primary mt-5">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->

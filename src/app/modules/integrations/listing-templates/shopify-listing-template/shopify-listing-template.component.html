@@ -1,0 +1,215 @@
+<div class="portlet-body form">
+  <div class="portlet box ">
+    <div class="portlet-body">
+      <div class="col-md-12 col-lg-12 text-right m-b-10">
+        <a title="Description" href="https://www.sellershub.io/userguide/user-guide/listing-management/how-to-create-shopify-listing-template/" target="_blank" data-close-others="true" class="mt-3 mr-1 mb-3 btn-sm m-l-15 btn btn-dark btn-circle text-white"><i
+          class=" fas fa-info"></i> </a>
+        <button type="button" *ngIf="!isEditTemplate" (click)="newTemplateObj()" class="btn btn-primary mr-1">
+          <i class="fa fa-times-circle-o"></i>New Template
+        </button>
+        <button type="button" *ngIf="!isEditTemplate" (click)="close()" class="btn btn-danger ng-star-inserted">
+          <i class="fa fa-times font-red"></i> Close </button>
+        <button type="button" *ngIf="isEditTemplate" (click)="updateTemplate()"
+          class="btn btn-success ng-star-inserted">
+          Update </button>
+      </div>
+      <div class="col-md-12">
+      <div class="portlet transparent" id="maintemplatelist" *ngIf="!(newTemplate || isEditTemplate)">
+        <div class="portlet-body">
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table class="table tableFixHead table-hover order-column v2 table-bordered">
+              <thead>
+                <tr>
+                  <th>
+                    Template Name
+                  </th>
+                  <th>
+                    Modified Date
+                  </th>
+                  <th>
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="templates?.length>0">
+                <tr *ngFor="let item of templates">
+                  <td> {{item.templateName}}</td>
+                  <td> {{item.modifiedDate | date:short}}</td>
+                  <td>
+                    <button class="btn btn-sm btn-success btn-circle-new" (click)="editTemplate(item)">Edit</button>
+                    <button class="btn btn-sm btn-danger btn-circle-new" (click)="removeTemplate(item)">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div id="edittempalteid" *ngIf="newTemplate || isEditTemplate">
+        <div class="portlet-body m-t-20">
+          <div class="row">
+            <h4 class="mb-3">Please Enter Shopify Listing Profile Details</h4>
+            <div class="col-md-12">
+              <div class="portlet transparent">
+                <div class="portlet-body form">
+                  <form class="form-horizontal" role="form">
+                    <div class="form-body row">
+                      <div class="col-md-6">
+                        <div class="form-group has-success row">
+                          <label class="col-md-4 control-label">Template Name</label>
+                          <div class="col-md-6">
+                            <input type="text" [(ngModel)]="templateModel.name" name="templatename"
+                              class="form-control input-inline input-medium" id="templatename"
+                              placeholder="Enter Template Name">
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-4 control-label">Product Type</label>
+                          <div class="col-md-8">
+                            <input type="text" [(ngModel)]="templateModel.productType" name="productType"
+                              id="productype" class="form-control input-inline input-medium" value=""
+                              placeholder="Product Type">
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-4 control-label">Vendor</label>
+                          <div class="col-md-8">
+                            <input type="text" [(ngModel)]="templateModel.vendor" name="vendor"
+                              class="form-control input-inline input-medium" id="shopifyvendor" placeholder="Vendor">
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-4 control-label">Tags</label>
+                          <div class="col-md-8">
+                            <input type="text" [(ngModel)]="templateModel.tags" name="tags"
+                              class="form-control input-inline input-medium" id="shopifytags" placeholder="Tags">
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-4 control-label">Pricing Rule</label>
+                          <div class="col-md-8">
+                            <input type="text" [(ngModel)]="templateModel.pricingRule" name=" pricingRule"
+                              class="form-control input-inline input-medium" id="pricingRule"
+                              placeholder="Pricing Rule">
+                            <div class="help-block mt-2"
+                              [innerHTML]="'<span>e.g  <strong>${cost_price!}*1.6 + 1 </strong><span><br><span> This make the selling price by multiplying cost price by 1.6 and add 1 Tags available are  <strong>${cost_price!} and ${selling_price!}</strong></span> </span></span>'">
+                              <!-- -->
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-4 control-label"> Custom Collection / Store Category</label>
+                          <div class="input-group">
+                            <input type="text" [(ngModel)]="templateModel.storeCategoryId" name="idd"
+                              class="form-control mt-2 ml-2" id="storeCategoryName" placeholder="Store Category Id">
+                            <span class="input-group-btn ml-3 mt-2">
+                              <a href="javascript:void(0)">
+                                <button class="btn-sm btn-success" type="button"
+                                  (click)="openetsCategories()">Categories</button>
+                              </a>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="form-group has-success row" *ngIf="newTemplate">
+                          <div class="col-md-4"></div>
+                          <div class="col-md-8">
+                            <button (click)="saveshopifyTemplate()" type="submit" style="margin-right: 6px;"
+                              class="btn green btn-success">Save</button>
+                            <button type="button" class="btn default btn-danger"
+                              (click)="newTemplate = false">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 pl-5">
+                        <div class="form-group has-success row">
+                          <label class="custom-control custom-checkbox m-b-0">
+                            <input id="appendProductSummary" [(ngModel)]="templateModel.appendProductSummary"
+                              name="summ" type="checkbox" class="custom-control-input" value="true">
+                            <span for="appendProductSummary" class="custom-control-label">
+                              Is Gift MessageAvailable
+                            </span>
+                            <div class="help-block">
+                              <span>Shopify does not have bullet points/product summary fields. If enable product
+                                summary fields (e.g Amazon bullet points)
+                                will be added to the description text.<span>
+                                </span></span>
+                            </div>
+                          </label>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="custom-control custom-checkbox m-b-0">
+                            <input id="appendAttributes" [(ngModel)]="templateModel.appendAttributes" name="sumsssm"
+                              type="checkbox" class="custom-control-input" value="true">
+                            <span for="appendAttributes" class="custom-control-label">
+                              Append Product Attributes into Description
+                            </span>
+                            <div class="help-block">
+                              <span>If enabled, product attributes will be appended into the description text</span>
+                            </div>
+                          </label>
+                        </div>
+                        <div class="form-group has-success row">
+                          <label class="custom-control custom-checkbox m-b-0">
+                            <input id="appendConditionNote" [(ngModel)]="templateModel.appendConditionNote"
+                              name="appendConditionNote" type="checkbox" class="custom-control-input" value="true">
+                            <span for="appendConditionNote" class="custom-control-label">
+                              Append Condition Note into Description
+                            </span>
+                            <div class="help-block">
+                              <span>
+                                If enabled, condition note (In General Details ) will be appended into the description
+                                text
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                        <div class="form-group has-success  row">
+                          <label class="col-md-4 control-label">Round the value to (Decimal Value)</label>
+                          <div class="col-md-8">
+                            <input class="form-control" [(ngModel)]="templateModel.pricingruleroundvalue" name="round"
+                              type="text" placeholder="99" id="pricingruleroundvalue" value="">
+                            <div class="help-block mt-2">
+                              <span>This allows you to round the calculated selling price' decimal value into
+                                pre-defined value. e.g if
+                                you enter 99 and selling price is 59.87 this will make the selling price to 59.99<span>
+                                </span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade bs-modal-lg in" id="categorywindow" tabindex="-1" role="basic" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="caption alert alert-warning">
+        <h4>Manage Shopify Collections / Store Category</h4>
+      </div>
+      <div class="modal-body">
+        <h4>Please select an Shopify Collection / Store Category </h4>
+        <div class="form-group has-success">
+          <select class="form-control" id="shopifystorectegoriesid" [(ngModel)]="categoryID" name="catege">
+            <option value="-1">Please select</option>
+            <option *ngFor="let item of categoriesList" [ngValue]="item.id">{{item.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm  btn-circle-new red-mint btn-danger" data-dismiss="modal">Close</button>
+        <button href="javascript:void(0)" type="button" class="btn btn-sm btn-circle-new blue btn-success"
+          (click)="setCategory()">Select</button>
+      </div>
+    </div>
+  </div>
+</div>

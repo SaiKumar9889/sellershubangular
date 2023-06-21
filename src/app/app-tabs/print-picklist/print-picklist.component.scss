@@ -1,0 +1,48 @@
+.header-row{
+    padding: 0px;
+    line-height: 35px;
+    text-align: center;
+    border: 1px solid black;
+}
+.highlight{
+    background-color: darkgrey;
+}
+.header-rep{
+color: black;
+padding: 0px;
+border: 3px solid black;
+background-color: darkgrey;
+}
+.header-data{
+    color: black;
+    padding: 0px;
+    background-color: white; 
+}
+
+@media print {
+    html, body {
+        width: 210mm;
+        height: 297mm;
+    }
+
+    .header-row{
+        padding: 0px;
+        line-height: 35px;
+        text-align: center;
+        border: 1px solid black;
+    }
+    .highlight{
+        background-color: darkgrey;
+    }
+    .header-rep{
+    color: black;
+    padding: 0px;
+    border: 3px solid black;
+    background-color: darkgrey;
+    }
+    .header-data{
+        color: black;
+        padding: 0px;
+        background-color: white; 
+    }
+}

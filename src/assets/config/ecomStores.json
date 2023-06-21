@@ -1,0 +1,98 @@
+[
+    {
+      "channel_id": "1",
+      "channel_title": "Opencart",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubopencart.png",
+      "channel_link_path": "openchart-ecommerce",
+      "enable":false,
+      "channel_link_website": "http://opencart.com/"
+    },
+    {
+      "channel_id": "2",
+      "channel_title": "Magento",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubmagento.png",
+      "channel_link_path": "magento-ecommerce",
+      "enable":false,
+      "channel_link_website": "http://magento.com/"
+    },
+    {
+      "channel_id": "3",
+      "channel_title": "PRESTASHOP",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubprestashop.png",
+      "channel_link_path": "prestashop-ecommerce",
+      "enable":true,
+      "channel_link_website": "http://kartzhub.com/prestashopv2"
+    },
+    {
+      "channel_id": "4",
+      "channel_title": "shopify",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubshopify.png",
+      "channel_link_path": "shopify-ecommerce",
+      "enable":true,
+      "channel_link_website": "http://www.shopify.com/"
+    },
+    {
+      "channel_id": "5",
+      "channel_title": "Bigcommerce",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubbigcommerce.png",
+      "channel_link_path": "big-ecommerce",
+      "enable":false,
+      "channel_link_website": "https://www.bigcommerce.com/free-trial"
+    },
+    {
+      "channel_id": "6",
+      "channel_title": "WooCommerce",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubwoocommerce.png",
+      "channel_link_path": "woo-ecommerce",
+      "enable":true,
+      "channel_link_website": "http://www.woothemes.com/woocommerce/"
+    },
+    {
+      "channel_id": "7",
+      "channel_title": "volusion",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubvolusion.png",
+      "channel_link_path": "bonza-channel-integration",
+      "enable":false,
+      "channel_link_website": "http://www.volusion.com/"
+    },
+    {
+      "channel_id": "8",
+      "channel_title": "ekmpowershop",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubekmpowershop.png",
+      "channel_link_path": "/#/",
+      "enable":false,
+      "channel_link_website": "http://ekmpowershop.com/"
+    },
+    {
+      "channel_id": "9",
+      "channel_title": "bluepark",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubbluepark.png",
+      "channel_link_path": "/#/",
+      "enable":false,
+      "channel_link_website": "http://www.bluepark.co.uk/"
+    },
+    {
+      "channel_id": "10",
+      "channel_title": "XChart",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubxcart.png",
+      "channel_link_path": "/#/",
+      "enable":false,
+      "channel_link_website": "https://www.x-cart.com/"
+    },
+    {
+      "channel_id": "11",
+      "channel_title": "Magento2",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubmagento2.png",
+      "channel_link_path": "/#/",
+      "enable":true,
+      "channel_link_website": "http://magento.com/"
+    },
+    {
+      "channel_id": "12",
+      "channel_title": "Shopwired",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubshopwired.png",
+      "channel_link_path": "shopwired-ecommerce",
+      "enable":true,
+      "channel_link_website": "https://www.shopwired.co.uk/"
+    }
+  ]

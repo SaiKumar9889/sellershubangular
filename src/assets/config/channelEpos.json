@@ -1,0 +1,9 @@
+[
+    {
+      "channel_id": "1",
+      "channel_title": "Eposnow",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubeposnow.png",
+      "channel_link_path": "eposnow-epos",
+      "channel_link_website": "https://www.eposnow.com/"
+    }
+  ]

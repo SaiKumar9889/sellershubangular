@@ -1,0 +1,418 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-12 col-md-12 row option-alignment">
+            <div class="col-lg-6 col-sm-12 col-md-6">
+              <h4 class="card-title">Stock Summary</h4>
+            </div>
+          </div>
+          <!-- <div class="col-lg-12 col-md-12 ">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Description : </h5>
+                      <p>This report contains a summary of all products that are low in stock. To calculate a low stock alert the available stock level must be lower than the set low stock alert level for a given SKU. If the low stock alert is empty, then all stock with quantity less than or equal to 1 will be returned.</p>
+                  </div>
+              </div>
+          </div> -->
+          <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <!-- <div class="form-group m-r-15"> -->
+                <!-- <label for="exampleInputuname">User Name</label> -->
+                <!-- <div class="input-group">
+                    <input type="text" class="form-control" placeholder="sku or product title" aria-label="Username">
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="ti-search"></i></span>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" data-toggle="modal" data-target="#responsive-modal"
+                  class="btn btn-success d-lg-block m-r-15"><i class=" fas fa-download"></i> Download Orders</button> -->
+                <div>
+                  <!-- <label class="control-label">Page Size</label> -->
+                  <select class="form-control custom-select">
+                    <option value="">5</option>
+                    <option value="">10</option>
+                    <option value="">15</option>
+                    <option value="">25</option>
+                    <option value="">50</option>
+                    <option value="">100</option>
+                    <option value="">500</option>
+                  </select>
+
+                </div>
+                <!-- <button type="button" data-toggle="modal" data-target="#search-modal"
+                  class="btn btn-success d-lg-block m-l-15"><i class=" fas fa-search"></i> Search</button> -->
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table class="table table color-bordered-table success-bordered-table table-bordered">
+              <thead class="text-center">
+                <th>
+                  <div class="custom-control custom-checkbox">
+                    <!-- <input type="checkbox" id="checkall" name="checkall" class="custom-control-input checkallP">
+                      <label class="custom-control-label" for="checkall"></label> -->
+                    <input type="checkbox" id="checkall" [checked]="!isAllChecked" name="checkall"
+                      class="custom-control-input checkallP">
+                    <label (click)="selectall($event)" class="custom-control-label" for="checkall"></label>
+                  </div>
+                </th>
+                <th>IMAGE<span class="fas fa-sort"></span> </th>
+                <th>SKU<span class="fas fa-sort"></span> </th>
+                <th>TITLE<span class="fas fa-sort"></span></th>
+                <th>WAREHOUSE DETAILS<span class="fas fa-sort"></span></th>
+                <th>PRICE<span class="fas fa-sort"></span></th>
+                <th>CURRENT QUANTITY<span class="fas fa-sort"></span></th>
+                <!-- <th>{{warehouseName}}<span class="fas fa-sort"></span></th> -->
+                <th>ACTION<span class="fas fa-sort"></span></th>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let prod of allProds">
+
+
+                  <td>
+                    <div class="custom-control custom-checkbox">
+                      <input (click)="individualselection(prod)" [checked]="prod.selected" type="checkbox"
+                        [id]="prod.id" [value]="prod.selected" [name]="test" class="custom-control-input checkallP">
+                      <label class="custom-control-label" for="{{prod.id}}"></label>
+                    </div>
+                  </td>
+                  <td><img [src]="prod?.imageUrl" class="img-responsive prod-img"></td>
+                  <td><span class="sku">{{ prod.sku }}</span></td>
+                  <td><span class="title">{{ prod.title }}</span></td>
+                  <td><span *ngFor="let loc of prod.itemLocations"> {{ '[' + loc.warehouseName +'] ['+
+                      loc.locationdetails +'] ['+ loc.qty + ']'}} <br></span></td>
+                  <td>{{ prod.rrp }}</td>
+                  <td>{{ prod.qty }}</td>
+                  <!-- <td>{{ prod.sku }}</td> -->
+                  <td>
+                    <!-- <button type="button" class="btn btn-success d-lg-block m-l-15">Edit Product</button> -->
+                    <button (click)="editstock(prod);auditTrack(1)" type="button"
+                      class="btn btn-success d-lg-block m-l-15" style="margin-top: 5px;">Edit Stock</button>
+                    <!-- <button type="button" (click)="transferstock(prod)" class="btn btn-success d-lg-block m-l-15"
+                      style="margin-top: 5px;">Transfer Stock</button> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row col-lg-12 col-md-12">
+            <div class="col-lg-6 col-md-6 ">
+              <span>Showing {{pageSize <= total ? pageSize : total}} of {{total}} entries</span>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+              <ngb-pagination [collectionSize]="total" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+              </ngb-pagination>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="search-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Search Criteria
+        </h2>
+
+        <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <select class="form-control custom-select" aria-placeholder="filter By">
+                <option value="">Male</option>
+                <option value="">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="John doe">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success">Save</button>
+        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="editstock-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Stock</h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card border-primary">
+              <div class="card-body">
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-3 col-lg-3">
+                    <!-- <div class="form-group" style="text-align: right; margin-top: 10px;">
+                      <label class="control-label">label</label>
+                    </div> -->
+                  </div>
+                  <div class="col-md-3 col-lg-3">
+                    <div class="form-group">
+                      <label class="control-label">TITLE:</label>
+                      <label class="control-label" style="margin-left: 10px;">{{title}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3">
+                    <div class="form-group">
+                      <label class="control-label">SKU:</label>
+                      <label class="control-label" style="margin-left: 10px;">{{sku}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3">
+                    <div class="form-group">
+                      <label class="control-label">QUANTITY:</label>
+                      <label class="control-label" style="margin-left: 10px;">{{totalquantity}}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="padding-top: 20px;">
+                  <div class="table-responsive">
+                    <table class="table table color-bordered-table success-bordered-table">
+                      <thead>
+                        <th>Aisle</th>
+                        <th>Bay</th>
+                        <th>Shelf</th>
+                        <th>Bin</th>
+                        <th>Assign Qunatity</th>
+                        <th>Action</th>
+                      </thead>
+                      <tbody class="text-left">
+                        <tr>
+                          <td>{{aisle}}</td>
+                          <td>{{bay}}</td>
+                          <td>{{shelf}}</td>
+                          <td>{{bin}}</td>
+                          <td><input type="number" [(ngModel)]="assignqty" id="firstName" class="form-control"
+                              pattern="[0-9]+"></td>
+                          <td>
+                            <button type="button" (click)="editstockclear()"
+                              class="btn btn-success d-lg-block m-l-15">X</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="UpdatestockforLocation()"
+          class="btn waves-effect waves-light btn-success">Update</button>
+
+        <button type="button" (click)="modalclosed()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="editstocktransfer-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Transfer Stock</h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card border-primary">
+              <div class="card-body">
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-3 col-lg-3">
+                    <!-- <div class="form-group" style="text-align: right; margin-top: 10px;">
+                      <label class="control-label">label</label>
+                    </div> -->
+                  </div>
+                  <div class="col-md-3 col-lg-3">
+                    <div class="form-group">
+                      <label class="control-label">TITLE:</label>
+                      <label class="control-label" style="margin-left: 10px;">{{title}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3">
+                    <div class="form-group">
+                      <label class="control-label">SKU:</label>
+                      <label class="control-label" style="margin-left: 10px;">{{sku}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3">
+                    <div class="form-group">
+                      <label class="control-label">QUANTITY:</label>
+                      <label class="control-label" style="margin-left: 10px;">{{totalquantity}}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="padding-top: 20px;">
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-3 col-lg-3">
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <select id="select-type-basic" class="form-control custom-select"
+                          [(ngModel)]="srcwarehousedetails">
+                          <option *ngFor="let list of srcwarehouselocations" value="{{list.id}}---{{list.quantity}}">
+                            {{list.warehouseName}}-{{list.aisle}}-{{list.bay}}-{{list.shelf}}-{{list.bin}}
+                          </option>
+                        </select>
+                        <label>Current Stock: {{currentstock}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                      <div class="form-group">
+                        <select id="select-type-basic" class="form-control custom-select"
+                          [(ngModel)]="dstwarehousedetails">
+                          <option *ngFor="let list of dstwarehouselocations" value="{{list.id}}">
+                            {{list.warehouseName}}-{{list.aisle}}-{{list.bay}}-{{list.shelf}}-{{list.bin}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                      <button type="button" (click)="ok()" class="btn waves-effect waves-light btn-success">Ok</button>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding-top: 20px;" *ngIf="locations">
+                  <div class="col-md-12 col-lg-12 row">
+                    <div class="col-md-3 col-lg-3">
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                      <label>Transfer Quantity</label>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                      <input type="number" [(ngModel)]="transferqty" id="firstName" class="form-control">
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" *ngIf="locations" (click)="Updatestocktransfer()"
+          class="btn waves-effect waves-light btn-success">Initiate
+          Transfer</button>
+
+        <button type="button" (click)="modalclosed()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+

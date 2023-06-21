@@ -1,0 +1,187 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-lg-12 col-md-12 row option-alignment" style="padding-left: 0px;">
+                        <div class="col-lg-6 col-sm-12 col-md-6 row">
+                            <h4 class="card-title">Messages</h4>
+                            <h6 class="card-title">(Beta *)</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment " style="padding-right: 0px;">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <div>
+                                <!-- <label class="control-label">Page Size</label> -->
+                                <select class="form-control custom-select" [(ngModel)]="pageSize" (change)="changePageSize()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                        <table class="table table color-bordered-table success-bordered-table">
+                            <thead>
+                                <th>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="checkall" name="checkall" class="custom-control-input checkallP">
+                                        <label (click)="selectall($event)" class="custom-control-label" for="checkall"></label>
+                                    </div>
+                                </th>
+                                <th>Channel</th>
+                                <th>Item Ref </th>
+                                <th>Message From </th>
+                                <th>Subject</th>
+                                <th>Received On</th>
+                                <th>Details</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let msg of allMessages;let i=index">
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input (click)="individualselection(msg)" [checked]="msg.selected" type="checkbox" [id]="msg.id" [value]="msg.selected" [name]="test" class="custom-control-input checkallP">
+                                            <label class="custom-control-label" for="{{msg.id}}"></label>
+                                        </div>
+                                    </td>
+                                    <td><img [src]="getImage(msg.channelType)" class="prod-img img-responsive"></td>
+                                    <td>{{msg.itemId}}</td>
+                                    <td>{{msg.messageFrom}}</td>
+                                    <td>{{msg.messageSubject}}</td>
+                                    <td>{{msg.createdDate | date:'dd MMM yyyy'}}</td>
+                                    <td><button class="btn btn-sm btn-success" (click)="viewMessage(msg)">view</button></td>
+                                    <td *ngIf="msg.replied == false"><button class="btn btn-sm btn-success" (click)="replyMessage(msg)">Reply</button></td>
+                                    <td *ngIf="msg.replied != false"><button disabled class="btn btn-sm btn-success">Replied</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row col-lg-12 col-md-12">
+                        <div  class="col-lg-6 col-md-6 ">
+                          <span >Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of {{collectionsize}} entries</span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right">
+                          <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                            [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+                          </ngb-pagination>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <div id="msg-view-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Customer Message
+                    </h2>
+
+                    <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label text-right mb-3">Message Id </label>
+                                <div class="col-md-9 control-label">
+                                    <label class="col-md-9 text-left"> {{message?.messageId}}</label>
+                                </div>
+                                <label class="col-md-3 control-label text-right mb-3">Created on </label>
+                                <div class="col-md-9 control-label">
+                                    <label class="col-md-9 text-left"> {{message?.createdDate | date:'dd MMM yyyy'}} </label>
+                                </div>
+                                <label class="col-md-3 control-label text-right mb-3">Channel</label>
+                                <div class="col-md-9 control-label">
+                                    <label class="col-md-9 text-left"><img height="30" src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhub{{message?.channelType}}.png"></label>
+                                </div>
+                                <label class="col-md-3 control-label text-right mb-3">Message from </label>
+                                <div class="col-md-9 control-label">
+                                    <label class="col-md-9 text-left"> {{message?.messageFrom}}</label>
+                                </div>
+                                <label class="col-md-3 control-label text-right mb-3">Message Status </label>
+                                <div class="col-md-9 control-label">
+
+                                    <label class="col-md-9 text-left" *ngIf="message?.replied == false">Reply Not Sent</label>
+                                    <label class="col-md-9 text-left" *ngIf="message?.replied == true">Replied</label>
+                                </div>
+                                <label class="col-md-3 control-label text-right mb-3">Image </label>
+                                <div class="col-md-9 control-label">
+
+                                    <label class="col-md-9 text-left"></label>
+                                </div>
+                                <label class="col-md-3 control-label text-right mb-3">Message Content </label>
+                                <div class="col-md-9 control-label">
+                                    <label class="col-md-9 text-left">{{message?.messageText}}</label>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn waves-effect waves-light btn-success" *ngIf="message?.replied == false"
+                    (click)="onReply(message)">Reply</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="reply-view-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Give reply to the Customer Message
+                    </h2>
+
+                    <button type="button" class="close" data-dismiss="modal" (click)="replymodalclosed()" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Message Id </label>
+                                <div class="col-md-6 control-label">
+                                    <input type="text" value="{{msgId}}" class="form-control" disabled [(ngModel)]="msgId" [ngModelOptions]="{standalone: true}">
+                                </div>
+                                <label class="col-md-6 control-label ">Message Subject </label>
+                                <div class="col-md-6 control-label">
+                                    <textarea rows="5" class="form-control" value="{{msgSubject}}" disabled></textarea>
+                                </div>
+                                <label class="col-md-6 control-label ">Message Content </label>
+                                <div class="col-md-6 control-label">
+                                    <textarea rows="5" class="form-control" value="{{msgContent}}" disabled></textarea>
+                                </div>
+                                <label class="col-md-3 control-label">Reply Message Content </label>
+                                <div class="col-md-6 control-label">
+                                    <textarea class="form-control" rows="5" id="replycontent" [ngModelOptions]="{standalone: true}" [(ngModel)]="repContent"></textarea>
+                                </div>
+                                
+
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn waves-effect waves-light btn-success" (click)="onSubmit()">Submit</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,102 @@
+<div class="skin-default fixed-layout">
+    <div id="main-wrapper" style="color: black;">
+        <div class="col-md-12 col-lg-12 card">
+            <div class="card-body row" *ngIf="!isSingleSelected">
+                <!-- <ng-container *ngFor="let report of allreports">
+                    <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                        <div class="ribbon-wrapper card border-dark shadow p-0 rounded">
+                            <div class="card-header bg-success" style="padding:5px 0px 0px 0px!important;">
+                            </div>
+                            <div class="card-body border" style="padding: 10px 10px 0px 10px!important;">
+                                <div class="ribbon ribbon-bookmark  ribbon-success" style="font-weight: 500;">
+                                    {{getReportBy(report)}}</div>
+                                <div class="ribbon-content" style="cursor: pointer;" (click)="openModal(report)">
+                                    <div class="row div-size text-center">
+                                        <span class="span-color">{{report.reportname}}</span>
+                                    </div>
+                                    <div class="row text-center">
+                                        <label class="lable-color">{{getDateTime(report.createdDtm)}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container> -->
+                <div class="table-responsive">
+                    <table id="printabletable" class="display wrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Report Name</th>
+                                <th>Created By</th>
+                                <th>Created On</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let report of allreports;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{report.reportname}}</td>
+                                <td>{{getReportBy(report)}}</td>
+                                <td>{{getDateTime(report.createdDtm)}}</td>
+                                <td>
+                                    <button (click)="openModal(report)" type=" button " class="btn btn-info "> Generate Report</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-12 " *ngIf="isSingleSelected ">
+                <div class="col-lg-12 col-md-12 row ">
+                    <div class="col-lg-6 col-sm-12 col-md-6 ">
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6 align-self-center text-right " style="margin-top: 2%; ">
+                        <div class="d-flex justify-content-end align-items-center ">
+                            <button (click)="backtolist() " type="button " class="btn btn-info d-lg-block m-l-15 ">
+                                Back to list</button>
+                            <button (click)="exportToPDF() " type="button " class="btn btn-info d-lg-block m-l-15 ">
+                               Generate PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="page " id="Page-{{i}} " *ngFor="let page of selectedRep.pages;let i=index ">
+                    <div class="col-md-12 col-lg-12 " *ngFor="let div of page.divs ">
+                        <div class="col-md-12 col-lg-12 " *ngFor="let ui of div.UIelements ">
+                            <div *ngIf="ui!=null && ui!=undefined ">
+                                <div *ngIf="ui.type=='Text Field' ">
+                                    <p [ngStyle]="getStyleObj(ui) ">{{ui.value}}</p>
+                                </div>
+                                <div *ngIf="ui.type=='Text Area' ">
+                                    <p [ngStyle]="getStyleObj(ui) ">{{ui.value}}</p>
+                                </div>
+                                <div *ngIf="ui.type=='Image' ">
+                                    <div class=" form-group row imgUp ">
+                                        <div class="col-sm-4 " [style.margin-left]="getposition(ui) ">
+                                            <div [id]="ui.id " class="imagePreview "></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="ui.type=='Table' ">
+                                    <div class="table-responsive ">
+                                        <table class="text-center display wrap table table-hover table-striped table-bordered " cellspacing="0 " width="100% ">
+                                            <thead>
+                                                <tr>
+                                                    <th *ngFor="let column of ui.columns ">{{column}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let rep of ui.response ">
+                                                    <td *ngFor="let colres of rep ">{{colres}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

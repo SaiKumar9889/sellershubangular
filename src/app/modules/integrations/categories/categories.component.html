@@ -1,0 +1,13 @@
+<div *ngFor="let item of categories" class="cate"
+  [style.padding.px]="item.level*5 + '%'">
+    <span *ngIf="item?.children" style="cursor: pointer;" class="m-l-5">
+        <i *ngIf="!item.expand" class="fa fa-plus" (click)="openNodes(item)" aria-hidden="true"></i>
+        <i *ngIf="item.expand" class="fa fa-minus" (click)="item.expand = false" aria-hidden="true"></i>
+    </span>
+    <span (click)="_getItem(item)" class="category"> {{item.text }} </span>
+
+    <ng-container *ngIf="item.children && item.children.length > 0 && item.expand">
+        <app-categories (getItem)="_getItem($event)" [categories]="item.children" class="m-l-5"></app-categories>
+    </ng-container>
+
+</div>

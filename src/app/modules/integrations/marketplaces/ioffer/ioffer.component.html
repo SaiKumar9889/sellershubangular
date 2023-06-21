@@ -1,0 +1,152 @@
+<div  class="container-fluid" style="margin-top: 2px;">
+    <div  class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right">
+        <div  class="d-flex justify-content-end align-items-center"><button 
+                type="button" class="btn btn-warning d-lg-block m-l-15"><i 
+                    class="fas fa-arrow-left"></i> Back To List</button></div>
+    </div>
+    <div  class="col-md-12 col-lg-12 text-center m-t-10"><img 
+            src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubioffer.png" alt="user"
+            class="img-responsive img-fixed img-fluid"></div>
+    <div  class="card-body p-b-0">
+        <ul  role="tablist" class="nav nav-tabs customtab2">
+            <li  class="nav-item"><a  data-toggle="tab" role="tab" (click)="listing = false"
+                    aria-selected="true" class="nav-link active"><span  class="hidden-sm-up"><i
+                             class="ti-home"></i></span><span 
+                        class="hidden-xs-down"> Integration</span></a></li>
+            <li  class="nav-item"><a  data-toggle="tab" role="tab" (click)="listing = true"
+                aria-selected="true" class="nav-link "><span  class="hidden-sm-up"><i
+                            class="ti-home"></i></span><span 
+                    class="hidden-xs-down"> Listing</span></a></li>
+          
+        </ul>
+        <div  class="tab-content">
+            <div class="tab-pane active" style="min-height: 450px;" *ngIf="!listing" role="tabpanel">
+              
+               <div style="padding: 15px;">iOffer does not allow an API to directly connect for listing and order download. Please use bulk import file to list items from KartzHub to iOffer</div>
+            </div> 
+            
+            <div class="tab-pane active" *ngIf="listing" role="tabpanel">
+                <div class="tab-pane active in"   style="min-height: 450px;"  id="listingtemplate">
+
+                    <div id="ebaylistingtemplatedivid" class="portlet light">
+                    
+                     
+                        <div class="tools">
+                          <button (click)="newTemplate = true;" class="btn btn-sm btn-default btn-success pull-right" ><i class="fa fa-angle-right"></i> New Listing Template</button>
+                        </div>
+                     
+                    
+                      <div class="portlet-body"  *ngIf="listing && !newTemplate">
+                        <div class="table-responsive">
+                          <table class="table tableFixHead table-hover order-column v2">
+                            <thead>
+                            <tr>
+                              <th>
+                                Template Name
+                              </th>
+                    
+                              <th>
+                                Modified Date
+                              </th>
+                              <th>
+                                Action
+                              </th>
+                    
+                            </tr>
+                            </thead>
+                            <tbody>
+                    
+                            
+                    
+                            </tbody>
+                    
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                    <div id="editebaylistingtempaltedivid" *ngIf="newTemplate">
+                    
+                    <div class="alert alert-warning">Please enter iOffer Listing Template details</div>
+                    
+                    <div class="portlet-body form" style="padding: 15px;">
+                        <form class="" role="form">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Template Name</label>
+                                            <div>
+                                                <input type="text" value="" class="form-control" id="channeltemplatename" placeholder="Enter Template Name">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>iOffer Product Typpe</label>
+                                            <input type="text" value="" class="form-control" id="ioffertemplateproducttype" placeholder="Enter Product Type">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Pricing Rules</label>
+                                            <input type="text" class="form-control" id="pricingrulesid" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Shipping Charge</label>
+                                            <input type="text" value="" class="form-control" id="ioffertemplateshippingCharge" placeholder="Enter Shipping Charge in USD">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Attributes</label>
+                                            <a href="javascript:void(0)"> </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>iOffer Category Id</label>
+                                            <div class="input-group">
+                                                <input type="text" value="" class="form-control" id="ioffertemplatecategoryid" placeholder="Enter Category Id">
+                                                <span class="input-group-btn">
+                                                    <a onclick="showioffercategories()" href="javascript:void(0)">
+                                                        <button class="btn-xs" type="button">Edit Quantity</button>
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Ship to County</label>
+                                            <input type="text" value="" class="form-control" id="ioffertemplatecountryShipping" placeholder="Enter Ship to country">
+                                            <p>Please enter ship to country in following format. </p>
+                                            <p>If the shipping charge for US is $5.49  and shipping charge for UK is $10.50, please enter  US:5.49;GB:10.50.  Please ues ISO country codes e.g FR for France, DE for Germany
+                                                ES for Spain, CA for Canada, IT for Italy</p>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <button href="javascript:void(0)" type="submit" class="btn btn-sm btn-success btn-success">Save</button>
+                                            <button  type="button" class="btn btn-sm btn-default btn-danger"><i class="fa fa-times font-red"></i> Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                    
+                    
+                    
+                    </div>
+                    
+                 </div>
+
+            </div>
+
+            
+         
+        </div>
+    </div>
+</div>

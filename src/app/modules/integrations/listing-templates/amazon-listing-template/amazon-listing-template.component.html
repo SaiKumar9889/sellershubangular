@@ -1,0 +1,628 @@
+<div class="portlet box">
+  <div class="portlet-body">
+    <div class="portlet-body">
+      <div class="mrgn12 pull-right col-md-12">
+        <div class="pull-right" style="float: right;">
+          <button *ngIf="!isEditTemplate" (click)="newTemplateObj()"
+            class="btn btn-circle-new btn-sm btn-default btn-success">New Listing
+            Template <i class="fa fa-angle-right"></i>
+          </button>
+          <button (click)="close()" *ngIf="!isEditTemplate" class="btn btn-sm btn-circle-new btn-danger btn-default">
+            <i class="fa fa-times font-red"></i> Close</button>
+        </div>
+      </div>
+      <div id="amazonlistingtemplatesid" class="row">
+        <div class="col-md-12">
+          <div class="portlet transparent" *ngIf="!(newTemplate || isEditTemplate)">
+            <div class="portlet-body">
+              <div class="table-responsive">
+                <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                <table class="table tableFixHead table-hover order-column v2 table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Template Name</th>
+                      <th>Amazon Site</th>
+                      <th>Modified Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of templates">
+                      <td>
+                        {{item.templateName}}
+                      </td>
+                      <td>
+                        {{item.site}}
+                      </td>
+                      <td>
+                        {{item.modifiedDate | date: short}}
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-success btn-circle-new" (click)="editTemplate(item)">Edit</button>
+                        <button class="btn btn-sm btn-danger btn-circle-new"
+                          (click)="removeTemplate(item)">Remove</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="newTemplate || isEditTemplate">
+        <div class="row" id="editamazonlistingtemplatedivid">
+          <div class="col-md-12 ">
+            <!-- BEGIN SAMPLE FORM PORTLET-->
+            <div class="portlet light">
+              <div class="portlet-title">
+                <div class="caption">
+                  <h5> Manage Amazon listing template - </h5>
+                </div>
+              </div>
+              <div class="portlet-body form">
+                <div class="tabbable-custom">
+                  <ul class="nav nav-tabs">
+                    <li class="lics active">
+                      <a data-toggle="tab" href="#tab_1_1_1" role="tab" aria-selected="false" class="nav-link"><span
+                          class="hidden-sm-up"><i class="ti-home"></i>
+                        </span><span class="hidden-xs-down"> General Details</span></a>
+                    </li>
+                    <!-- <li class="lics">
+                      <a data-toggle="tab" href="#tab_1_1_2" role="tab" aria-selected="false" class="nav-link"><span
+                          class="hidden-sm-up"><i class="ti-home"></i>
+                        </span><span class="hidden-xs-down"> Shipping</span></a>
+                    </li>
+                    <li class="lics">
+                      <a data-toggle="tab" href="#tab_1_1_3" role="tab" aria-selected="false" class="nav-link"><span
+                          class="hidden-sm-up"><i class="ti-home"></i>
+                        </span><span class="hidden-xs-down"> Pricing Rules</span></a>
+                    </li> -->
+                    <li class="lics">
+                      <a data-toggle="tab" href="#tab_1_1_4" role="tab" aria-selected="false" class="nav-link"><span
+                          class="hidden-sm-up"><i class="ti-home"></i>
+                        </span><span class="hidden-xs-down"> Other</span></a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1_1_1">
+                      <form class="" role="form">
+                        <div class="row form-body">
+                          <div class="col-md-6">
+                            <div class="form-group has-success">
+                              <label class="control-label">Template Name</label>
+                              <input type="text" value="" class="form-control" id="templatename"
+                                [(ngModel)]="templateModel.templateName" [ngModelOptions]="{standalone: true}"
+                                placeholder="Template Name">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label">Amazon Site</label>
+                              <select id="amazonsiteid" class="form-control" [(ngModel)]="templateModel.site"
+                                [ngModelOptions]="{standalone: true}">
+                                <option value="{{item.name}}" *ngFor="let item of allCountries">{{item.name}}
+                                </option>
+                              </select>
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label">Item Condition</label>
+                              <select id="amazonitemcondition" class="form-control"
+                                [(ngModel)]="templateModel.itemCondition" [ngModelOptions]="{standalone: true}">
+                                <option value="-1">Please select</option>
+                                <option value="New">New</option>
+                                <option value="UsedLikeNew">Used Like New</option>
+                                <option value="UsedVeryGood">Used Very Good</option>
+                                <option value="UsedGood">Used Good</option>
+                                <option value="UsedAcceptable">Used Acceptable</option>
+                                <option value="CollectibleLikeNew">Collectible Like New</option>
+                                <option value="CollectibleVeryGood">Collectible Very Good</option>
+                                <option value="CollectibleGood">Collectible Good</option>
+                                <option value="CollectibleAcceptable">Collectible Acceptable</option>
+                                <option value="Refurbished">Refurbished</option>
+                                <option value="Club">Club</option>
+                              </select>
+                              <p class="help-block mt-2"> If this leave empty, item condition at product level will be
+                                used
+                              </p>
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="control-label">Max Order Quantity</label>
+                              <input type="text" value="" class="form-control" id="maxorderqty"
+                                [(ngModel)]="templateModel.maxOrderQuantity" [ngModelOptions]="{standalone: true}"
+                                placeholder="Max order quantity">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="control-label">Handling Time</label>
+                              <select class="form-control" id="listingtempaltehandlingtimeid"
+                                [(ngModel)]="templateModel.handlingtime" [ngModelOptions]="{standalone: true}">
+                                <option value="-1">Default Setting in Amazon Account</option>
+                                <option value="1">1</option>
+                              </select>
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label">Number of Items</label>
+                              <input type="text" value="" class="form-control" id="numberofitems"
+                                [(ngModel)]="templateModel.numberOfItems" [ngModelOptions]="{standalone: true}"
+                                title="Number of items">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="control-label">Item Package Qty</label>
+                              <input type="text" value="" class="form-control" id="itempackageqty"
+                                [(ngModel)]="templateModel.itemPackageQuantity" [ngModelOptions]="{standalone: true}"
+                                title="Item Package qty">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label">Manufacture</label>
+                              <input type="text" class="form-control" value="" id="manufacture" title="manufacture"
+                                [(ngModel)]="templateModel.manufacture" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label"> Brand</label>
+                              <input type="text" class="form-control" value="" id="brand" title="brand"
+                                [(ngModel)]="templateModel.brand" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label"> Department Name</label>
+                              <input type="text" class="form-control" value="" id="departmentname"
+                                [(ngModel)]="templateModel.departmentName" [ngModelOptions]="{standalone: true}"
+                                title="Deparment Name">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label"> Product Summary (upto 5)</label>
+                              <input type="text" id="summary1" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.summary1" [ngModelOptions]="{standalone: true}"
+                                title="ProductSummary"><br>
+                              <input type="text" id="summary2" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.summary2" [ngModelOptions]="{standalone: true}"
+                                title="ProductSummary"><br>
+                              <input type="text" id="summary3" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.summary3" [ngModelOptions]="{standalone: true}"
+                                title="ProductSummary"><br>
+                              <input type="text" id="summary4" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.summary4" [ngModelOptions]="{standalone: true}"
+                                title="ProductSummary"><br>
+                              <input type="text" id="summary5" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.summary5" [ngModelOptions]="{standalone: true}"
+                                title="ProductSummary">
+                            </div>
+                          </div><!-- col-md-6 -->
+                          <div class="col-md-6">
+                            <div class="form-group has-success">
+                              <label class=" control-label"> Legal Disclaimer</label>
+                              <input type="text" class="form-control" id="legaldisclaimer" value=""
+                                [(ngModel)]="templateModel.legalDisclaimer" [ngModelOptions]="{standalone: true}"
+                                title="legal disclaimer">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label"> Product Tax Code</label>
+                              <input type="text" class="form-control" id="productTaxCode" value=""
+                                [(ngModel)]="templateModel.productTaxCode" [ngModelOptions]="{standalone: true}"
+                                title="Product Tax Code">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="control-label"> Product Description (Optional)</label>
+                              <textarea rows="8" cols="4" id="description" class="form-control"
+                                [(ngModel)]="templateModel.description"
+                                [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="custom-control custom-checkbox m-b-0">
+                                <input id="catLogIsChecked" type="checkbox" class="custom-control-input"
+                                  [(ngModel)]="templateModel.onlyIncludeDescription"
+                                  [ngModelOptions]="{standalone: true}" value="true"><span for="catLogIsChecked"
+                                  class="custom-control-label">
+                                  Only include this description when listing <p class="help-block">If enable, only
+                                    this description entered above will be sent to amazon when listing items using this
+                                    template</p>
+                                </span></label>
+                            </div>
+                            <div class="form-group has-success">
+                              <label class=" control-label"> Search Terms (Max 50 characters for each search
+                                term)</label>
+                              <input type="text" id="searchterms" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.searchTerms" [ngModelOptions]="{standalone: true}"
+                                title="Search Terms"><br>
+                              <input type="text" id="searchterms1" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.searchTerms1" [ngModelOptions]="{standalone: true}"
+                                title="Search Terms"><br>
+                              <input type="text" id="searchterms2" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.searchTerms2" [ngModelOptions]="{standalone: true}"
+                                title="Search Terms"><br>
+                              <input type="text" id="searchterms3" class="form-control mb-3" value=""
+                                [(ngModel)]="templateModel.searchTerms3" [ngModelOptions]="{standalone: true}"
+                                title="Search Terms">
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="custom-control custom-checkbox m-b-0">
+                                <input id="isgiftwrapavailable" type="checkbox" class="custom-control-input"
+                                  [(ngModel)]="templateModel.giftWrapAvailable" [ngModelOptions]="{standalone: true}"
+                                  value="true">
+                                <span for="isgiftwrapavailable" class="custom-control-label">
+                                  Is Gift Wrap Available
+                                </span></label>
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="custom-control custom-checkbox m-b-0">
+                                <input id="isgiftmessageavailable" type="checkbox" class="custom-control-input"
+                                  [(ngModel)]="templateModel.giftMessageAvailable" [ngModelOptions]="{standalone: true}"
+                                  value="true">
+                                <span for="isgiftmessageavailable" class="custom-control-label">
+                                  Is Gift Message Available
+                                </span></label>
+                            </div>
+                            <div class="form-group has-success">
+                              <label class="custom-control custom-checkbox m-b-0">
+                                <input id="appendvariationstoitemtitle" type="checkbox" class="custom-control-input"
+                                  [(ngModel)]="templateModel.appendVariationValueToTitle"
+                                  [ngModelOptions]="{standalone: true}" value="true">
+                                <span for="appendvariationstoitemtitle" class="custom-control-label">
+                                  Append Variation Values To the Variation Item Title
+                                </span></label>
+                            </div>
+                          </div><!-- col-md-6 -->
+                        </div>
+                      </form>
+                    </div>
+                    <div class="tab-pane" id="tab_1_1_2">
+                      <form class="form-horizontal" role="form">
+                        <div class="form-group has-success">
+                          <div class="col-md-6">
+                            <label class="control-label mt-3"> Amazon Shipping Template (If opted in)</label>
+                            <input type="text" value="" class="form-control mt-2" id="shippingTemplateName"
+                              [ngModelOptions]="{standalone: true}" [(ngModel)]="templateModel.shippingTemplateName">
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="tab-pane" id="tab_1_1_3">
+                      <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group has-success">
+                                <label class="col-md-4 control-label"> Pricing Rule:</label>
+                                <div class="col-md-8">
+                                  <input type="text" value="" class="form-control mt-2" id="amazontemplatepricingrule"
+                                    [(ngModel)]="templateModel.pricingRules" [ngModelOptions]="{standalone: true}">
+                                  <p class="help-block mt-2"> You can define pricing rules to automatically calculate
+                                    selling
+                                    price for amazon items using this listing template</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group has-success">
+                                <div class="alert alert-warning" [innerHTML]="'<p>e.g  <strong>${cost_price!}*1.6 + 1 </strong></p><p>
+                                </p><p>
+                                    This make the selling price by multiplying cost price by 1.6 and add 1
+                                    Tags available are  <strong>${cost_price!} and ${selling_price!}</strong>
+                                </p> '">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="tab-pane in" id="tab_1_1_4">
+                      <form class="form-horizontal" role="form">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group has-success">
+                              <div class="col-md-12">
+                                <p class="mt-3">Please select default Amazon category and browser nodes for your amazon
+                                  items using
+                                  this template</p>
+                                <div class="table-scrollable">
+                                  <table
+                                    class="table table-striped table-bordered table-hover order-column dataTable no-footer">
+                                    <thead>
+                                      <tr>
+                                        <th>
+                                          Category
+                                        </th>
+                                        <th>
+                                          Subcategory
+                                        </th>
+                                        <th>
+                                          Selected Category
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <select class="form-control" id="amazonmaincategoryid"
+                                            [(ngModel)]="templateModel.categoryName"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (change)="onSelectCategory($event.target.value)">
+                                            <option value="-1">Please select</option>
+                                            <option value="APS"> APS</option>
+                                            <option value="AutoAccessory"> AutoAccessory</option>
+                                            <option value="Baby"> Baby</option>
+                                            <option value="Beauty"> Beauty</option>
+                                            <option value="Books"> Books</option>
+                                            <option value="CameraPhoto"> CameraPhoto</option>
+                                            <option value="Categories"> Categories</option>
+                                            <option value="CE"> CE</option>
+                                            <option value="Clothing"> Clothing</option>
+                                            <option value="Collectibles"> Collectibles</option>
+                                            <option value="Computers"> Computers</option>
+                                            <option value="Departments"> Departments</option>
+                                            <option value="FoodAndBeverages"> FoodAndBeverages</option>
+                                            <option value="Genres"> Genres</option>
+                                            <option value="Health"> Health</option>
+                                            <option value="Home"> Home</option>
+                                            <option value="Jewelry"> Jewelry</option>
+                                            <option value="Miscellaneous"> Miscellaneous</option>
+                                            <option value="Music"> Music</option>
+                                            <option value="MusicalInstruments"> MusicalInstruments</option>
+                                            <option value="Office"> Office</option>
+                                            <option value="Products"> Products</option>
+                                            <option value="Shoes"> Shoes</option>
+                                            <option value="Sport"> Sport</option>
+                                            <option value="Styles"> Styles</option>
+                                            <option value="Subjects"> Subjects</option>
+                                            <option value="Tools"> Tools</option>
+                                            <option value="Toys"> Toys</option>
+                                            <option value="ToysBaby"> ToysBaby</option>
+                                            <option value="Wine"> Wine</option>
+                                          </select>
+                                        </td>
+                                        <td>
+                                          <div id="subcategorydivid">
+                                            <select id="amazonsubcategoryid" class="form-control"
+                                              [(ngModel)]="templateModel.subCategoryName"
+                                              [ngModelOptions]="{standalone: true}">
+                                              <option id="-1" value="">Please select</option>
+                                              <option *ngFor="let list of subcategories" value="{{list.code}}">
+                                                {{list.categoryName}}
+                                              </option>
+                                            </select>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <input id="selectedcategorynameid" class="form-control mb-3" type="text"
+                                            [(ngModel)]="templateModel.categoryName"
+                                            [ngModelOptions]="{standalone: true}" readonly="" value="">
+                                          <input id="selectedsubcategorynameid" class="form-control" type="text"
+                                            [(ngModel)]="templateModel.subCategoryName"
+                                            [ngModelOptions]="{standalone: true}" readonly="" value="">
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group has-success">
+                                <label class="control-label">Selected Default Browser Node: <span
+                                    class="required"></span></label>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group has-success">
+                                  <div class="col-md-12">
+                                    <div class="input-group">
+                                      <input type="text" value="" class="form-control" id="storecategoryidone"
+                                        [(ngModel)]="templateModel.browserNode1" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Store Category One">
+                                      <span class="input-group-btn ml-3">
+                                        <a href="javascript:void(0)">
+                                          <button class="btn-sm btn-success" (click)="openBrowserNode()"
+                                            type="button">Search</button>
+                                        </a>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group has-success">
+                                  <div class="col-md-12">
+                                    <div class="input-group">
+                                      <input class="form-control" type="text" value="" id="storecategoryidone2"
+                                        [(ngModel)]="templateModel.browserNode2" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Store Category Two">
+                                      <span class="input-group-btn ml-3">
+                                        <a href="javascript:void(0)">
+                                          <button class="btn-sm btn-success" type="button"
+                                            (click)="openBrowserNodes()">Search</button>
+                                        </a>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal fade bs-modal-lg" id="amazonbrowsernodedivmodal1" tabindex="-1" role="dialog"
+                      aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="alert alert-warning">
+                            <h4>Please Select a Browser Node</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <!-- BEGIN SAMPLE TABLE PORTLET-->
+                                <div class="light">
+                                  <form class="form-horizontal" role="form">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group has-success">
+                                          <div class="col-md-12">
+                                            <select class="form-control" id="amazonbrowsernodeselcid"
+                                              (change)="onCategorySelect($event.target.value)">
+                                              <option value="">Please select a Category</option>
+                                              <option value="alexa skills">alexa skills</option>
+                                              <option value="amazon instant video">amazon instant video</option>
+                                              <option value="appliances">appliances</option>
+                                              <option value="apps &amp; games">apps &amp; games</option>
+                                              <option value="arts">arts</option>
+                                              <option value="artsandcrafts">artsandcrafts</option>
+                                              <option value="automotive">automotive</option>
+                                              <option value="baby">baby</option>
+                                              <option value="baby products">baby products</option>
+                                              <option value="beauty">beauty</option>
+                                              <option value="beauty &amp; personal care">beauty &amp; personal care
+                                              </option>
+                                              <option value="books">books</option>
+                                              <option value="cds &amp; vinyl">cds &amp; vinyl</option>
+                                              <option value="cell phones &amp; accessories">cell phones &amp;
+                                                accessories
+                                              </option>
+                                              <option value="cellphone">cellphone</option>
+                                              <option value="clothing">clothing</option>
+                                              <option value="collectibles &amp; fine art">collectibles &amp; fine art
+                                              </option>
+                                              <option value="digital music">digital music</option>
+                                              <option value="educational courses">educational courses</option>
+                                              <option value="electronics">electronics</option>
+                                              <option value="gardens">gardens</option>
+                                              <option value="grocery">grocery</option>
+                                              <option value="grocery &amp; gourmet food">grocery &amp; gourmet food
+                                              </option>
+                                              <option value="handmade products">handmade products</option>
+                                              <option value="health">health</option>
+                                              <option value="health &amp; household">health &amp; household</option>
+                                              <option value="home kitchen">home kitchen</option>
+                                              <option value="home-improvements">home-improvements</option>
+                                              <option value="home-kitchen">home-kitchen</option>
+                                              <option value="industrial">industrial</option>
+                                              <option value="industrial &amp; scientific">industrial &amp; scientific
+                                              </option>
+                                              <option value="jewelry">jewelry</option>
+                                              <option value="kindle store">kindle store</option>
+                                              <option value="magazine subscriptions">magazine subscriptions</option>
+                                              <option value="movies &amp; tv">movies &amp; tv</option>
+                                              <option value="musical instruments">musical instruments</option>
+                                              <option value="musical-instruments">musical-instruments</option>
+                                              <option value="office products">office products</option>
+                                              <option value="office-products">office-products</option>
+                                              <option value="patio">patio</option>
+                                              <option value="pet supplies">pet supplies</option>
+                                              <option value="pet-supplies">pet-supplies</option>
+                                              <option value="shoes">shoes</option>
+                                              <option value="software">software</option>
+                                              <option value="sporting-goods">sporting-goods</option>
+                                              <option value="sports &amp; outdoors">sports &amp; outdoors</option>
+                                              <option value="thesaurus-tree-department-category">
+                                                thesaurus-tree-department-category</option>
+                                              <option value="tools &amp; home improvement">tools &amp; home improvement
+                                              </option>
+                                              <option value="toys &amp; games">toys &amp; games</option>
+                                              <option value="video games">video games</option>
+                                              <option value="video shorts">video shorts</option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="input-group">
+                                          <input type="text" class="form-control" placeholder="Search text"
+                                            [(ngModel)]="search" [ngModelOptions]="{standalone: true}"
+                                            id="amazonbrowsernodesearchtext">
+                                          <span class="input-group-btn">
+                                            <a href="javascript:void(0)">
+                                              <button class="btn-xs" type="button" (click)="onSearch()">Search</button>
+                                            </a>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group has-success">
+                                      <div class="col-md-12">
+                                        <div id="amazonbrowsernodeiddiv" class="table-scrollable">
+                                          <div class="row">
+                                            <div class="col-md-4">
+                                            </div>
+                                            <!-- <div class="col-md-4">
+                                              <nav>
+                                                <ul class="pagination">
+                                                  <li><a href="javascript:void(0)" aria-label="Previous"><span
+                                                        aria-hidden="true">&lt;&lt;</span></a></li>
+                                                  <li class="active"><a href="#"><span class="sr-only"></span></a></li>
+                                                  <li><a href="#" aria-label="Next"><span
+                                                        aria-hidden="true">&gt;</span></a></li>
+                                                </ul>
+                                              </nav>
+                                            </div> -->
+                                            <div class="col-md-2 totalcount">
+                                              Total Products: <span>{{pages.totalResults}} </span>
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-md-12">
+                                              <table
+                                                class="table table-striped table-bordered table-hover order-column dataTable no-footer">
+                                                <thead>
+                                                  <tr>
+                                                    <th>
+                                                      Node
+                                                    </th>
+                                                    <th>
+                                                      Action
+                                                    </th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr *ngFor="let list of browserNodes">
+                                                    <td>
+                                                      {{list.nodeId}}-{{list.nodePath}}
+                                                    </td>
+                                                    <td>
+                                                      <button class="btn btn-xs btn-info" *ngIf="!node1"
+                                                        (click)="applyamazonbrowsernode(list)">Select</button>
+                                                      <button class="btn btn-xs btn-info" *ngIf="node1"
+                                                        (click)="applyamazonbrowsernode2(list)">Select</button>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </div>
+                                          <div class="col-lg-6 col-md-6 ">
+                                            <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize"
+                                              [(page)]="page" [maxSize]="3" [rotate]="true" [boundaryLinks]="true"
+                                              (pageChange)="changespage(page);">
+                                            </ngb-pagination>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-default  btn-circle-new" data-dismiss="modal"><i
+                                class="fa fa-times font-red"></i> Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pull-right">
+          <button (click)="saveTemplate()" class="btn btn-sm  btn-success   btn-circle-new"><i class="fa fa-check"></i>
+            Save</button>
+          <button (click)="closeListing()" class="btn btn-sm btn-danger   btn-circle-new"><i
+              class="fa fa-times font-red"></i> Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

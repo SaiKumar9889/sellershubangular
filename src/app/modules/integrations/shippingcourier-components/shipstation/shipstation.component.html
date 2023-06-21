@@ -1,0 +1,531 @@
+<div class="card">
+    <div class="card-body p-b-0">
+        <div class="col-md-12 col-lg-12 text-center m-t-10">
+            <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubshipstation.png" alt="user"
+                class="img-responsive img-fixed img-fluid">
+        </div>
+        <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right " style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+                <!-- <button type="button" class="btn btn-success d-lg-block m-l-15"><i class="fa fa-check"></i>
+Create a Test Label</button>
+<button  type="button" class="btn btn-success d-lg-block m-l-15"><i class="fa fa-check"></i>
+Preview Integrated Label</button> -->
+                <a class="btn btn-sm btn-success" target="_blank" href="https://www.shipstation.com/"><i
+                        class="fa fa-share"></i> Create ShipStation Account</a>
+                <button (click)="save()" type="button" *ngIf="!isEnabled"
+                    class="btn btn-success btn-sm d-lg-block m-l-15 mb-3 mt-2"><i class="fa fa-check"></i>
+                    Save</button>
+                <button *ngIf="isEnabled" (click)="save()" type="button" class="btn btn-sm btn-success d-lg-block m-l-15"><i
+                        class="fa fa-check"></i>
+                    Update</button>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet transparent">
+                    <div class="portlet">
+                        <div class="portlet-body form">
+                            <div class="portlet box">
+                                <div class="portlet-body">
+                                    <div class="">
+                                        <div class="tabbable-custom">
+                                            <ul class="nav nav-tabs customtab2" role="tablist">
+                                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab"
+                                                        href="#integration" role="tab" aria-selected="false"><span
+                                                            class="hidden-sm-up"><i class="ti-home"></i></span> <span
+                                                            class="hidden-xs-down">
+                                                            Integration</span></a>
+                                                </li>
+                                                <li class="nav-item"> <a class="nav-link" data-toggle="tab"
+                                                        href="#shippingsettings" role="tab" aria-selected="false"><span
+                                                            class="hidden-sm-up"><i class="ti-user"></i></span> <span
+                                                            class="hidden-xs-down">
+                                                            Carriers</span></a>
+                                                <li class="nav-item"> <a class="nav-link" data-toggle="tab"
+                                                        href="#settings" role="tab" aria-selected="false"><span
+                                                            class="hidden-sm-up"><i class="ti-user"></i></span> <span
+                                                            class="hidden-xs-down">
+                                                            Label Settings</span></a>
+                                                </li>
+                                                <!-- <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#labelsettings" role="tab"
+                                                   aria-selected="true"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">
+                                                  Thermal Label Setup</span></a>  
+                                               </li> 
+                                               <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#printStep" role="tab"
+                                                  aria-selected="true"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">
+                                                  Printer Setup</span></a>  
+                                              </li>  -->
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active in" id="integration">
+                                                    <!-----------------------------Form Start----------------------------------->
+                                                    <div class="row m-t-5">
+
+
+                                                        <div class="col-md-6">
+                                                            <div class="card border-primary">
+                                                                <div class="card-header bg-primary">
+                                                                    <h4 class="m-b-0 text-white"><i
+                                                                            class="fa fa-key"></i>
+                                                                        Shipstation Account Details</h4>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <form class="form-horizontal mt-4" name="dac">
+                                                                        <div class="form-group">
+                                                                            <label>API Key </label>
+                                                                            <div>
+                                                                                <input class="form-control" type="text"
+                                                                                    [(ngModel)]="apikey"
+                                                                                    [ngModelOptions]="{standalone: true}"
+                                                                                    id="shipstationapikey">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>API Secret </label>
+                                                                            <div>
+                                                                                <input class="form-control" type="text"
+                                                                                    [ngModelOptions]="{standalone: true}"
+                                                                                    [(ngModel)]="apisecret"
+                                                                                    id="shipstationapisecret">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="col-md-4"></label>
+                                                                            <div class="text-right">
+                                                                                <button class="btn btn-sm btn-success"
+                                                                                    (click)="testconnection()"><i
+                                                                                        class="fas fa-exchange-alt fa-md m-r-5"></i>
+                                                                                    Test
+                                                                                    Connection</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="card border-primary">
+                                                                <div class="card-header bg-primary">
+                                                                    <h4 class="m-b-0 text-white"><i
+                                                                            class="fa fa-key"></i>
+                                                                        Supported Carriers</h4>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <form class="form-horizontal mt-4" name="dac">
+                                                                        <div class="text-center mb-2">
+                                                                            <div class="img-thumbnail">
+                                                                                <img style="width:120px;height: 40px;"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubups.png">
+                                                                            </div>
+                                                                            <div class="img-thumbnail">
+                                                                                <img style="width:120px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubfedex.png">
+                                                                            </div>
+                                                                            <div class="img-thumbnail">
+                                                                                <img style="width:120px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubdhl.png">
+                                                                            </div>
+                                                                            <div class="img-thumbnail">
+                                                                                <img style="width:120px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubshipwire.png">
+                                                                            </div>
+                                                                            <div class="img-thumbnail">
+                                                                                <img style="width:120px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubroyalmail.png">
+                                                                            </div>
+                                                                            <div class="img-thumbnail">
+                                                                                <img style="width:120px;height: 60px;"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/amazonbuyshippinglogo.png">
+                                                                            </div>
+                                                                        </div>
+                                                                        <span class="help-block"> Please configure your
+                                                                            ShipStation account print labels for
+                                                                            Shipping carriers supported by ShipStation
+                                                                        </span>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="card border-primary">
+                                                                <div class="card-header bg-primary">
+                                                                    <h4 class="m-b-0 text-white"><i
+                                                                            class="fa fa-key"></i>
+                                                                        Please Enter From Address Details for
+                                                                        Shipping Labels</h4>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <form class="form-horizontal mt-4" name="dac">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label>Name </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            [(ngModel)]="name"
+                                                                                            class="form-control"
+                                                                                            id="shipstationname"
+                                                                                            placeholder="Enter name">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label>Company </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            [(ngModel)]="company"
+                                                                                            class="form-control"
+                                                                                            id="shipstationcompany"
+                                                                                            placeholder="Enter Company Name">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label>Street Name </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            [(ngModel)]="street"
+                                                                                            class="form-control"
+                                                                                            id="shipstationstreet1"
+                                                                                            placeholder="Enter Street">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label>City </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            [(ngModel)]="city"
+                                                                                            class="form-control"
+                                                                                            id="shipstationcity"
+                                                                                            placeholder="Enter city">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label>Email </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            [(ngModel)]="mail"
+                                                                                            class="form-control"
+                                                                                            id="shipstationemail"
+                                                                                            placeholder="Enter email">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label>State </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            [(ngModel)]="state"
+                                                                                            class="form-control"
+                                                                                            id="shipstationstate"
+                                                                                            placeholder="Enter state">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label>Zip Code </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            [(ngModel)]="zip"
+                                                                                            class="form-control"
+                                                                                            id="shipstationzip"
+                                                                                            placeholder="Enter zip">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label>Country </label>
+                                                                                    <div>
+                                                                                        <div
+                                                                                            class="form-group  has-success">
+                                                                                            <ng-multiselect-dropdown
+                                                                                                [settings]="dropdownSettings_country"
+                                                                                                [placeholder]="'Select Country'"
+                                                                                                id="country"
+                                                                                                name="country"
+                                                                                                [data]="allCountries"
+                                                                                                ngDefaultControl
+                                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                                [(ngModel)]="selecte_country">
+                                                                                            </ng-multiselect-dropdown>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label>Phone </label>
+                                                                                    <div>
+                                                                                        <input type="text"
+                                                                                            [(ngModel)]="phone"
+                                                                                            [ngModelOptions]="{standalone: true}"
+                                                                                            class="form-control"
+                                                                                            id="shipstationphone"
+                                                                                            placeholder="Enter Phone">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="shippingsettings">
+                                                    <div class="portlet box">
+                                                        <div class="portlet-body">
+                                                            <h5>Please enable carriers applicable for your ShipStation
+                                                                Account</h5>
+                                                            <div class="table-scrollable">
+                                                                <table
+                                                                    class="table tableFixHead table-hover order-column v2">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Enable</th>
+                                                                            <th>Carrier</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label
+                                                                                    class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                                    <input type="checkbox" checked=""
+                                                                                        [(ngModel)]="fedexselect"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        value="fedexselect"
+                                                                                        (click)="appendData($event)"
+                                                                                        id="fedexselect">
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubfedex.png">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label
+                                                                                    class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                                    <input type="checkbox" checked=""
+                                                                                        [(ngModel)]="upsselect"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        value="upsselect"
+                                                                                        (click)="appendData($event)"
+                                                                                        id="upsselect">
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubups.png">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label
+                                                                                    class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                                    <input type="checkbox" checked=""
+                                                                                        [(ngModel)]="dhlselect"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        value="dhlselect"
+                                                                                        (click)="appendData($event)"
+                                                                                        id="dhlselect">
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubdhl.png">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label
+                                                                                    class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                                    <input type="checkbox" checked=""
+                                                                                        [(ngModel)]="shipwireselect"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        value="shipwireselect"
+                                                                                        (click)="appendData($event)"
+                                                                                        id="shipwireselect">
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubshipwire.png">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label
+                                                                                    class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                                    <input type="checkbox" checked=""
+                                                                                        [(ngModel)]="royalmailselect"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        value="royalmailselect"
+                                                                                        (click)="appendData($event)"
+                                                                                        id="royalmailselect">
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubroyalmail.png">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label
+                                                                                    class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                                    <input type="checkbox" checked=""
+                                                                                        [(ngModel)]="amazonshippingselect"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        value="amazonshippingselect"
+                                                                                        (click)="appendData($event)"
+                                                                                        id="amazonshippingselect">
+                                                                                    <span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/web/amazonbuyshippinglogo.png">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="settings">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-group">
+                                                                <div class="card-body">
+                                                                    <label class="control-label">Label
+                                                                        Text</label>
+                                                                    <textarea class="form-control"
+                                                                        id="royalmaillabeltextid"
+                                                                        rows="30">label!</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="card-body">
+                                                                    <h4>Select a Pre Configured Label</h4>
+                                                                    <div class="text-center">
+                                                                        <div class="img-thumbnail">
+                                                                            <a (click)="selectashippinglabel('royalmail')"
+                                                                                href="javascript:void(0)">
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/images/shippinglabels/S11_2.png">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="text-center">
+                                                                        <div class="img-thumbnail">
+                                                                            <a (click)="selectashippinglabel('royalmail')"
+                                                                                href="javascript:void(0)">
+                                                                                <img style="width:100px"
+                                                                                    src="https://s3-us-west-1.amazonaws.com/khubweb/images/shippinglabels/singleB.png">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class="btn btn-md btn-success mt-3 mb-3"
+                                                                        (click)="selectashippinglabel('royalmail')">Click
+                                                                        for More Labels</button>
+                                                                    <div class="alert alert-warning">
+                                                                        If a different integrated label
+                                                                        format
+                                                                        is required, please send us the new
+                                                                        format details to add into your
+                                                                        account
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="well">
+                                                        <h3>Please use the following fields to customize the label text
+                                                        </h3>
+                                                        <ul>
+                                                            <li><strong>shipping_label!</strong>&nbsp;- This
+                                                                will show the postage label</li>
+                                                            <li><strong>order_lines!</strong>&nbsp;- This
+                                                                will show the invoice table</li>
+                                                            <li><strong>shippingname!</strong>&nbsp;- This
+                                                                will show the shipping contact</li>
+                                                            <li><strong>address_line1!</strong>&nbsp;- This
+                                                                will show the shipping address line one</li>
+                                                            <li><strong>address_line2!</strong>&nbsp;- This
+                                                                will show the shipping address line two</li>
+                                                            <li><strong>address_line3!</strong>&nbsp;- This
+                                                                will show the shipping address line three
+                                                            </li>
+                                                            <li><strong>city!</strong>&nbsp;- This will show
+                                                                the city</li>
+                                                            <li><strong>state!</strong>&nbsp;- This will
+                                                                show
+                                                                the state</li>
+                                                            <li><strong>postcode!</strong>&nbsp;- This will
+                                                                show the postcode</li>
+                                                            <li><strong>country!</strong>&nbsp;- This will
+                                                                show the country</li>
+                                                            <li><strong>order_date!</strong>&nbsp;- This
+                                                                will
+                                                                show order date</li>
+                                                            <li><strong>invoice_no!</strong>&nbsp;- This
+                                                                will
+                                                                show invoice number</li>
+                                                            <li><strong>billing_shippingname!</strong>&nbsp;-
+                                                                This will show the billing contact</li>
+                                                            <li><strong>billing_address_line1!</strong>&nbsp;-
+                                                                This will show the billing address line one
+                                                            </li>
+                                                            <li><strong>billing_address_line2!</strong>&nbsp;-
+                                                                This will show the billing address line two
+                                                            </li>
+                                                            <li><strong>billing_address_line3!</strong>&nbsp;-
+                                                                This will show the billing address line
+                                                                three
+                                                            </li>
+                                                            <li><strong>billing_city!</strong>&nbsp;- This
+                                                                will show the billing city</li>
+                                                            <li><strong>billing_state!</strong>&nbsp;- This
+                                                                will show the billing state</li>
+                                                            <li><strong>billing_postcode!</strong>&nbsp;-
+                                                                This will show the billing postcode</li>
+                                                            <li><strong>billing_country!</strong>&nbsp;-
+                                                                This
+                                                                will show the billing country</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

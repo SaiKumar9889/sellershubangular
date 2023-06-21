@@ -1,0 +1,16 @@
+.card-body {
+    padding: 0.5rem;
+}
+
+.search-alignment{
+    padding-right: 0px;
+    margin-bottom: 0.5%;
+}
+
+.option-alignment{
+    padding-right: 0px;
+    margin-bottom: 0.5%;
+}
+.prod-img{
+    max-height: 100px;
+}

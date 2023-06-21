@@ -1,0 +1,16 @@
+.img-responsive2 {
+    max-width: 100% !important;
+    height: 70px;
+}
+
+.img-responsive3 {
+    max-width: 100% !important;
+    height: 70px;
+}
+
+ngb-pagination {
+    float: right;
+}
+:host ::ng-deep .multiselect-dropdown .selected-item{
+    max-width: 200px!important;
+  }

@@ -1,0 +1,6 @@
+ngb-pagination{
+  float: right;
+}
+:host ::ng-deep .multiselect-dropdown .selected-item{
+  max-width: 200px!important;
+}

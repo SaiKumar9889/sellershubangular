@@ -1,0 +1,723 @@
+<div class="card">
+    <div class="card-body p-b-0">
+        <div class="col-md-12 col-lg-12 text-center m-t-10">
+            <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubfedex.png" alt="user"
+                class="img-responsive img-fixed img-fluid" />
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right" style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+                <button *ngIf="!isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15">
+                    Save</button>
+                <button *ngIf="isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15">
+                    Update</button>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs customtab2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#integration" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">
+                        Integration</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#shippingsettings" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down"> Shipping
+                        Services</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#labelsettings" role="tab" aria-selected="true">
+                    <span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"> Label Settings</span>
+                </a>
+            </li> -->
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="integration" role="tabpanel">
+                <div class="col-md-12">
+                    <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                    <div class="m-t-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Fedex Shipping Account Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Amazon Shipping Account ID <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="accountnumber" [(ngModel)]="shippingaccountid" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <!--  <div class="form-group has-success">
+                                            <label>Shipping Order Source: <span style="color: red;">*</span></label>
+                                            <input name="deliveryinstruction_1" [(ngModel)]="shippingordersource" type="text" class="form-control" />
+                                        </div>  -->
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Pickup Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Shipment From Name<span style="color: red;">*</span></label>
+                                                <input name="fromname" [(ngModel)]="fromname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 1 <span style="color: red;">*</span></label>
+                                                <input name="addressline1" [(ngModel)]="addressline1" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 2 <span style="color: red;">*</span></label>
+                                                <input name="addressline2" [(ngModel)]="addressline2" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 3 <span style="color: red;">*</span></label>
+                                                <input name="addressline3" [(ngModel)]="addressline3" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Company Name <span style="color: red;">*</span></label>
+                                                <input name="companyname" [(ngModel)]="companyname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>State <span style="color: red;">*</span></label>
+                                                <input name="streetname" [(ngModel)]="state" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town/City <span style="color: red;">*</span></label>
+                                                <input name="picktown" [(ngModel)]="picktown" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group  has-success">
+                                                <label>Country Of Origin:</label>
+                                                <ng-multiselect-dropdown [settings]="dropdownSettings_country"
+                                                    [placeholder]="'Select Country'" id="country" name="country"
+                                                    [data]="allCountries" ngDefaultControl
+                                                    [(ngModel)]="selecte_country">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode <span style="color: red;">*</span></label>
+                                                <input name="pickpostcode" [(ngModel)]="pickpostcode" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Return Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Return Name<span style="color: red;">*</span></label>
+                                                <input name="return" [(ngModel)]="return" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 1 <span style="color: red;">*</span></label>
+                                                <input name="return_addressline1" [(ngModel)]="return_addressline1"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 2 <span style="color: red;">*</span></label>
+                                                <input name="return_addressline2" [(ngModel)]="return_addressline2"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Address Line 3 <span style="color: red;">*</span></label>
+                                                <input name="return_addressline3" [(ngModel)]="return_addressline3"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Company Name <span style="color: red;">*</span></label>
+                                                <input name="return_companyname" [(ngModel)]="return_companyname"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>State <span style="color: red;">*</span></label>
+                                                <input name="return_state" [(ngModel)]="return_state" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town/City <span style="color: red;">*</span></label>
+                                                <input name="return_picktown" [(ngModel)]="return_picktown" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group  has-success">
+                                                <label>Country Of Origin:</label>
+                                                <ng-multiselect-dropdown [settings]="dropdownSettings_country"
+                                                    [placeholder]="'Select Country'" id="country" name="country"
+                                                    [data]="allCountries" ngDefaultControl
+                                                    [(ngModel)]="selecte_country_return">
+                                                </ng-multiselect-dropdown>
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode <span style="color: red;">*</span></label>
+                                                <input name="return_pickpostcode" [(ngModel)]="return_pickpostcode"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Optional Pickup Time</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4">
+                                            <div class="form-group has-success">
+                                                <label>Monday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="monday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Monday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="monday_et" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Tuesday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="tuesday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Tuesday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="tuesday_et" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Wednesday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="wednesday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Wednesday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="wednesday_et"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Thursday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="thursday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Thursday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="thursday_et"
+                                                    type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Friday Start Time: </label>
+                                                <input name="accountnumber" [(ngModel)]="friday_st" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Friday End Time: </label>
+                                                <input name="deliveryinstruction_1" [(ngModel)]="friday_et" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-20" id="shippingsettings" role="tabpanel">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Service Name
+                            </th>
+
+                            <th>
+                                Service Code
+                            </th>
+
+                            <th>
+                                Enabled
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>1</strong>
+                            </td>
+                            <td>
+                                EUROPE_FIRST_INTERNATIONAL_PRIORITY
+                            </td>
+                            <td>
+                                EFIP
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('EFIP','EUROPE_FIRST_INTERNATIONAL_PRIORITY')"
+                                    (click)="appendData($event)" name="EUROPE_FIRST_INTERNATIONAL_PRIORITY" value="EFIP"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>2</strong>
+                            </td>
+                            <td>
+                                FEDEX_1_DAY_FREIGHT
+                            </td>
+                            <td>
+                                F1DF
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('F1DF','FEDEX_1_DAY_FREIGHT')"
+                                    (click)="appendData($event)" name="FEDEX_1_DAY_FREIGHT" value="F1DF"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>3</strong>
+                            </td>
+                            <td>
+                                FEDEX_2_DAY
+                            </td>
+                            <td>
+                                F2DY
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('F2DY','FEDEX_2_DAY')"
+                                    (click)="appendData($event)" name="FEDEX_2_DAY"
+                                    value="F2DY" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>4</strong>
+                            </td>
+                            <td>
+                                FEDEX_2_DAY_AM
+                            </td>
+                            <td>
+                                F2DA
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('F2DA','FEDEX_2_DAY_AM')"
+                                    (click)="appendData($event)" name="FEDEX_2_DAY_AM"
+                                    value="F2DA" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>5</strong>
+                            </td>
+                            <td>
+                                FEDEX_2_DAY_FREIGHT
+                            </td>
+                            <td>
+                                F2DF
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('F2DF','FEDEX_2_DAY_FREIGHT')"
+                                    (click)="appendData($event)" name="FEDEX_2_DAY_FREIGHT"
+                                    value="F2DF" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>6</strong>
+                            </td>
+                            <td>
+                                FEDEX_3_DAY_FREIGHT
+                            </td>
+                            <td>
+                                F3DF
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('F3DF','FEDEX_3_DAY_FREIGHT')"
+                                    (click)="appendData($event)" name="FEDEX_3_DAY_FREIGHT"
+                                    value="F3DF" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>7</strong>
+                            </td>
+                            <td>
+                                FEDEX_DISTANCE_DEFERRED
+                            </td>
+                            <td>
+                                FDDF
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('FDDF','FEDEX_DISTANCE_DEFERRED')"
+                                    (click)="appendData($event)" name="FEDEX_DISTANCE_DEFERRED"
+                                    value="FDDF" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>8</strong>
+                            </td>
+                            <td>
+                                FEDEX_EXPRESS_SAVER
+                            </td>
+                            <td>
+                                FESV
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('FESV','FEDEX_EXPRESS_SAVER')"
+                                    (click)="appendData($event)" name="FEDEX_EXPRESS_SAVER"
+                                    value="FESV" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>9</strong>
+                            </td>
+                            <td>
+                                FEDEX_FIRST_FREIGHT
+                            </td>
+                            <td>
+                                FFFR
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('FFFR','FEDEX_FIRST_FREIGHT')"
+                                    (click)="appendData($event)" name="FEDEX_FIRST_FREIGHT"
+                                    value="FFFR" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>10</strong>
+                            </td>
+                            <td>
+                                FEDEX_FREIGHT_ECONOMY
+                            </td>
+                            <td>
+                                FFEC
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('FFEC','FEDEX_FREIGHT_ECONOMY')"
+                                    (click)="appendData($event)" name="FEDEX_FREIGHT_ECONOMY"
+                                    value="FFEC" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>11</strong>
+                            </td>
+                            <td>
+                                FEDEX_FREIGHT_PRIORITY
+                            </td>
+                            <td>
+                                FFPT
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('FFPT','FEDEX_FREIGHT_PRIORITY')"
+                                    (click)="appendData($event)" name="FEDEX_FREIGHT_PRIORITY"
+                                    value="FFPT" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>12</strong>
+                            </td>
+                            <td>
+                                FEDEX_GROUND
+                            </td>
+                            <td>
+                                FGRD
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('FGRD','FEDEX_GROUND')"
+                                    (click)="appendData($event)" name="FEDEX_GROUND" value="FGRD"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>13</strong>
+                            </td>
+                            <td>
+                                FEDEX_NEXT_DAY_AFTERNOON
+                            </td>
+                            <td>
+                                FNDA
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('FNDA','FEDEX_NEXT_DAY_AFTERNOON')"
+                                    (click)="appendData($event)" name="FEDEX_NEXT_DAY_AFTERNOON" value="FNDA"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>14</strong>
+                            </td>
+                            <td>
+                                FEDEX_NEXT_DAY_EARLY_MORNING
+                            </td>
+                            <td>
+                                NDEM
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('NDEM','FEDEX_NEXT_DAY_EARLY_MORNING')"
+                                    (click)="appendData($event)" name="FEDEX_NEXT_DAY_EARLY_MORNING"
+                                    value="NDEM" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>15</strong>
+                            </td>
+                            <td>
+                                FEDEX_NEXT_DAY_END_OF_DAY
+                            </td>
+                            <td>
+                                NDED
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('NDED','FEDEX_NEXT_DAY_END_OF_DAY')"
+                                    (click)="appendData($event)" name="FEDEX_NEXT_DAY_END_OF_DAY"
+                                    value="NDED" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>16</strong>
+                            </td>
+                            <td>
+                                FEDEX_NEXT_DAY_FREIGHT
+                            </td>
+                            <td>
+                                FNDF
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('FNDF','FEDEX_NEXT_DAY_FREIGHT')"
+                                    (click)="appendData($event)" name="FEDEX_NEXT_DAY_FREIGHT"
+                                    value="FNDF" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>17</strong>
+                            </td>
+                            <td>
+                                FEDEX_NEXT_DAY_MID_MORNING
+                            </td>
+                            <td>
+                                NDMM
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('NDMM','FEDEX_NEXT_DAY_MID_MORNING')"
+                                    (click)="appendData($event)" name="FEDEX_NEXT_DAY_MID_MORNING"
+                                    value="NDMM" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>18</strong>
+                            </td>
+                            <td>
+                                FIRST_OVERNIGHT
+                            </td>
+                            <td>
+                                FOVN
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('FOVN','FIRST_OVERNIGHT')"
+                                    (click)="appendData($event)" name="FIRST_OVERNIGHT"
+                                    value="FOVN" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>19</strong>
+                            </td>
+                            <td>
+                                GROUND_HOME_DELIVERY
+                            </td>
+                            <td>
+                                GHDY
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('GHDY','GROUND_HOME_DELIVERY')"
+                                    (click)="appendData($event)" name="GROUND_HOME_DELIVERY"
+                                    value="GHDY" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>20</strong>
+                            </td>
+                            <td>
+                                INTERNATIONAL_ECONOMY
+                            </td>
+                            <td>
+                                INEC
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('INEC','INTERNATIONAL_ECONOMY')"
+                                    (click)="appendData($event)" name="INTERNATIONAL_ECONOMY"
+                                    value="INEC" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>21</strong>
+                            </td>
+                            <td>
+                                INTERNATIONAL_ECONOMY_FREIGHT
+                            </td>
+                            <td>
+                                INEF
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('INEF','INTERNATIONAL_ECONOMY_FREIGHT')"
+                                    (click)="appendData($event)" name="INTERNATIONAL_ECONOMY_FREIGHT"
+                                    value="INEF" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>22</strong>
+                            </td>
+                            <td>
+                                INTERNATIONAL_FIRST
+                            </td>
+                            <td>
+                                IFST
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('IFST','INTERNATIONAL_FIRST')"
+                                    (click)="appendData($event)" name="INTERNATIONAL_FIRST"
+                                    value="IFST" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>23</strong>
+                            </td>
+                            <td>
+                                INTERNATIONAL_PRIORITY
+                            </td>
+                            <td>
+                                INPT
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('INPT','INTERNATIONAL_PRIORITY')"
+                                    (click)="appendData($event)" name="INTERNATIONAL_PRIORITY" value="INPT"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>24</strong>
+                            </td>
+                            <td>
+                                INTERNATIONAL_PRIORITY_FREIGHT
+                            </td>
+                            <td>
+                                INPF
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('INPF','INTERNATIONAL_PRIORITY_FREIGHT')"
+                                    (click)="appendData($event)" name="INTERNATIONAL_PRIORITY_FREIGHT" value="INPF"
+                                    type="checkbox" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>25</strong>
+                            </td>
+                            <td>
+                                PRIORITY_OVERNIGHT
+                            </td>
+                            <td>
+                                PONT
+                            </td>
+
+                            <td><input
+                                    [checked]="getCheckStatus('PONT','PRIORITY_OVERNIGHT')"
+                                    (click)="appendData($event)" name="PRIORITY_OVERNIGHT"
+                                    value="PONT" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>26</strong>
+                            </td>
+                            <td>
+                                SAME_DAY
+                            </td>
+                            <td>
+                                SDAY
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('SDAY','SAME_DAY')"
+                                    (click)="appendData($event)" name="SAME_DAY"
+                                    value="SDAY" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>27</strong>
+                            </td>
+                            <td>
+                                SAME_DAY_CITY
+                            </td>
+                            <td>
+                                SDCT
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('SDCT','SAME_DAY_CITY')"
+                                    (click)="appendData($event)" name="SAME_DAY_CITY"
+                                    value="SDCT" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>28</strong>
+                            </td>
+                            <td>
+                                SMART_POST
+                            </td>
+                            <td>
+                                SPST
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('SPST','SMART_POST')"
+                                    (click)="appendData($event)" name="SMART_POST"
+                                    value="SPST" type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>29</strong>
+                            </td>
+                            <td>
+                                STANDARD_OVERNIGHT
+                            </td>
+                            <td>
+                                SOVN
+                            </td>
+
+                            <td><input [checked]="getCheckStatus('SOVN','STANDARD_OVERNIGHT')"
+                                    (click)="appendData($event)" name="STANDARD_OVERNIGHT"
+                                    value="SOVN" type="checkbox" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane p-20" id="labelsettings" role="tabpanel">3</div>
+        </div>
+    </div>
+</div>

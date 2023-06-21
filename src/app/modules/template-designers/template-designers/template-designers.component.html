@@ -1,0 +1,143 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body p-b-0">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs customtab2" role="tablist">
+                        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#invoictemplate"
+                                role="tab"><span class="hidden-sm-up"><i class=" ti-layout-width-default"></i></span> <span
+                                    class="hidden-xs-down"> Invoice Template Design</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#picklisttemplate"
+                                role="tab"><span class="hidden-sm-up"><i class=" ti-layout-width-default"></i></span> <span
+                                    class="hidden-xs-down">
+                                    Picklist Template Design</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#packlisttemplate"
+                                role="tab"><span class="hidden-sm-up"><i class=" ti-layout-width-default"></i></span> <span
+                                    class="hidden-xs-down">
+                                    Packlist Template Design</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#packageslip" role="tab"><span
+                                    class="hidden-sm-up"><i class=" ti-layout-width-default"></i></span> <span class="hidden-xs-down">
+                                    Packaging Slip</span></a> </li>
+                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#labeldesign" role="tab"><span
+                                        class="hidden-sm-up"><i class=" ti-layout-width-default"></i></span> <span class="hidden-xs-down">
+                                        Label Design</span></a> </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="invoictemplate" role="tabpanel">
+                            <div class="p-10">
+                                <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+                                    style="padding-right: 0px;">
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        <div *ngIf="!isEditInvoice && !isEditPackingSlip">
+                                            <button (click)="enableTemplateCreation();auditTrack(1)" type="button"
+                                                class="btn btn-success d-lg-block m-r-15">Create Invoice
+                                                Template</button>
+                                        </div>
+                                        <div *ngIf="isEditInvoice && !isEditPackingSlip">
+                                            <button (click)="backToListing();auditTrack(2)" type="button"
+                                                class="btn btn-warning d-lg-block m-r-15">Back To
+                                                Listing</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12" *ngIf="!isEditInvoice && !isEditPackingSlip">
+                                    <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                                    <div class="table-responsive m-t-10">
+                                        <table class="table text-center table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Channel</th>
+                                                    <th style="max-width: 200px;">Name</th>
+                                                    <th>Invoice Template Status</th>
+                                                    <th>Invoice Template</th>
+                                                    <th>Packing Slip</th>
+                                                    <!-- <th>Picklist</th>
+                                                <th>Packlist</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let template of allInvoiceTemplates">
+                                                    <td><img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhub{{ template.type }}.png"
+                                                            class="img-responsive prod-img" /></td>
+                                                    <td>{{template.name}}</td>
+                                                    <td>
+                                                        <div class="text-white"
+                                                            [ngClass]="template.invoiceBodyText!=null && template.invoiceBodyText!='' && template.invoiceBodyText!=undefined ?'label label-table label-success':'label label-table label-warning'">
+                                                            {{ template.invoiceBodyText!=null &&
+                                                            template.invoiceBodyText!='' &&
+                                                            template.invoiceBodyText!=undefined ? 'Integrated':'Pending'
+                                                            }}</div>
+                                                    </td>
+                                                    <td class="text-center"><i (click)="editInvoice(template);auditTrack(3)"
+                                                            style="cursor: pointer;color: #fec107;"
+                                                            class=" fas fa-edit fa-lg"></i></td>
+                                                    <td class="text-center"><i (click)="editPackingSlip(template);auditTrack(4)"
+                                                            style="cursor: pointer;color: #fec107;"
+                                                            class=" fas fa-edit fa-lg"></i></td>
+                                                    <!--<td class="text-center"><i (click)="editLabels(template)"
+                                                        style="cursor: pointer;color: #fec107;" class=" fas fa-edit fa-lg"></i></td>
+                                                <td class="text-center"><i (click)="editLabels(template)"
+                                                        style="cursor: pointer;color: #fec107;" class=" fas fa-edit fa-lg"></i></td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div *ngIf="isEditInvoice && !isEditLable">
+                                    <app-invoice-creation [dashboard]="dashboard" [apiData]="allInvoiceTemplates"
+                                        [isEditInvoiceI]="isEditInvoiceI">
+                                    </app-invoice-creation>
+                                </div>
+                                <div *ngIf="isEditLable">
+                                    <app-label-template [apiData]="allInvoiceTemplates"></app-label-template>
+                                </div>
+                                <div *ngIf="isEditPackingSlip">
+                                    <app-packaging-slip [dashboard]="dashboard" [apiData]="allInvoiceTemplates" [isEditInvoiceI]="isEditInvoiceI"></app-packaging-slip>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="picklisttemplate" role="tabpanel">
+                            <div class="p-10">
+                                <div>
+                                    <app-picklist-template [allInvoiceTemplates]="allInvoiceTemplates">
+                                    </app-picklist-template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="packlisttemplate" role="tabpanel">
+                            <div class="p-10">
+                                <div>
+                                    <app-packlist-template [allInvoiceTemplates]="allInvoiceTemplates">
+                                    </app-packlist-template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="packageslip" role="tabpanel">
+                            <div class="p-10">
+                                <div>
+                                    <app-packaging-slip>
+
+                                    </app-packaging-slip>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="labeldesign" role="tabpanel">
+                            <div class="p-10">
+                                <div>
+                                    <app-shipping-courier-setup>
+
+                                    </app-shipping-courier-setup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

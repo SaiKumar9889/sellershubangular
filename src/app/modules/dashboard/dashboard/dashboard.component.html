@@ -1,0 +1,345 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div>
+    <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+    <div class="col-lg-12 col-mg-12" style="padding: 0px;">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <!-- column -->
+            <div class="col-md-3">
+              <div class="card">
+                <div class="box bg-success text-center">
+                  <h1 class="font-light text-white">{{revenue}}</h1>
+                  <h6 class="text-white">REVENUE <i class="far fa-money-bill-alt"> </i></h6>
+                </div>
+              </div>
+            </div>
+            <!-- column -->
+            <div class="col-md-3">
+              <div class="card">
+                <div class="box bg-warning text-center">
+                  <h1 class="font-light text-white">{{salesorders}}</h1>
+                  <h6 class="text-white">SALES ORDERS</h6>
+                </div>
+              </div>
+            </div>
+            <!-- column -->
+            <div class="col-md-3">
+              <div class="card">
+                <div class="box bg-danger text-center">
+                  <h1 class="font-light text-white">{{unitsslod}}</h1>
+                  <h6 class="text-white">UNITS SOLD</h6>
+                </div>
+              </div>
+            </div>
+            <!-- column -->
+            <div class="col-md-3">
+              <div class="card">
+                <div class="box bg-info text-center">
+                  <h1 class="font-light text-white">{{lowstock}}</h1>
+                  <h6 class="text-white">LOW STOCK</h6>
+                </div>
+              </div>
+            </div>
+            <!-- column -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-mg-12" style="padding: 0px;">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-12 col-md-12  row">
+            <div class="col-lg-8 col-md-8">
+              <h4 class="card-title">Sales by channels (Past 1 month data)</h4>
+            <div id="morris-donut-chart"></div>
+            </div>
+            <div class="col-lg-4 col-md-4" *ngIf="chartData.length > 0">
+              <h4 class="card-title">Order Summary</h4>
+              <!-- <ul>
+                <li class="draft"><span class="text-dark">{{draftTotal}} -  Draft Orders</span></li>
+              </ul> -->
+              <ul>
+                <li class="pending"><span class="text-dark">{{pendingTotal}} - Pending Orders</span></li>
+              </ul>
+              <ul>
+                <li class="unship"><span class="text-dark">{{unshipTotal}} - Unshipped Orders</span></li>
+              </ul>
+              <ul>
+                <li class="ship"><span class="text-dark">{{shipTotal}} - Shipped Orders</span></li>
+              </ul>
+              <!-- <ul>
+                <li class="partship"><span class="text-dark">{{PartiallyShipped}} -  Partially Shipped Orders</span></li>
+              </ul> -->
+              <ul>
+                <li class="cancel"><span class="text-dark">{{cancTotal}} - Cancelled Orders</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-mg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Sales by countries (Past 12 month data)</h4>
+          <!-- <div>
+            <canvas id="chart2" height="120"></canvas>
+            
+          </div> -->
+          <div>
+            <div id="world-map-markers" style="height: 700px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-mg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Order history (Past 3 month data)</h4>
+          <div>
+            <div id="morris-line-chart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-mg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Recent Orders</h4>
+          <div class="table-responsive">
+            <table class="table color-bordered-table warning-bordered-table">
+              <thead>
+                <th>DATE</th>
+                <th>STATUS </th>
+                <th>CHANNEL </th>
+                <th>ID/SKU/QTY</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+              </thead>
+              <tbody class="text-left">
+                <tr *ngFor="let lowstock of recentOrders;let i=index">
+                  <td>{{ lowstock.orderDate | date:'dd MMM yyyy' }}</td>
+                  <td>
+                    <lable
+                      [ngClass]="lowstock.status=='Shipped'?'badge badge-success badge-pill':'badge badge-warning badge-pill'">
+                      {{ lowstock.status }} </lable>
+                  </td>
+                  <td>{{ lowstock.channel }}</td>
+                  <td>{{ lowstock.orderId }}/{{ lowstock.sku }}/{{ lowstock.qty }}</td>
+                  <td>{{ lowstock.name }}</td>
+                  <td>{{ lowstock.orderPrice }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-mg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Low stock products</h4>
+          <div class="table-responsive">
+            <table class="table color-bordered-table info-bordered-table">
+              <thead>
+                <th>ID </th>
+                <th style="min-width: 150px;">SKU </th>
+                <th>PRODUCT </th>
+                <th>STOCK</th>
+                <th>LEVEL</th>
+              </thead>
+              <tbody class="text-left">
+                <tr *ngFor="let lowstock of lowStockProducts;let i=index">
+                  <td>{{ lowstock.id }}</td>
+                  <td>{{ lowstock.sku }}</td>
+                  <td>{{ lowstock.title }}</td>
+                  <td>{{ lowstock.qty }}</td>
+                  <td>{{ lowstock.minimumQty }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- column -->
+    <!-- column -->
+
+
+  </div>
+</div>
+<!-- <div id="changePlan-modal" class="modal fade show" tabindex="-1" role="basic" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;" data-backdrop="static">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-weight: 400;">Please select a subscription plan</h3>
+ 
+      </div>
+      <div class="modal-body" style="max-height: 80vh;overflow-y: scroll;">
+        <div class="container1 row">
+          <div class="columns col-md-3" *ngFor="let priceplan of allpriceplans; index as i">
+            <ul class="price">
+              <li class="grey" style="font-size: 20px;">{{priceplan.name?.toUpperCase()}}</li>
+             
+              <li class="grey" *ngIf="priceplan.currencycode=='GBP'">&#163; {{priceplan.price}}/<span
+                  style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+              <li class="grey" *ngIf="priceplan.currencycode=='USD'">&#36; {{priceplan.price}}/<span
+                  style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+              <li class="grey" *ngIf="priceplan.currencycode=='INR'">&#x20B9; {{priceplan.price}}/<span
+                  style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+              <li class="grey" *ngIf="priceplan.currencycode=='EURO'">&#128; {{priceplan.price}}/<span
+                  style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+              <div *ngIf="priceplan.name.trim().toUpperCase()=='LITE'">
+                <li>Upto 500 order a month</li>
+                <li>All Marketplaces</li>
+                <li>All Couriers</li>
+                <li>Stock Control</li>
+              </div>
+              <div *ngIf="priceplan.name.trim().toUpperCase()=='INTERMEDIATE'">
+                <li>Upto 3000 orders</li>
+                <li>Split & Merge orders</li>
+                <li>Reporting</li>
+                <li>Account Manager</li>
+
+              </div>
+              <div *ngIf="priceplan.name.trim().toUpperCase()=='EXPERT'">
+                <li>Upto 10000 orders</li>
+                <li>All Intermediate</li>
+                <li>AI Dashboard</li>
+                <li>Virtual & Duplex Printer</li>
+              </div>
+              <div *ngIf="priceplan.name.trim().toUpperCase()=='TEST MODE'">
+                <li>Upto 10000 orders</li>
+                <li>All Intermediate</li>
+                <li>AI Dashboard</li>
+                <li>Virtual & Duplex Printer</li>
+              </div>
+
+
+              
+              <li *ngIf="!selectedSubscrption.active" (click)="paymentMethods(priceplan)"><a class="button">Start
+                  Now</a></li>
+              <li *ngIf="selectedSubscrption.active" (click)="paymentMethods(priceplan)"><a class="button">Upgrade
+                  Now</a></li>
+            </ul>
+          </div>
+
+          <div class="columns col-md-3 ">
+            <ul class="price">
+              <li class="grey" style="font-size: 20px;">Customize</li>
+              <li class="grey ">Enterprise</li>
+              <li>More than 10K orders</li>
+              <li>Extra Customization</li>
+              <li>Specific Automations</li>
+              <li>Sellershub Features</li>
+              <li class=""><a class="button" style="font-size: 14px;">Contact Support</a></li>
+            </ul>
+          </div>
+
+        </div>
+        <span style="font-size: larger;">We won't charge you until your free trial ends on {{endDate| date:'dd MMMM
+          yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="paymentMetthod-modal" class="modal fade show" tabindex="-1" role="basic" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;" data-backdrop="static">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Please select a payment Method
+        </h3>
+       
+      </div>
+      <div class="modal-body">
+        <div class="row" *ngIf="selectdPay!='Pay With Credit Card'">
+          <div class="col-12">
+            <span style="font-size: larger;">You will be charged £{{price}} + tax on {{endDate| date:'dd MMMM yyyy' }}
+              when your free trial ends</span>
+            <div class="form-group">
+             
+              <div class="custom-control custom-radio" style="margin-top: 5%;">
+                <input (click)="setValueForPay('Pay With Credit Card')" type="radio" id="customRadio2"
+                  name="customRadio" class="custom-control-input">
+                <label class="custom-control-label" for="customRadio2">Pay With Credit Card</label>
+                <img src="assets/images/cards.png" style="margin-left: 10%; width: 30%;" />
+              </div>
+            </div>
+            <div class="form-group m-t-20">
+              <label class="custom-control custom-checkbox m-b-0">
+                <input type="checkbox" [checked]="isAgree" (click)="isAgree=!isAgree" class="custom-control-input">
+                <span class="custom-control-label">I agree <a href="http://www.sellershub.io/terms-conditions/"
+                    target="_blank">terms and
+                    conditions</a> and <a href="http://www.sellershub.io/privacy-policy/" target="_blank">privacy
+                    policy</a> of
+                  Sellershub.</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" *ngIf="valuePay=='Pay With Paypal'" (click)="savePaymentDetails()"
+          class="btn waves-effect waves-light btn-success">Submit</button>
+        <button type="button" *ngIf="valuePay=='Pay With Credit Card' && isAgree" (click)="savePaymentDetails()"
+          class="btn waves-effect waves-light btn-success">Proceed to pay</button>
+        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"
+          (click)="closePaymentMetthodModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="paymentModel-modal" class="modal fade show" tabindex="-1" role="basic" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="font-weight: 400;color:#fb9678">{{plandetials}}</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="closePaymentModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <form novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest">
+                <div class="row">
+                  <div class="col-md-12 ">
+                    <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" class="form-control" formControlName="name">
+                     
+                    </div>
+                  </div>
+                  <div class="col-md-12 ">
+                    <div class="form-group">
+                      <label>Amount</label>
+                      <input disabled type="text" class="form-control" formControlName="amount">
+                     
+                    </div>
+                  </div>
+                  <div class="col-md-12 m-t-20">
+                    <div class="form-group">
+                      <label>Card Details</label>
+                      <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
+                      </ngx-stripe-card>
+                    </div>
+                  </div>
+                  <div class="col-md-12 m-t-40 text-center">
+                    <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Make Payment</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

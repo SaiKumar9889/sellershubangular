@@ -1,0 +1,303 @@
+<div  class="container-fluid" style="margin-top: 2px;">
+    <div  class="col-md-12 col-lg-12 text-center m-t-10">
+        <img  src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubsears.png" alt="user" class="img-responsive img-fixed img-fluid"></div>
+        <div  class="card-body p-b-0">
+            <ul  role="tablist" class="nav nav-tabs customtab2">
+                <li  class="nav-item">
+                <a  data-toggle="tab" (click)="listing = false" role="tab" aria-selected="false" class="nav-link active">
+                    <span  class="hidden-sm-up"><i  class="ti-home"></i></span>
+                    <span  class="hidden-xs-down"> Integration</span></a></li>
+                    <li  class="nav-item"><a  data-toggle="tab" (click)="listing = true" role="tab" aria-selected="true" class="nav-link">
+                        <span  class="hidden-sm-up"><i  class="ti-user"></i></span>
+                        <span  class="hidden-xs-down"> Listing Templates</span></a></li>
+            </ul>
+            <div  class="tab-content">
+                <div  id="sear1" role="tabpanel" class="active" *ngIf="!listing">
+                    <div class="portlet light">
+                        <div class="portlet-title">
+                            <div class="pull-right">
+                                <a  class="btn btn-sm btn-circle-new btn-success"><i class="fa fa-check"></i> Save</a>
+                                <a  class="btn btn-sm btn-default btn-circle-new btn-success"><i class="fa fa-exchange"></i> Test Connection</a>
+                                <a  class="btn btn-sm btn-default btn-circle-new btn-success"><i class="fa fa-download"></i> Download Sears Catalog</a>
+                                <a href="javascript:void(0)" type="button"  class="btn btn-sm btn-default btn-circle-new btn-success"><i class="fa fa-times font-red"></i>  Remove All listings from Sellershub</a>
+                                <a  class="btn btn-sm btn-default btn-circle-new btn-danger"><i class="fa fa-times font-red"></i>  Close</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form role="form">
+                                        <div class="form-body">
+
+                                            <div class="form-group">
+                                                <label>Name to Remember within KartzHub</label>
+                                                <input type="text" class="form-control" value="enter name" id="name" placeholder="Name to remmember">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label> API Username</label>
+                                                <input type="text" value="" class="form-control input-lg" id="apiusername" placeholder="Email address">
+                                                <input type="hidden" value="" class="form-control" id="apipassword" placeholder="Password">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label> Sears Seller Id
+                                                </label>
+                                                <input type="text" value="" class="form-control" id="merchantIdentifier" placeholder="Sears Seller Id">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label> API Secret Key
+                                                </label>
+                                                <input type="text" value="" class="form-control" id="apiKey" placeholder="Secret Key">
+                                            </div>
+
+                                            <div class="form-group mt-checkbox-list">
+                                                <label class="mt-checkbox mt-checkbox-outline"> Download the catalog into Sellershub
+
+                                                <input id="downloadamazoncatalogid" type="checkbox" value=""><span></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group mt-checkbox-list">
+                                                <label class="mt-checkbox mt-checkbox-outline"> Download Orders into Sellershub
+
+                                                <input id="downloadamazonorderid" type="checkbox" value="">
+                                                <span></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Seller Type</label><br>
+
+                                                <input type="radio" name="optionsRadios" id="searssellertypefbs" value="fbs"> FBS (Fulfillment by Sears)<br>
+                                                <input type="radio" name="optionsRadios" id="searssellertypefbm" value="fbm"> FBM (Fulfillment by Merchant)
+
+                                            </div>
+
+
+                                            <!-- <div class="col-md-12">
+                                                <div class="form-group has-success">
+                                                  <label class="control-label">Max Listed</label>
+                                                  <input type="text"  name="username" class="form-control" placeholder="Max Listed">
+                                                  
+                                                </div>
+                                              </div>
+                                              <div class="col-md-12">
+                                                <div class="form-group has-success">
+                                                  <label class="control-label">Stock Percentage</label>
+                                                  <input type="text"  name="username" class="form-control" placeholder="Stock Percentage">
+                                                  
+                                                </div>
+                                              </div>
+                                              <div class="col-md-12">
+                                                <div class="form-group has-success">
+                                                  <label class="control-label">End When</label>
+                                                  <input type="text"  name="username" class="form-control" placeholder="End When">
+                                                  
+                                                </div>
+                                              </div> -->
+
+
+
+                                        </div>
+                                    </form>
+
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <div  id="sear12" role="tabpanel" class="p-20" *ngIf="listing">
+
+                    <div class="portlet light" id="etsylistingtemplatediv1" *ngIf="!newTemplate">
+
+                        <div class="">
+                         
+                            <div class="tools pull-right">
+                                <button (click)="newTemplate = true" class="btn-success btn btn-sm btn-circle-new btn-default">New Listing Template <i class="fa fa-angle-right"></i></button>
+                            </div>
+                        
+                        
+                        </div>
+                        
+                        <div class="portlet-body">
+                        
+                        
+                            <div class="table-scrollable">
+                        
+                        
+                                <table class="table tableFixHead table-hover order-column v2">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            Template Name
+                                        </th>
+                                        <th>
+                                            Modified Date
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                        
+                        
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                        
+                                    
+                        
+                                    </tbody>
+                        
+                                </table>
+                        
+                            </div>
+                        
+                        
+                        
+                        </div>
+                        
+                        </div>
+                        
+                        
+                        <div id="etsylistingtemplatediv2" *ngIf="newTemplate">
+                        
+                        <div class="alert alert-warning">Please enter Sears Listing details</div>
+                        
+                        <div class="portlet-body form">
+                        <form class="" role="form">
+                        <div class="form-body">
+                        <div class="row">
+                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <div class="form-group">
+                            <label class=" control-label">Template Name</label>
+                              <input type="text" value="" class="form-control input-inline input-medium" id="templatename" placeholder="Enter Template Name">
+                              <input type="hidden" id="templateid" value="-1">
+                              <input type="hidden" id="channeluserid" value="6364">
+                          </div>
+                          </div>
+                        
+                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <div class="form-group">
+                             <label class=" control-label">Item Categorization</label>
+                              <input type="text" value="" class="form-control input-inline input-medium" id="categoryId" placeholder="Your own categorization">
+                          </div>
+                          </div>
+                        
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label class="control-label">Item Class Id</label>
+                            <div class="input-group">
+                              <input type="text" value="" class="form-control" id="selectedcategorynameid" placeholder="Item Class Id">
+                              <span class="input-group-btn">
+                              <a class="" ><button class="btn-xs" type="button">Search</button></a>
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                              <label class="control-label">Item Attributes</label>
+                              <a class="btn btn-sm btn-circle-new btn-default" >Attributes</a>
+                            </div>
+                          </div>
+                           
+                         
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          
+                            <div  class="form-group mt-checkbox-list">
+                                <label  class="mt-checkbox mt-checkbox-outline">Mature Content
+                                    <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                    <span ></span></label>
+                            </div>
+                            <div  class="form-group mt-checkbox-list">
+                                <label  class="mt-checkbox mt-checkbox-outline">Ship To Store Eligible
+                                    <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                    <span ></span></label>
+                            </div>
+
+                            <div  class="form-group mt-checkbox-list">
+                                <label  class="mt-checkbox mt-checkbox-outline">Restricted
+                                    <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                    <span ></span></label>
+                            </div>
+                            
+                         
+
+                          <div  class="form-group mt-checkbox-list">
+                            <label  class="mt-checkbox mt-checkbox-outline">Perishable
+                                <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                <span ></span></label>
+                        </div>
+                            
+                         </div>
+                        
+                         
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                             
+                            <div  class="form-group mt-checkbox-list">
+                                <label  class="mt-checkbox mt-checkbox-outline"> Required Refrigeration 
+                                    <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                    <span ></span></label>
+                            </div>
+                            <div  class="form-group mt-checkbox-list">
+                                <label  class="mt-checkbox mt-checkbox-outline"> requiresfreezing
+                                    <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                    <span ></span></label>
+                            </div>
+                            <div  class="form-group mt-checkbox-list">
+                                <label  class="mt-checkbox mt-checkbox-outline">Contains Alcohol
+                                    <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                    <span ></span></label>
+                            </div>
+                            <div  class="form-group mt-checkbox-list">
+                                <label  class="mt-checkbox mt-checkbox-outline"> Contains Tobacco
+                                    <input  id="downloadamazoncatalogid" type="checkbox" value="">
+                                    <span ></span></label>
+                            </div>
+                            
+                           </div>
+                         </div>
+                        
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div class="form-group">
+                            <label class=" control-label">Pricing Rule</label>
+                              <input type="text" value="" class="form-control input-inline input-medium" id="pricingRule" placeholder="Pricing Rule">
+                              <div class="well" [innerHtml]="'<p>e.g  <strong>${cost_price!}*1.6 + 1 </strong></p><p>
+                            </p><p>
+                              This make the selling price by multiplying cost price by 1.6 and add 1
+                              Tags available are  <strong>${cost_price!} and ${selling_price!}</strong>
+                            </p>'">
+                            
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="pull-right">
+                              <button href="javascript:void(0)" type="submit" class="btn btn-success btn-sm btn-circle-new"><i class="fa fa-check"></i> Save</button>
+                              <button  type="button" class="btn btn-default btn-danger btn-circle-new btn-sm"><i class="fa fa-times font-red"></i> Cancel</button>
+                        </div>
+                        </div>
+                        
+                        </div></form>
+                        
+                        </div></div>
+                    
+                </div>
+
+            </div>
+
+            </div>
+   </div>         
+           
+
+
+
+

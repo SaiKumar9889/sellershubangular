@@ -1,0 +1,193 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-lg-12 col-md-12 row option-alignment">
+                        <div class="col-lg-6 col-sm-12 col-md-6">
+                            <h4 class="card-title">Shipped Orders</h4>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 row" style="padding-right: 0px;">
+                        <div class="col-lg-12 col-sm-12 col-md-21  align-self-center text-right search-alignment "
+                            style="padding-right: 0px;">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <div class=" row">
+                                    <select class="col-sm-6 form-control custom-select" [(ngModel)]="searchname"
+                                        id="searchname">
+                                        <option class="form-control" value="0">Search By</option>
+                                        <option class="form-control" value="1">SKU</option>
+                                        <option class="form-control" value="2">Order No</option>
+                                        <option class="form-control" value="3">Customer</option>
+                                        <option class="form-control" value="4">Post Code</option>
+                                    </select>
+                                    <div class="col-sm-6">
+                                        <div class="input-group">
+                                            <input type="text" [(ngModel)]="searchvalue" class="form-control" id="pass3"
+                                                placeholder="Enter Search Value">
+                                            <div class="input-group-append"><span class="input-group-text"
+                                                    (click)="getOrders();auditTrack(1)"><i class="ti-search"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="m-l-5">
+                                    <select class="form-control custom-select" [(ngModel)]="channelId" name="fliter">
+                                        <option value="all" disabled>--Select Channel--</option>
+                                        <option class="form-control" *ngFor="let channel of channels"
+                                            value="{{channel.id}}">
+                                            {{channel.type}}-{{channel.name}}</option>
+                                    </select>
+                                </div>
+                                <button (click)="getOrders();auditTrack(2)" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                                        class="fa fa-plus-circle"></i> Apply Filter</button>
+                                <button (click)="reset();auditTrack(3)" type="button" class="btn btn-warning d-lg-block m-l-15"><i
+                                        class="fa fa-plus-circle"></i> Reset</button>
+                                <!-- <button type="button" (click)="downloadorders()"
+                  class="btn btn-info d-lg-block m-l-15 mr-1"><i class=" fas fa-file-excel"></i> Export To CSV</button> -->
+                                <div class="m-l-15">
+                                    <!-- <label class="control-label">Page Size</label> -->
+                                    <select (change)="getOrders()" class="form-control custom-select"
+                                        [(ngModel)]="pageSize">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                    <!-- <small class="form-control-feedback"> Select your gender </small> -->
+                                </div>
+                                <!-- <button type="button" data-toggle="modal" data-target="#search-modal"
+                    class="btn btn-success d-lg-block m-l-15"><i class=" fas fa-search"></i> Search</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                        <table class="table table color-bordered-table success-bordered-table table-bordered">
+                            <thead>
+                                <!-- <th>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" id="checkall" name="checkall" class="custom-control-input checkallP">
+                      <label class="custom-control-label" for="checkall"></label>
+                    </div>
+                  </th> -->
+                                <th>Order No
+                                    <!-- <app-filter></app-filter> -->
+                                </th>
+                                <th>Channel </th>
+                                <!-- <th>Image</th> -->
+                                <th style="min-width: 200px;">Product</th>
+                                <!-- <th>Qty</th> -->
+                                <th style="min-width: 150px;">SKU
+                                    <!-- <app-filter></app-filter> -->
+                                </th>
+                                <th style="min-width: 100px;">Order Date
+                                    <!-- <app-filter></app-filter> -->
+                                </th>
+
+                                <th>Customer
+                                    <!-- <app-filter></app-filter> -->
+                                </th>
+                                <th>Amount</th>
+                                <th>Stock Qty</th>
+                                <th style="min-width: 200px;">Shipping</th>
+                                <!-- <th>Return Eligible</th> -->
+                                <th>View Order</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let order of allOrders">
+                                    <!-- <td>
+                      <div class="custom-control custom-checkbox">
+                      <input type="checkbox"class="custom-control-input checkallP">
+                      <label class="custom-control-label"></label>
+                    </div>
+                  </td> -->
+                                    <td>{{ order.orderId}}</td>
+                                    <td><img [src]="getImage(order.channel)" class="prod-img img-responsive"></td>
+                                    <!-- <td><img height="40" src="{{order.imageUrl}}"></td> -->
+                                    <td> {{ order.title }}</td>
+                                    <td>{{ order.sku }}</td>
+                                    <td>{{ order.purchaseDate | date:'dd/MM/yyyy H:mm:ss' }}</td>
+                                    <td>{{ order.isExpired?'Encrypted':order.buyerName }}</td>
+                                    <td>{{ order.totalPrice }} {{order?.currencyCode }}</td>
+                                    <td>{{ order.quantityPurchased }}</td>
+                                    <td style="font-size: 11px;font-weight:400;">
+                                        <div *ngIf="order.isExpired">
+                                            Encrypted
+                                        </div>
+                                        <div *ngIf="!order.isExpired">
+                                            {{order.carrierName}} {{order.shippingMethod }}
+                                            <br> Shipped Date: {{order.shippedDate | date:'dd/MM/yyyy' }}
+                                            <br> Shipping Cost: {{order.shippingPrice }}
+                                            <br> Shipping Country: {{ order.shipCountry}}
+                                        </div>
+                                    </td>
+                                    <!-- <td>NO</td> -->
+
+                                    <td>
+
+                                        <div class="btn-group" style="margin-left: 2%;">
+                                            <button *ngIf="!order.isExpired" type="button" (click)="viewOrderTab(order);auditTrack(4)" title="View Order"
+                                                class="waves-effect waves-light btn btn-md btn-warning"><i
+                                                    class=" fas fa-eye"></i></button>
+                                             <button *ngIf="order.isExpired" type="button" (click)="viewOrderTabv2(order);auditTrack(5)" title="View Order"
+                                                    class="waves-effect waves-light btn btn-md btn-warning"><i
+                                                        class=" fas fa-eye"></i></button>
+                                            <button (click)="createDuplicateOrderTab(order);auditTrack(6)" type="button"
+                                                title="Resend"
+                                                class="waves-effect waves-light btn btn-md btn-success"><i
+                                                    class=" fas fa-redo-alt"></i></button>
+                                        </div>
+                                        <!-- <button type="button" class="btn btn-success d-lg-block m-l-15" >View
+                      Order</button>
+                                        <button type="button" class="btn btn-success d-lg-block m-l-15" >Resend</button> -->
+                                    </td>
+                                    <!-- <td>
+                      <button (click)="gotoView(order)" *ngIf="!order.isExpired" type="button" class="btn btn-success d-lg-block m-l-15">View</button>
+                      <button (click)="openModal(order)" *ngIf="order.isExpired" type="button" class="btn btn-success d-lg-block m-l-15">Enable</button>
+                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 ">
+                            <span>Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of
+                                    {{collectionsize}} entries</span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right">
+                            <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page"
+                                [maxSize]="3" [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="responsive-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Encrypted Order ( PII Privacy Policy ) : 2300 </h4>
+
+                <!-- <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button> -->
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn waves-effect waves-light btn-success">Save</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,206 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body"> 
+            <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+              <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+                style="padding-right: 0px;">
+                <div class="d-flex justify-content-end align-items-center">
+                  <!-- <div class="m-r-15">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="sku or product title" aria-label="Username">
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="ti-search"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" data-toggle="modal" data-target="#responsive-modal"
+                    class="btn btn-success d-lg-block m-r-15"><i class=" fas fa-download"></i> Download Orders</button> -->
+                  <div>
+                    <!-- <label class="control-label">Page Size</label> -->
+                    <select (change)="getProducts()" class="form-control custom-select" [(ngModel)]="pageSize">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                    <!-- <small class="form-control-feedback"> Select your gender </small> -->
+                  </div>
+                  <!-- <button type="button" data-toggle="modal" data-target="#search-modal"
+                    class="btn btn-success d-lg-block m-l-15"><i class=" fas fa-search"></i> Filter</button> -->
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table color-bordered-table success-bordered-table">
+                <thead>
+                  <th>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" id="checkall" name="checkall" class="custom-control-input checkallP">
+                      <label class="custom-control-label" for="checkall"></label>
+                    </div>
+                  </th>
+                  <th>IMAGE<span class="fas fa-sort"></span> </th>
+                  <th>SKU<span class="fas fa-sort"></span> </th>
+                  <th>TITLE<span class="fas fa-sort"></span></th>
+                  <th>SELLING PRICE<span class="fas fa-sort"></span></th>
+                  <th>CHANNEL<span class="fas fa-sort"></span></th>
+                  <th>TOTAL QUANTITY<span class="fas fa-sort"></span></th>
+                  <th>LISTING QUANTITY<span class="fas fa-sort"></span></th>
+                  <th>SCHEDULE TIME<span class="fas fa-sort"></span></th>
+                  <th>LISTING STATUS<span class="fas fa-sort"></span></th>
+                  <th>UPDATE TIME<span class="fas fa-sort"></span></th>
+                  <!-- <th>ACTION<span class="fas fa-sort"></span></th> -->
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let prod of allProducts">
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input checkallP">
+                        <label class="custom-control-label"></label>
+                      </div>
+                    </td>
+                    <td><img [src]="prod.imageUrl" class="img-responsive prod-img"></td>
+                    <td>{{ prod.sku }}</td>
+                    <td>{{ prod.title }}</td>
+                    <td>{{ prod.sellingPrice }}</td>
+                    <td>{{ prod.channel }}</td>
+                    <td>{{ prod.totalQty }}</td>
+                    <td>{{ prod.listingQty }}</td>
+                    <td>{{ prod.scheduleTime }}</td>
+                    <td>{{ prod.listingStatus }}</td>
+                    <td>{{ prod.createdDate | date:'dd MMM yyyy' }}</td>
+                    <!-- <td>{{ prod.sku }}</td> -->
+                    <!-- <td><button type="button" class="btn btn-success d-lg-block m-l-15">Action</button></td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-lg-12 col-md-12  align-self-center text-right">
+              <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="search-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" style="padding-left: 30%;color: rgb(255 165 0);font-weight: 400">Search Criteria
+          </h2>
+  
+          <button type="button" class="close" data-dismiss="modal" (click)="modalclosed()" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <select class="form-control custom-select" aria-placeholder="filter By">
+                  <option value="">Male</option>
+                  <option value="">Female</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 row">
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="John doe">
+  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn waves-effect waves-light btn-success">Save</button>
+          <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <app-apploader [Uloading]="loading"></app-apploader> -->
+  

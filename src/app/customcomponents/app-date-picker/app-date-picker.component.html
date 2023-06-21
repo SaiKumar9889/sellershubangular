@@ -1,0 +1,29 @@
+<div class="form-group">
+    <label *ngIf="lable&&lable!=''" class="control-label">{{lable}} :
+      <!-- <span style="color:red">*</span> -->
+    </label>
+    <div class="input-group" *ngIf="datePopupOpen">
+        <input [minDate]="minDate" [maxDate]="maxDate"  class="form-control" autocomplete="off"  [(ngModel)]="model" (ngModelChange)="onChange($event)" placeholder="{{lable}} (dd MMM yyyy)"
+            ngbDatepicker #d3="ngbDatepicker">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary no-shadow" id="toogleClick" (click)="d3.toggle()" type="button">
+                <i class="fa fa-calendar"></i>
+            </button>
+        </div>
+    </div>
+    <div class="input-group" *ngIf="!datePopupOpen">
+        <input  class="form-control" autocomplete="off"  [(ngModel)]="newModel"
+         placeholder="{{lable}} (dd MMM yyyy)" name="dp2" >
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary no-shadow" (click)="openDate()" type="button">
+                <i class="fa fa-calendar"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- [footerTemplate]="footerTemplate" -->
+<!-- <ng-template #footerTemplate>
+    <hr class="my-0">
+    <button class="btn btn-primary btn-sm m-2 float-left" (click)="model = today; d.close()">Today</button>
+    <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">Close</button>
+</ng-template> -->

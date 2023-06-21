@@ -1,0 +1,33 @@
+export class Supplier {
+    id?: number;
+    kartzhubUserId?: number;
+    code?: any;
+    type?: string;
+    website?: string;
+    company?: string;
+    notes?: string;
+    firstName?: string;
+    lastName?: string;
+    addressline1?: string;
+    addressline2?: string;
+    addressline3?: string;
+    city?: string;
+    state?: string;
+    postcode?: string;
+    countryCode?: string;
+    country?: string;
+    billingAddressline1?: string;
+    billingAddressline2?: string;
+    billingAddressline3?: string;
+    billingCity?: string;
+    billingState?: string;
+    billingPostcode?: string;
+    billingCountryCode?: string;
+    billingCountry?: string;
+    email?: string;
+    phone?: string;
+    modifiedDate?: any;
+    defaultSupplier?: string;
+    supplierSku?: string;
+    accountNumber?:string;
+}

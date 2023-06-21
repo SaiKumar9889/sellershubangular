@@ -1,0 +1,305 @@
+<div class="col-md-12 col-lg-12 row m-t-20 ">
+  <div class="col-md-12 col-lg-12">
+    <div class="card">
+      <div class="card-header text-center" style="height: 40px;">
+        <h5>Channel Products</h5>
+      </div>
+      <div class="card-body">
+        <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right " style="padding-right: 0px;">
+          <div class="d-flex justify-content-left align-items-center">
+
+            <div class=" row mr-1">
+              <select class="col-sm-6 form-control custom-select" [(ngModel)]="searchName" id="searchName">
+                <option class="form-control" value="0">Search By</option>
+                <option class="form-control" value="1">SKU</option>
+                <option class="form-control" value="3">TITLE</option>
+                <option class="form-control" value="50">ASIN</option>
+              </select>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <input type="text" [(ngModel)]="searchValue" class="form-control" id="pass3"
+                    placeholder="Enter Search Value">
+
+                </div>
+              </div>
+            </div>
+            <button (click)="refresh();" type="button" class="btn btn-success d-lg-block mr-1"><i
+              class="fas fa-filter fa-sm"></i> Apply Filter</button>
+          <button (click)="reset();" type="button" class="btn btn-warning d-lg-block mr-1"><i
+            class="fa fa-refresh fa-md mr-1">&#xf021;</i> Refresh</button>
+            <button type="button" class="btn btn-success  d-lg-block mr-1" (click)="linkMappAllSkus()"> Apply
+              Link By All SKUs</button>
+              <button type="button" class="btn btn-success  d-lg-block" *ngIf="channel == 'amazon'" (click)="updateClickAndCollect()">Update into Click and Collect</button>
+          </div>
+
+        </div>
+      </div>
+      <br>
+      <div class="table-responsive">
+        <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+        <table class="table table color-bordered-table success-bordered-table table-bordered">
+          <thead style="font-size: 12px;" class="text-center">
+            <th *ngIf="channel == 'amazon'">
+              <div class="custom-control custom-checkbox">
+                  <input type="checkbox" id="checkall" [(ngModel)]="isAllChecked" name="checkall" (click)="selectall($event)"
+                      class="custom-control-input checkallP">
+                  <label  class="custom-control-label"
+                      for="checkall"></label>
+              </div>
+          </th>
+            <th *ngIf="channel != 'amazon'">Enable </th>
+            <th>SKU </th>
+            <th>Title</th>
+            <th>FBA</th>
+            <th>SellersHub SKU</th>
+            <!-- <th>Max Listed</th>
+              <th>Stock Percentage</th>
+              <th>End When</th> -->
+            <th>Actions</th>
+            <th *ngIf="channel == 'amazon'">Enable </th>
+          </thead>
+          <tbody style="font-size: 12px;" class="text-center">
+            <tr *ngFor="let prod of channelProducts; i as index">
+              <td *ngIf="channel == 'amazon'">
+                <div class="custom-control custom-checkbox">
+                    <input (click)="individualProdselection(prod)" [checked]="prod.selected"
+                        type="checkbox" [id]="prod.id" [value]="prod.selected" [name]="test"
+                        class="custom-control-input checkallP">
+                    <label class="custom-control-label" for="{{prod.id}}"></label>
+                </div>
+            </td>
+              <td class="text-center" *ngIf="channel != 'amazon'">
+                <div class="">
+                  <input [(ngModel)]="prod.updateInventory" type="checkbox" name="test{{i}}" class="">
+                  <!-- <label class="custom-control-label" for="{{prod.id}}"></label> -->
+                </div>
+              </td>
+              <td>{{prod.sku}}</td>
+              <td>
+                {{prod.title}}
+              </td>
+              <td>
+                {{prod.fbaItem}}
+              </td>
+              <td>{{prod.mapSku}}</td>
+              <!-- <td> <input class="form-control"
+                  type="text"  name="test1{{i}}" [(ngModel)]="prod.maxListed"
+                  ></td>
+                <td > <input class="form-control"
+                  type="text"  name="test2{{i}}" [(ngModel)]="prod.stockPercentage"
+                  ></td>
+                <td> <input class="form-control"
+                  type="text"  name="test3{{i}}" [(ngModel)]="prod.endWhen"
+                  ></td> -->
+              <td>
+                <div class="row justify-content-center">
+                  <button title="Create" class="btn btn-success btn-sm mb-1 mr-1" (click)="createProduct(prod);"
+                    *ngIf="!prod.mapSku"><i class="fas fa-plus-circle mr-1"></i>Create</button>
+                  <button title="Link" class="btn btn-sm btn-warning mb-1 mr-1" (click)="LinkProduct(prod);"
+                    *ngIf="!prod.mapSku"><i class='fa fa-link fas mr-1'></i>Link</button>
+                  <button title="Unlink" class="btn btn-danger btn-sm mb-1 mr-1" *ngIf="prod.mapSku" (click)="unLinkProd(prod)">
+                    <i class="fa fa-solid fa-unlink fa-lg fas mr-1"></i>Unlink</button>
+                  <button title="Unlink" class="btn btn-success btn-sm mb-1 mr-1" *ngIf="prod.mapSku"
+                    (click)="updateProd(prod)"><i class="fa fa-refresh fa-lg mr-1" style="
+                        color: white;">&#xf021;</i>Update</button>
+                </div>
+              </td>
+              <td class="text-center" *ngIf="channel == 'amazon'">
+                <div class="">
+                  <input [(ngModel)]="prod.updateInventory" type="checkbox" name="test{{i}}" class="">
+                  <!-- <label class="custom-control-label" for="{{prod.id}}"></label> -->
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row col-lg-12 col-md-12">
+        <div class="col-lg-6 col-md-6 ">
+          <span>Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of {{collectionsize}} entries</span>
+        </div>
+        <div class="col-lg-6 col-md-6 text-right">
+          <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+            [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="link-products-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="closeModal()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12">
+          <div class="card">
+            <div class="card-header text-center" style="height: 40px;">
+              <h5>SellersHub Products</h5>
+            </div>
+            <div class="card-body">
+              <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right " style="padding-right: 0px;">
+                <div class="d-flex justify-content-left align-items-center">
+      
+                  <div class=" row m-l-15">
+                    <select class="col-sm-6 form-control custom-select" [(ngModel)]="searchname" id="searchname">
+                      <option class="form-control" value="0">Search By</option>
+                      <option class="form-control" value="1">SKU</option>
+                      <option class="form-control" value="3">TITLE</option>
+                      <option class="form-control" value="50">ASIN</option>
+                    </select>
+                    <div class="col-sm-6">
+                      <div class="input-group">
+                        <input type="text" [(ngModel)]="searchValue2" class="form-control" id="searchValue2"
+                          placeholder="Enter Search Value">
+      
+                      </div>
+                    </div>
+                  </div>
+                  <button (click)="refresh1();" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                    class="fas fa-filter fa-sm"></i> Apply Filter</button>
+                <button (click)="reset1();" type="button" class="btn btn-warning d-lg-block m-l-15"><i
+                  class="fa fa-refresh fa-md mr-1">&#xf021;</i> Refresh</button>
+                  
+                </div>
+      
+              </div>
+              <br>
+              <div class="table-responsive">
+                <table class="table table color-bordered-table success-bordered-table">
+                  <thead style="font-size: 12px;">
+                    <th>SKU </th>
+                    <th>Title</th>
+                    <th>Actions</th>
+                  </thead>
+                  <tbody style="font-size: 12px;">
+                    <tr *ngFor="let prod of allProducts">
+
+                      <td>{{prod.sku}}</td>
+                      <td>
+                        {{prod.title}}
+                      </td>
+                      <td>
+                        <div class="row">
+                          <button title="Link" class="btn btn-sm btn-success m-r-15" (click)="onLinkProducts(prod);"><i
+                              class='fa fa-link fas mr-1'></i>Link</button>
+                          <!-- <button title="Unlink" class="btn btn-sm mr-1"><i
+                            class="fa fa-solid fa-unlink fa-lg fas"></i></button> -->
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row col-lg-12 col-md-12">
+                <div class="col-lg-6 col-md-6 ">
+                  <span>Showing {{pagesize <= collectionSize ? pagesize : collectionSize}} of {{collectionSize}}
+                      entries</span>
+                </div>
+                <div class="col-lg-6 col-md-6 text-right">
+                  <ngb-pagination [collectionSize]="collectionSize" [pageSize]="pagesize" [(page)]="Page" [maxSize]="3"
+                    [rotate]="true" [boundaryLinks]="true" (pageChange)="changepage(page);">
+                  </ngb-pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="update-store-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="closeUpdateModal()" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right " style="padding-right: 0px;">
+          <div class="d-flex justify-content-end align-items-center">
+
+            <div class="col-lg-12 form-group row">
+              <label class="col-md-8 control-label text-right mt-2">Select Store</label>
+              <div class="col-md-4">
+                  <select id="currencyid" class="form-control" (change)="onSelectStore($event.target.value)">
+                      <option value="">Please Select</option>
+                      <option value="{{store.supplySourceId}}" *ngFor="let store of allStores">{{store.alias}}</option>
+                  </select>
+              </div>
+          </div>
+            
+          </div>
+
+        </div>
+        <div class="col-md-12 col-lg-12">
+              <div class="table-responsive">
+                <table class="table table color-bordered-table success-bordered-table table-bordered">
+                  <thead class="text-center">
+                    <th>
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" id="checkallprod" [(ngModel)]="isAllProdChecked" name="checkall" (click)="selectallProd($event)"
+                              class="custom-control-input checkallP">
+                          <label  class="custom-control-label"
+                              for="checkallprod"></label>
+                      </div>
+                  </th>
+                    <th>SKU </th>
+                    <th>Title</th>
+                    <th>Store</th>
+                    <th>Quantity</th>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr *ngFor="let product of products">
+                      <td>
+                        <div class="custom-control custom-checkbox">
+                            <input (click)="individualselection(product)" [checked]="product.selected"
+                                type="checkbox" [id]="'test' + product.id" [value]="product.selected" [name]="'test' + product.channel"
+                                class="custom-control-input checkallP">
+                            <label class="custom-control-label" for="test{{product.id}}"></label>
+                        </div>
+                    </td>
+                      <td>{{product.sku}}</td>
+                      <td>
+                        <span class="title">{{product.title}}</span>
+                      </td>
+                      <td>{{product.storeName}}</td>
+                      <td>
+                          <div class="col-md-12">
+                              <input class="form-control form-control-sm text-center" type="text"
+                              (blur)="updateQty(product)" [ngClass]="product.qty > qty ?'has-error':''" [(ngModel)]="product.qty" name="product.sku" id="product.id">
+                              <div class="text-center">
+                                <span *ngIf="product.qty > qty" for="product.id" class="text-danger">Updated quntity should not be greater than the existing quantity</span>
+                                </div>
+                          </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- <div class="row col-lg-12 col-md-12">
+                <div class="col-lg-6 col-md-6 ">
+                  <span>Showing {{pagesize <= collectionSize ? pagesize : collectionSize}} of {{collectionSize}}
+                      entries</span>
+                </div>
+                <div class="col-lg-6 col-md-6 text-right">
+                  <ngb-pagination [collectionSize]="collectionSize" [pageSize]="pagesize" [(page)]="Page" [maxSize]="3"
+                    [rotate]="true" [boundaryLinks]="true" (pageChange)="changepage(page);">
+                  </ngb-pagination>
+                </div>
+              </div> -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn waves-effect waves-light btn-success" (click)="updateInventory();">List</button>
+        <button type="button" class="btn btn-danger waves-effect"
+            (click)="closeUpdateModal();" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+  </div>
+</div>

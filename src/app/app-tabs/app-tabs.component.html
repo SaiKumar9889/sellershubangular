@@ -1,0 +1,279 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card" style="margin-bottom: 0px;">
+            <div class="card-body p-b-0 card-body-tabs">
+                <div *ngIf="selectedTabs.length>0">
+                    <ul class="nav nav-tabs customtab2" role="tablist">
+                        <li class="nav-item" *ngFor="let tab of selectedTabs" (click)="makeActive(tab)">
+                            <a class="nav-link" [ngClass]="tab.active?'active':'non-active'" data-toggle="tab"
+                                [href]="'#'+tab.id" role="tab">
+                                <!-- <span  class="hidden-sm-up"><i class="ti-user"></i></span>  -->
+                                <span class="hidden-xs-down"> {{tab.titlename}} </span>
+                                <span class="hidden-sm-up"><i (click)="closeTab(tab)" class="ti-close"></i></span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown" *ngIf="allSubscribedTabs.length>5">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"
+                                role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="hidden-sm-up"><i class="ti-layout-grid4-alt"></i></span> <span
+                                    class="hidden-xs-down"></span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="rewriteTab(tab)" *ngFor="let tab of hidedTabs"
+                                    id="{{tab.id}}" href="#{{tab.id}}" role="tab" data-toggle="tab"
+                                    aria-controls="dropdown1">{{tab.titlename}}</a>
+                                <!-- <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab"
+                  aria-controls="dropdown2">@mdo</a> -->
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <ng-container *ngFor="let tab of selectedTabs">
+                            <!-- <ng-container *ngIf="tab.active"> -->
+                            <div class="tab-pane" [ngClass]="tab.active?'active':'non-active'" [id]="tab.id"
+                                role="tabpanel">
+                                <div>
+                                    <div [ngSwitch]="tab.id">
+                                        <div *ngSwitchCase="'dashboard'">
+                                            <app-dashboard></app-dashboard>
+                                        </div>
+                                        <div *ngSwitchCase="'sales_by_prod'">
+                                            <app-search-by-prod></app-search-by-prod>
+                                        </div>
+                                        <div *ngSwitchCase="'low_stock'">
+                                            <app-lowstock></app-lowstock>
+                                        </div>
+                                        <div *ngSwitchCase="'stock_value_repo'">
+                                            <app-stock-value-repo></app-stock-value-repo>
+                                        </div>
+                                        <div *ngSwitchCase="'order_history'">
+                                            <app-order-history></app-order-history>
+                                        </div>
+                                        <div *ngSwitchCase="'mcf_Orders'">
+                                            <app-mcf-orders></app-mcf-orders>
+                                        </div>
+                                        <div *ngSwitchCase="'mange_Orders'">
+                                            <app-manage-returns></app-manage-returns>
+                                        </div>
+                                        <div *ngSwitchCase="'order_summary'">
+                                            <app-order-summary></app-order-summary>
+                                        </div>
+                                        <div *ngSwitchCase="'return_orders'">
+                                            <app-return-orders></app-return-orders>
+                                        </div>
+                                        <div *ngSwitchCase="'sales_orders'">
+                                            <app-sales-orders></app-sales-orders>
+                                        </div>
+                                        <div *ngSwitchCase="'dispatch_console'">
+                                            <app-dispatch-console></app-dispatch-console>
+                                        </div>
+                                        <div *ngSwitchCase="'click_collect'">
+                                            <app-click-and-collect></app-click-and-collect>
+                                        </div>
+                                        <div *ngSwitchCase="'error_labels'">
+                                            <app-sales-orders [tab]="'error_labels'"></app-sales-orders>
+                                        </div>
+                                        <div *ngSwitchCase="'ready_to_shipment'">
+                                            <app-ready-to-shipment></app-ready-to-shipment>
+                                        </div>
+
+                                        <div *ngSwitchCase="'shipped_Orders'">
+                                            <app-shipped-orders></app-shipped-orders>
+                                        </div>
+                                        <div *ngSwitchCase="'cancelled_Orders'">
+                                            <app-cancelled-orders></app-cancelled-orders>
+                                        </div>
+                                        <div *ngSwitchCase="'products'">
+                                            <app-products></app-products>
+                                        </div>
+                                        <div *ngSwitchCase="'channel_products'">
+                                            <app-channel-products></app-channel-products>
+                                        </div>
+                                        <div *ngSwitchCase="'stock_view'">
+                                            <app-stock-overview></app-stock-overview>
+                                        </div>
+                                        <div *ngSwitchCase="'purchanse_orders'">
+                                            <app-purchase-orders></app-purchase-orders>
+                                        </div>
+                                        <div *ngSwitchCase="'warehouses'">
+                                            <app-warehouses></app-warehouses>
+                                        </div>
+                                        <div *ngSwitchCase="'stockSummary'">
+                                            <app-stocksummary></app-stocksummary>
+                                        </div>
+                                        <div *ngSwitchCase="'transfers'">
+                                            <app-transfers></app-transfers>
+                                        </div>
+                                        <div *ngSwitchCase="'suppliers'">
+                                            <app-suppliers></app-suppliers>
+                                        </div>
+                                        <div *ngSwitchCase="'customers'">
+                                            <app-customer></app-customer>
+                                        </div>
+                                        <div *ngSwitchCase="'shipping_integration'">
+                                            <!-- <app-create-integrate></app-create-integrate> -->
+                                            <app-integrations></app-integrations>
+                                        </div>
+                                        <div *ngSwitchCase="'shipping_manifests'">
+                                            <!-- <app-create-integrate></app-create-integrate> -->
+                                            <app-shipping-manifests></app-shipping-manifests>
+                                        </div>
+                                        <div *ngSwitchCase="'filed_manifests'">
+                                            <!-- <app-create-integrate></app-create-integrate> -->
+                                            <app-filed-manifests></app-filed-manifests>
+                                        </div>
+                                        <div *ngSwitchCase="'channel_integration'">
+                                            <!-- <app-create-integrate></app-create-integrate> -->
+                                            <app-channel-integration></app-channel-integration>
+                                        </div>
+                                        <div *ngSwitchCase="'shipping_courier_setup'">
+                                            <app-shipping-courier-setup></app-shipping-courier-setup>
+                                        </div>
+                                        <div *ngSwitchCase="'waiting_to_list'">
+                                            <app-waiting-to-list></app-waiting-to-list>
+                                        </div>
+                                        <div *ngSwitchCase="'lis_errors'">
+                                            <app-listing-errors></app-listing-errors>
+                                        </div>
+                                        <div *ngSwitchCase="'listed_products'">
+                                            <app-listed-products></app-listed-products>
+                                        </div>
+                                        <div *ngSwitchCase="'closed_products'">
+                                            <app-closed-products></app-closed-products>
+                                        </div>
+                                        <div *ngSwitchCase="'channel_scheduled_listing'">
+                                            <app-channel-scheduled-listing></app-channel-scheduled-listing>
+                                        </div>
+                                        <div *ngSwitchCase="'manage_fba'">
+                                            <app-manage-fba></app-manage-fba>
+                                        </div>
+                                        <div *ngSwitchCase="'create_products_to_fba'">
+                                            <app-create-products-to-fba></app-create-products-to-fba>
+                                        </div>
+                                        <div *ngSwitchCase="'send_products_to_fba'">
+                                            <app-send-products-fba></app-send-products-fba>
+                                        </div>
+                                        <div *ngSwitchCase="'products_in_fba'">
+                                            <app-products-in-fba></app-products-in-fba>
+                                        </div>
+                                        <div *ngSwitchCase="'my_account'">
+                                            <app-my-account></app-my-account>
+                                        </div>
+                                        <div *ngSwitchCase="'announcements'">
+                                            <app-announcments></app-announcments>
+                                        </div>
+                                        <div *ngSwitchCase="'releases'">
+                                            <app-releases></app-releases>
+                                        </div>
+                                        <div *ngSwitchCase="'user_management'">
+                                            <app-manage-users></app-manage-users>
+                                        </div>
+                                        <div *ngSwitchCase="'suscrption'">
+                                            <app-subscrption></app-subscrption>
+                                        </div>
+                                        <div *ngSwitchCase="'reedem_coupon'">
+                                            <app-redem-coupon></app-redem-coupon>
+                                        </div>
+                                        <div *ngSwitchCase="'user_guide'">
+                                            <app-user-guides></app-user-guides>
+                                        </div>
+                                        <div *ngSwitchCase="'created_order'">
+                                            <app-create-order></app-create-order>
+                                        </div>
+                                        <div *ngSwitchCase="'user_setting'">
+                                            <app-settings-tabs></app-settings-tabs>
+                                        </div>
+                                        <div *ngSwitchCase="'view_order'">
+                                            <app-view-order></app-view-order>
+                                        </div>
+                                        <div *ngSwitchCase="'edit_order'">
+                                            <app-edit-order></app-edit-order>
+                                        </div>
+                                        <div *ngSwitchCase="'ebay_inte'">
+                                            <app-ebay-inte></app-ebay-inte>
+                                        </div>
+                                        <div *ngSwitchCase="'channel_inte'">
+                                            <app-create-integrate></app-create-integrate>
+                                        </div>
+                                        <div *ngSwitchCase="'ecom_inte'">
+                                            <app-create-ecom-integrate></app-create-ecom-integrate>
+                                        </div>
+                                        <div *ngSwitchCase="'accounting_inte'">
+                                            <app-accounting-inte></app-accounting-inte>
+                                        </div>
+                                        <div *ngSwitchCase="'accounting_info'">
+                                            <app-accounting-info></app-accounting-info>
+                                        </div>
+                                        <div *ngSwitchCase="'create_product'">
+                                            <app-create-product></app-create-product>
+                                        </div>
+                                        <div *ngSwitchCase="'template_desines'">
+                                            <app-template-designers></app-template-designers>
+                                        </div>
+                                        <div *ngSwitchCase="'automations'">
+                                            <app-automations></app-automations>
+                                        </div>
+                                        <div *ngSwitchCase="'edit_product'">
+                                            <app-edit-product></app-edit-product>
+                                        </div>
+                                        <div *ngSwitchCase="'amazon_stock_repricer'">
+                                            <app-amazon-stock-repricer></app-amazon-stock-repricer>
+                                        </div>
+                                        <div *ngSwitchCase="'repricing_settings'">
+                                            <app-amazon-stock-repricer-settings></app-amazon-stock-repricer-settings>
+                                        </div>
+                                        <div *ngSwitchCase="'create_po'">
+                                            <app-create-po></app-create-po>
+                                        </div>
+                                        <div *ngSwitchCase="'edit_po'">
+                                            <app-edit-po></app-edit-po>
+                                        </div>
+                                        <div *ngSwitchCase="'create_bundle_product'">
+                                            <app-bundle-product></app-bundle-product>
+                                        </div>
+                                        <div *ngSwitchCase="'ai_dashboard'">
+                                            <app-ai-dashboard></app-ai-dashboard>
+                                        </div>
+                                        <div *ngSwitchCase="'ai_product_dashboard'">
+                                            <app-ai-product-dashboard></app-ai-product-dashboard>
+                                        </div>
+                                        <div *ngSwitchCase="'ai_user_dashboard'">
+                                            <app-ai-user-dashboard></app-ai-user-dashboard>
+                                        </div>
+                                        <div *ngSwitchCase="'ai_subscription_dashboard'">
+                                            <app-ai-subscription-dashboard></app-ai-subscription-dashboard>
+                                        </div>
+                                        <div *ngSwitchCase="'ai_channelorderdownloader_dashboard'">
+                                            <app-ai-channelorderdownloader-dashboard>
+                                            </app-ai-channelorderdownloader-dashboard>
+                                        </div>
+                                        <div *ngSwitchCase="'ai_subscriptionplans_dashboard'">
+                                            <app-ai-subscriptionplans-dashboard></app-ai-subscriptionplans-dashboard>
+                                        </div>
+                                        <div *ngSwitchCase="'duplicateOrder'">
+                                            <app-duplicate-order></app-duplicate-order>
+                                        </div>
+                                        <div *ngSwitchCase="'customer_replies'">
+                                            <app-messages></app-messages>
+                                        </div>
+                                        <div *ngSwitchCase="'fba_calculator'">
+                                            <app-fba-calculator></app-fba-calculator>
+                                        </div>
+                                        <div *ngSwitchCase="'category'">
+                                            <app-category></app-category>
+                                        </div>
+                                        <div *ngSwitchDefault>
+                                            <p>No one is matched</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <app-apploader [Uloading]="loading"></app-apploader> -->

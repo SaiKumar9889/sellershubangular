@@ -1,0 +1,11 @@
+.title{
+    overflow: hidden !important;
+    width:200px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1 !important;
+    -webkit-box-orient: vertical !important;
+    margin: auto;
+  }
+  .has-error{
+    border: 2px solid red;
+  }

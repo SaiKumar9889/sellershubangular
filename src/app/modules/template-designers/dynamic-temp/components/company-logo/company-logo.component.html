@@ -1,0 +1,11 @@
+<div class="showoptions">
+    <div class="action-icons hide">
+        <input accept="image/png, image/gif, image/jpeg" type="file"
+        (change)="changeFiles($event)" name="my_file" [id]="ip_id" style="display: none;" />  
+        <i (click)="openuploadfun()"  style="cursor: pointer;color: rgb(39 39 39 / 52%);" class=" fas fa-edit"></i>
+        <!-- <i style="cursor: pointer;color: rgb(39 39 39 / 52%);padding: 5px" class=" fas fa-trash"></i> -->
+    </div>
+    <img class="img-responsive"
+        [src]="data?.text"
+        alt="logo" width="100%">
+</div>

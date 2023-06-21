@@ -1,0 +1,7 @@
+.title{
+    overflow: hidden !important;
+    width:150px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1 !important;
+    -webkit-box-orient: vertical !important;
+  }

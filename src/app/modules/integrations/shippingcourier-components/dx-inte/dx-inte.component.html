@@ -1,0 +1,913 @@
+<div class="card">
+    <div class="card-body p-b-0">
+        <div class="col-md-12 col-lg-12 text-center m-t-10">
+            <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubdx.png" alt="user"
+                class="img-responsive img-fixed img-fluid" />
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right" style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+                <button *ngIf="!isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                        class="fa fa-check"></i> Save</button>
+                <button *ngIf="isEnabled" (click)="save()" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                        class="fa fa-check"></i> Update</button>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs customtab2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#integration" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">
+                        Integration</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#shippingsettings" role="tab" aria-selected="false">
+                    <span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down"> Shipping
+                        Services</span>
+                </a>
+            </li>
+            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#labelsetup" role="tab"
+                    aria-selected="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span
+                        class="hidden-xs-down">
+                        Label Setup</span></a></li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#labelsettings" role="tab" aria-selected="true">
+                  <span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down"> Label Settings</span>
+              </a>
+          </li> -->
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="integration" role="tabpanel">
+                <div class="col-md-12">
+                    <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                    <div class="m-t-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Dx Account Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4" name="123">
+                                            <div class="form-group has-success">
+                                                <label>Customer Id</label>
+                                                <input name="customerid" [(ngModel)]="customerid" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>User Id</label>
+                                                <input name="userid" [(ngModel)]="userid" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Password</label>
+                                                <input name="password" [(ngModel)]="password" type="password"
+                                                    class="form-control" />
+                                            </div>
+                                            <!-- <div class="form-group has-success">
+                      <label class="control-label">Label Format <span style="color:red">*</span> </label>
+                      <select [(ngModel)]="labelformat" class="form-control custom-select">
+                        <option disabled value="">--Select label--</option>
+                        <option value="">Male</option>
+                        <option value="">Female</option>
+                      </select>
+                    </div> -->
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h4 class="m-b-0 text-white">Pickup Address Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="form-horizontal mt-4" name="45465">
+                                            <div class="form-group has-success">
+                                                <label>Contact Pick Phone Number <span
+                                                        style="color: red;">*</span></label>
+                                                <input name="pickphonenum" [(ngModel)]="pickphonenum" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Town <span style="color: red;">*</span></label>
+                                                <input name="pickuptown" [(ngModel)]="pickuptown" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Street <span style="color: red;">*</span></label>
+                                                <input name="picstreet" [(ngModel)]="picstreet" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Locality <span style="color: red;">*</span></label>
+                                                <input name="picklocality" [(ngModel)]="picklocality" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Contact Name <span style="color: red;">*</span></label>
+                                                <input name="pickContactname" [(ngModel)]="pickContactname" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Building <span style="color: red;">*</span></label>
+                                                <input name="pickupbuilding" [(ngModel)]="pickupbuilding" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <label>Pickup Postcode<span style="color: red;">*</span></label>
+                                                <input name="pickpostcode" [(ngModel)]="pickpostcode" type="text"
+                                                    class="form-control" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane p-20" id="shippingsettings" role="tabpanel">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Service Name/Code
+                            </th>
+
+                            <th>
+                                Enabled
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Signature Next Day
+                            </td>
+
+                            <td>
+                                <input name="rmshippinglabelservicecode" value="0" type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Saturday - Next Day
+                            </td>
+
+                            <td>
+                                <input name="rmshippinglabelservicecode" value="1" type="checkbox" />
+
+                                <input id="servicename1" value="Signature Saturday - Next Day" type="hidden" />
+                                <input id="servicecode1" value="Signature Saturday - Next Day" type="hidden" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Pre-12.00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="2"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Saturday
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="3"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Pre-9am
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="4"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Pre-10.30
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="5"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Saturday - Pre 12.00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="6"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Track only
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="7"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Branch Returns
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="8"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag 24 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="9"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag 24 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="10"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag Saturday 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="11"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag Saturday 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="12"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box 24 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="13"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box 24 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="14"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box Saturday 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="15"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box Saturday 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="16"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="17"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="18"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Bag 24 24 Hour Leave Safe DX2H 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="19"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Bag 24 24 Hour Leave Safe DX2H Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="20"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Bag Saturday 24 Hour Leave Safe DX2H S 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="21"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Bag Saturday 24 Hour Leave Safe DX2H S Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="22"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Box 24 24 Hour Leave Safe DX2H 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="23"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Box 24 24 Hour Leave Safe DX2H Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="24"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Box Saturday 24 Hour Leave Safe DX2H S 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="25"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Box Saturday 24 Hour Leave Safe DX2H S Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="26"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Long 24 24 Hour Leave Safe DX2H 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="27"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Long 24 24 Hour Leave Safe DX2H Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="28"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Long Saturday 24 Hour Leave Safe DX2H S 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="29"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Long Saturday 24 Hour Leave Safe DX2H S Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="30"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Bag 24 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="31"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Bag 24 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="32"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Bag Saturday 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="33"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Bag Saturday 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="34"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Box 24 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="35"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Box 24 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="36"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Box Saturday 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="37"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Box Saturday 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="38"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Long 24 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="39"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Long 24 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="40"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Long Saturday 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="41"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Long Saturday 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="42"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Long 24 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="43"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Long 24 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="44"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Long Saturday 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="45"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Long Saturday 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="46"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Bag NI 24 24 Hour Leave Safe DX2H 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="47"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Bag NI 24 24 Hour Leave Safe DX2H Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="48"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Box NI 24 24 Hour Leave Safe DX2H 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="49"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Box NI 24 24 Hour Leave Safe DX2H Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="50"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Long NI 24 24 Hour Leave Safe DX2H 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="51"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Leave safe Long NI 24 24 Hour Leave Safe DX2H Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="52"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Bag NI 24 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="53"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Bag NI 24 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="54"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Box NI 24 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="55"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Box NI 24 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="56"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Long NI 24 24 Hour MANDATORY SIGNATURE 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="57"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mandatory Signature Long NI 24 24 Hour MANDATORY SIGNATURE Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="58"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag NI 24 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="59"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag NI 24 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="60"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box NI 24 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="61"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box NI 24 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="62"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Long NI 24 24 Hour Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="63"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Long NI 24 24 Hour Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="64"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag NI 24 2 Day Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="65"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Bag NI 24 2 Day Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="66"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box NI 24 2 Day Signature 08:00 - 18:00
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="67"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Signature Box NI 24 2 Day Signature Pre 1
+                            </td>
+
+                            <td>
+                                <input (click)="appendData($event)" name="rmshippinglabelservicecode" value="68"
+                                    type="checkbox" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane p-20" id="labelsetup" role="tabpanel">
+                <app-label-template></app-label-template>
+            </div>
+        </div>
+    </div>
+</div>

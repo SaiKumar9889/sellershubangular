@@ -1,0 +1,472 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body p-b-0">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs customtab2" role="tablist">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#subscriptionDetails"
+                            role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-home"></i></span>
+                            <span class="hidden-xs-down">Subscrption Details</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#invoices" role="tab"
+                            aria-selected="true"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span
+                                class="hidden-xs-down">Invoices</span></a> </li>
+
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="subscriptionDetails" role="tabpanel">
+                        <div class="p-10">
+                            <h4><span>Member since : {{membercreatedDate | date:'dd MMM yyyy'}}</span><span
+                                    style="margin-left: 200px;"> 
+                                    <!-- Account Status :
+                                    <span style="color:#00c292"> {{accountStatus}}</span> -->
+                                </span></h4>
+                        </div>
+                        <div class="p-10">
+                            <h4>Subscriptions</h4>
+                        </div>
+                        <div class="table-responsive">
+                            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+                            <table class="table table color-bordered-table success-bordered-table">
+                                <thead class="text-center">
+                                    <th>Date</th>
+                                    <th>Plan</th>
+                                    <th>Status</th>
+                                    <th>Payment Mode</th>
+                                    <!-- <th>Expire On</th> -->
+                                    <th>Action</th>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr *ngFor="let sub of allSubscriptions; index as i">
+                                        <td>{{ sub.startDate | date:'dd MMM yyyy' }}</td>
+                                        <td>{{ sub.itemName }} <br>({{sub.stockLimit}} SKU limit /{{sub.orderLimit}}
+                                            orders per month)
+                                            <b>{{sub.mcCurrency}}{{sub.mcGross}} {{sub.subscriptionInterval}}</b>
+                                        </td>
+                                        <td>{{ sub.displayStatus }}</td>
+                                        <td>{{ sub.paymentProcessor }}</td>
+                                        <!-- <td>{{ sub.endDate | date:'dd MMM yyyy' }}</td> -->
+                                        <!-- <td>{{ sub.endDate | date:'dd MMM yyyy' }}</td> -->
+                                        <td>
+                                            <!-- *ngIf="sub.active"  -->
+                                            <!-- <button *ngIf="sub.active" (click)="cancelSubscrptionv1(sub)" type="button" title="Cancel Subscription" class="btn btn-warning btn-circle"><i class="fa fa-times"></i> </button>
+                                            <button (click)="planDetails(sub)" type="button" title="Subscribe / Upgrade" class="btn-circle btn btn-success"><i class="fa fa-edit"></i> </button> -->
+                                            <button *ngIf="sub.active" (click)="cancelSubscrptionv1(sub)" type="button"
+                                                class="btn btn-warning ">Cancel</button>
+                                            <button *ngIf="sub.displayStatus == 'Free Trial' && subState" (click)="planDetails(sub)"
+                                                type="button" class="btn btn-success ml-2">Subscribe </button>
+                                            <button *ngIf="sub.displayStatus == 'Subscribed'" (click)="planDetails(sub)"
+                                                type="button" class="btn btn-success ml-2">Upgrade </button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- <div class="col-lg-12 col-md-12  align-self-center text-right">
+                            <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3" [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+                            </ngb-pagination>
+                        </div> -->
+
+                        <!-- <div class="col-md-5 mb-2">
+                            <button (click)="makePayment(15)" class="btn btn-danger btn-block">Pay $15</button>
+                        </div> -->
+                    </div>
+                    <div class="tab-pane p-20" id="invoices" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table table color-bordered-table success-bordered-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Number</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Due</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr *ngFor="let invoice of allinvoices">
+                                        <td>Invoice Paid</td>
+                                        <td>INV-{{ invoice.invoiceId }}</td>
+                                        <td>{{ invoice.description }}</td>
+                                        <td>{{ invoice.paymentRecdDate | date:'dd MMM yyyy' }}</td>
+                                        <td><b>{{invoice.currency}}</b> {{ invoice.totalAmount }}</td>
+                                        <td><b>{{invoice.currency}}</b> {{ invoice.amountDue }}</td>
+                                        <td>
+                                            <button (click)="invoiceDetails(invoice)" type="button"
+                                                class="btn btn-success d-lg-block m-l-15"><i class="fa fa-edit"></i>
+                                                View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-12 col-md-12  align-self-center text-right">
+                            <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page"
+                                [maxSize]="3" [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="invoiceDetails-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Invoice
+                    Details
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" (click)="closeinvoiceDetailsModal()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- <div class="col-md-12 col-lg-12 row">
+          <p>body content</p>
+        </div> -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-body printableArea">
+                            <h3><b>INVOICE</b> <span class="pull-right">#{{invoiceId}}</span></h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-left">
+                                        <address>
+                                            <h3> &nbsp;<b class="text-danger">Sellershub</b></h3>
+                                            <p class="text-muted m-l-5">450 Brook Drive,
+                                                <br /> Green Park,
+                                                <br /> Reading,
+                                                <br /> Berkshire RG2 6UU,
+                                                <br /> United Kingdom
+                                            </p>
+                                        </address>
+                                    </div>
+                                    <div class="pull-right text-right">
+                                        <address>
+                                            <h3>To,</h3>
+                                            <h4 class="font-bold">{{kartzhubUser?.name}}</h4>
+                                            <p class="text-muted m-l-30">{{kartzhubUser?.address1}},
+                                                <br /> {{kartzhubUser?.address2}},
+                                                <br /> {{kartzhubUser?.city}},
+                                                <br /> {{kartzhubUser?.state}},
+                                                <br /> {{kartzhubUser?.zipCode}},
+                                            </p>
+                                            <p class="m-t-30"><b>Invoice Date :</b> <i class="fa fa-calendar"></i>
+                                                {{paymentRecdDate |
+                                                date:'dd MMM yyyy'}}</p>
+                                        </address>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table-responsive m-t-40" style="clear: both;">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-left">Description</th>
+                                                    <th class="text-left">Quantity</th>
+                                                    <th class="text-left">Unit Cost</th>
+                                                    <th class="text-left">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-left"> {{description}} </td>
+                                                    <td class="text-left"> {{qty}} </td>
+                                                    <td class="text-left"> {{unitPrice}} </td>
+                                                    <td class="text-left"> {{invoiceTotalamount}} </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="pull-right m-t-30 text-right">
+                                        <p>Sub - Total amount: {{currency}} {{subtotal}}</p>
+                                        <p>Tax Amount({{taxRate}}%) : {{currency}} {{taxAmount}} </p>
+                                        <hr>
+                                        <h3><b>Total :</b> {{currency}} {{totalAmount}}</h3>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <hr>
+                                    <!-- <div class="text-right">
+                                        <button class="btn btn-danger" type="submit"> Proceed to payment </button>
+                                        <button id="print" class="btn btn-default btn-outline" type="button"> <span><i
+                                                    class="fa fa-print"></i>
+                                                Print</span> </button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!-- <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success">Print</button>
+        <button type="button" (click)="closeinvoiceDetailsModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div> -->
+        </div>
+    </div>
+</div>
+
+<div id="changePlan-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="font-weight: 400;">Please select a subscription plan</h3>
+                <button type="button" class="close" data-dismiss="modal" (click)="closeplanDetailsModal()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" style="max-height: 80vh;overflow-y: scroll;">
+                <div class="container1 row">
+                    <div class="columns col-md-3" *ngFor="let priceplan of allpriceplans; index as i">
+                        <ul class="price">
+                            <li class="grey" style="font-size: 20px;">{{priceplan.name?.toUpperCase()}}</li>
+                            <!-- <div style="background-image:url('https://i.postimg.cc/YSLh49NP/Group-497.png')">
+
+                            </div> -->
+                            <!-- <img src="https://i.postimg.cc/YSLh49NP/Group-497.png" style="object-fit: contain; width: 100%; "> -->
+                            <li class="grey" *ngIf="priceplan.currencycode=='GBP'">&#163; {{priceplan.price}}/<span
+                                    style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+                            <li class="grey" *ngIf="priceplan.currencycode=='USD'">&#36; {{priceplan.price}}/<span
+                                    style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+                            <li class="grey" *ngIf="priceplan.currencycode=='INR'">&#x20B9; {{priceplan.price}}/<span
+                                    style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+                            <li class="grey" *ngIf="priceplan.currencycode=='EURO'">&#128; {{priceplan.price}}/<span
+                                    style="font-size: 25px;">Month</span><sub style="font-size: 10px;">+VAT</sub></li>
+                            <div *ngIf="priceplan.name.trim().toUpperCase()=='LITE'">
+                                <li>Upto 99 order a month</li>
+                                <li>All Marketplaces</li>
+                                <li>All Couriers</li>
+                                <li>Stock Control</li>
+                            </div>
+                            <div *ngIf="priceplan.name.trim().toUpperCase()=='INTERMEDIATE'">
+                                <li>Upto 3000 orders</li>
+                                <li>Split & Merge orders</li>
+                                <li>Reporting</li>
+                                <li>Account Manager</li>
+
+                            </div>
+                            <div *ngIf="priceplan.name.trim().toUpperCase()=='EXPERT'">
+                                <li>Upto 10000 orders</li>
+                                <li>All Intermediate</li>
+                                <li>AI Dashboard</li>
+                                <li>Virtual & Duplex Printer</li>
+                            </div>
+                            <div *ngIf="priceplan.name.trim().toUpperCase()=='LITE ANNUAL'">
+                                <li>Upto 10000 orders</li>
+                                <li>All Intermediate</li>
+                                <li>AI Dashboard</li>
+                                <li>Virtual & Duplex Printer</li>
+                            </div>
+                            <div *ngIf="priceplan.name.trim().toUpperCase()=='TEST MODE'">
+                                <li>Upto 10000 orders</li>
+                                <li>All Intermediate</li>
+                                <li>AI Dashboard</li>
+                                <li>Virtual & Duplex Printer</li>
+                            </div>
+
+
+                            <!-- <li><span *ngIf="priceplan.description1">{{priceplan.description1}},</span><span *ngIf="priceplan.description2">{{priceplan.description2}},</span><span *ngIf="priceplan.description3">{{priceplan.description3}},</span></li> -->
+                            <li *ngIf="!selectedSubscrption.active && priceplan.name.trim().toUpperCase()=='CUSTOM PLAN'"><a
+                                    class="button" href="https://buy.stripe.com/cN27wm6VP8Tzais7st" target="_blank">Start Now</a></li>
+                                    <li *ngIf="!selectedSubscrption.active && priceplan.name.trim().toUpperCase()=='LITE'"><a
+                                        class="button" href="https://buy.stripe.com/3cscQG5RLb1Hais3cc " target="_blank">Start Now</a></li>
+                                        <li *ngIf="!selectedSubscrption.active && priceplan.name.trim().toUpperCase()=='INTERMEDIATE'"><a
+                                            class="button" href="https://buy.stripe.com/4gwdUK0xredTeyI146" target="_blank">Start Now</a></li>
+                                    <li *ngIf="!selectedSubscrption.active && priceplan.name.trim().toUpperCase()=='EXPERT'" ><a
+                                        class="button" href="https://buy.stripe.com/4gwg2S3JD6Lr76g003" target="_blank">Start Now</a></li>
+                                        <li *ngIf="!selectedSubscrption.active && priceplan.name.trim().toUpperCase()=='LITE ANNUAL'" ><a
+                                            class="button" href="https://buy.stripe.com/14k9Eua812vbeyI3cg" target="_blank">Start Now</a></li>
+                            <li *ngIf="selectedSubscrption.active" (click)="paymentMethods(priceplan)"><a
+                                    class="button">Upgrade Now</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="columns col-md-3 ">
+                        <ul class="price">
+                            <li class="grey" style="font-size: 20px;">Customize</li>
+                            <li class="grey ">Enterprise</li>
+                            <li>More than 10K orders</li>
+                            <li>Extra Customization</li>
+                            <li>Specific Automations</li>
+                            <li>Sellershub Features</li>
+                            <li class=""><a class="button" style="font-size: 14px;">Contact Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="paymentMetthod-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Please select a payment Method
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" (click)="closeplanDetailsModal()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row" *ngIf="selectdPay!='Pay With Credit Card'">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <!-- <div class="custom-control custom-radio">
+                                <input (click)="setValueForPay('Pay With Paypal')" type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio1">Pay With Paypal</label>
+                                <img src="assets/images/paypal.png" style="margin-left: 10%; width: 25%;" />
+                            </div> -->
+                            <div class="custom-control custom-radio" style="margin-top: 5%;">
+                                <input (click)="setValueForPay('Pay With Credit Card')" type="radio" id="customRadio2"
+                                    name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio2">Pay With Credit Card</label>
+                                <img src="assets/images/cards.png" style="margin-left: 10%; width: 30%;" />
+                            </div>
+                        </div>
+                        <div class="form-group m-t-20">
+                            <label class="custom-control custom-checkbox m-b-0">
+                                <input type="checkbox" [checked]="isAgree" (click)="isAgree=!isAgree"
+                                    class="custom-control-input">
+                                <span class="custom-control-label">I agree <a
+                                        href="http://www.sellershub.io/terms-conditions/" target="_blank">terms and
+                                        conditions</a> and <a href="http://www.sellershub.io/privacy-policy/"
+                                        target="_blank">privacy policy</a> of
+                                    Sellershub.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" *ngIf="valuePay=='Pay With Paypal'" (click)="savePaymentDetails()"
+                    class="btn waves-effect waves-light btn-success">Submit</button>
+                <button type="button" *ngIf="valuePay=='Pay With Credit Card' && isAgree" (click)="savePaymentDetails()"
+                    class="btn waves-effect waves-light btn-success">Proceed to pay</button>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="cancel-subscrption-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete My Account</h3>
+                <button type="button" class="close" data-dismiss="modal" (click)="closeDeleteModal()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <h5 class="text-success">
+                        Upon cancelling the Sellershub account, we will deactivate your numbers and start data removal.
+                    </h5>
+                    <h5 class="text-success">
+                        Before you leave, would you mind leaving us quick feedback? Help us understand the reason:
+                    </h5>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox m-b-0">
+                                <input [checked]="isProceisHign" (click)="checkboxStatus(1)" type="checkbox"
+                                    class="custom-control-input">
+                                <span class="custom-control-label">Pricing is high</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox m-b-0">
+                                <input [checked]="isDificultTouse" (click)="checkboxStatus(2)" type="checkbox"
+                                    class="custom-control-input">
+                                <span class="custom-control-label">Difficult to use</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox m-b-0">
+                                <input [checked]="missingfunctionality" (click)="checkboxStatus(3)" type="checkbox"
+                                    class="custom-control-input">
+                                <span class="custom-control-label">Missing functionality</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox m-b-0">
+                                <input [checked]="usingotherprod" (click)="checkboxStatus(4)" type="checkbox"
+                                    class="custom-control-input">
+                                <span class="custom-control-label">Using other products</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox m-b-0">
+                                <input [checked]="notinanymore" (click)="checkboxStatus(5)" type="checkbox"
+                                    class="custom-control-input">
+                                <span class="custom-control-label"> Not in use anymore</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox m-b-0">
+                                <input [checked]="othre" (click)="checkboxStatus(6)" type="checkbox"
+                                    class="custom-control-input">
+                                <span class="custom-control-label"> Other</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Feedback</label>
+                            <textarea class="form-control" [(ngModel)]="feedback" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="cancelSubscrption()"
+                    class="btn waves-effect waves-light btn-success">Delete My
+                    account</button>
+                <button type="button" (click)="closeDeleteModal()" class="btn btn-danger waves-effect"
+                    data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="paymentModel-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight: 400;color:#fb9678">{{plandetials}}</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="closePaymentModal()"
+                    aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <app-payment-modal [plandetails]="paymentRequestDetails" (paymentStatus)="paymentStatus($event)">
+                </app-payment-modal>
+            </div>
+        </div>
+    </div>
+</div>
+

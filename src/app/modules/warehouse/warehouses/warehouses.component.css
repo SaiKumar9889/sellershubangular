@@ -1,0 +1,44 @@
+ngb-pagination{
+  float: right;
+}
+
+
+
+
+
+/* @media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 90%;
+    margin: 1.75rem auto;
+}
+}
+@media (min-width: 992px){
+  .modal-lg, .modal-xl {
+    max-width: 90%;
+}
+}
+@media (min-width: 1400px){
+  .modal-xl {
+    max-width: 90%;
+}
+} */
+
+:host ::ng-deep .multiselect-dropdown .selected-item{
+  max-width: 200px!important;
+}
+.title{
+  overflow: hidden !important;
+  width:120px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}
+.sku{
+  overflow: hidden !important;
+  width:90px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  margin: auto;
+}

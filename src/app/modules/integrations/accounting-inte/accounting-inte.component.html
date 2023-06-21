@@ -1,0 +1,4 @@
+<app-kashflow [isNewIntegration]="isNewCreation" [channelId]="channelId" *ngIf="channelType==1"></app-kashflow>
+<app-xero [isNewIntegration]="isNewCreation" [channelId]="channelId" *ngIf="channelType==4"></app-xero>
+<app-quickbooks [isNewIntegration]="isNewCreation" [channelId]="channelId" *ngIf="channelType==2"></app-quickbooks>
+<app-sage [isNewIntegration]="isNewCreation" [channelId]="channelId" *ngIf="channelType==3"></app-sage>

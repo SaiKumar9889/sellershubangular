@@ -1,0 +1,404 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body" *ngIf="view == 0">
+          <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <!-- <div class="m-r-15">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="sku or product title" aria-label="Username">
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="ti-search"></i></span>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <button type="button" data-toggle="modal" data-target="#responsive-modal"
+                  class="btn btn-success d-lg-block m-r-15"><i class=" fas fa-download"></i> Download Orders</button> -->
+                <div>
+                  <!-- <label class="control-label">Page Size</label> -->
+                  <!-- <select (change)="getCustomer()" class="form-control custom-select">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select> -->
+                  <!-- <small class="form-control-feedback"> Select your gender </small> -->
+                </div>
+                <!-- <button type="button" data-toggle="modal" data-target="#search-modal"
+                  class="btn btn-success d-lg-block m-l-15"><i class=" fas fa-search"></i> Filter</button> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table  class="display nowrap table table-hover table-striped table-bordered"
+              cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <!-- <th>PRIORITY </th> -->
+                  <th>EMAIL </th>
+                  <th>NAME</th>
+                  <th>ADDRESS</th>
+                  <th>COUNTRY</th>
+                  <th>NOTES</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cust of allCust">
+                  <!-- <td>{{ cust.priority }}</td> -->
+                  <td>{{ cust.email }}</td>
+                  <td>{{ cust.firstName }} {{ cust.lastName }}</td>
+                  <td>{{ cust.addressline1 }} <br> {{ cust.addressline2 }} <br> {{ cust.addressline3 }}</td>
+                  <td>{{ cust.country }}</td>
+                  <td>{{ cust.notes }}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-success d-lg-block m-r-15"
+                      (click)="editCustomer(cust)"><i  class="fas fa-edit"></i></button>
+                      <button type="button" class="btn btn-success d-lg-block m-l-15"
+                      (click)="fetchCustomerOrders(cust)"><i  class="left-icons-color icons-Add-Cart"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-12 col-md-12  align-self-center text-right">
+            <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+              [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+            </ngb-pagination>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="view == 1">
+
+          <div class="row p-t-20">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="text" [(ngModel)]="selectedCustomer.email" id="email" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" [(ngModel)]="selectedCustomer.firstName" id="firstName" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Second Name</label>
+                <input type="text" [(ngModel)]="selectedCustomer.lastName" id="lastName" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">AddressLine 1</label>
+                <input type="text" [(ngModel)]="selectedCustomer.addressline1" id="addressline1" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">AddressLine 3</label>
+                <input type="text" [(ngModel)]="selectedCustomer.addressline2" id="addressline2" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">AddressLine 3</label>
+                <input type="text" [(ngModel)]="selectedCustomer.addressline3" id="addressline3" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">City</label>
+                <input type="text" [(ngModel)]="selectedCustomer.city" id="city" class="form-control">
+              </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">County</label>
+                <input type="text" [(ngModel)]="selectedCustomer.state" id="state" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group disabled">
+                <label class="control-label">Post code</label>
+                <input type="text" [(ngModel)]="selectedCustomer.postcode" id="postcode" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group disabled">
+                <label class="control-label">Country</label>
+                <input type="text" [(ngModel)]="selectedCustomer.country" id="country" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group disabled">
+                <label class="control-label">Phone Number</label>
+                <input type="text" [(ngModel)]="selectedCustomer.phone" id="phone" class="form-control">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-actions text-right">
+            <button type="submit" (click)="saveOrUpdateUser()" class="btn btn-success"> <i class="fa fa-check"></i>
+              Save</button>
+            <button type="button"  (click)="resetView()" class="btn btn-danger m-l-15">Cancel</button>
+          </div>
+
+        </div>
+        <div class="card-body" *ngIf="view == 2">
+          <div class="container-scroll">
+            <app-apploader [Uloading]="loading"  *ngIf="loading"></app-apploader>
+            <cdk-virtual-scroll-viewport #scrollViewport [itemSize]="50" class="list-container">
+
+                <table id="salesTable" class="table table color-bordered-table success-bordered-table table-bordered">
+                    <thead style="background: aliceblue;">
+                        <tr>
+                            <th [style.top]="inverseOfTranslation" style="z-index: 99;">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="checkall-{{tab}}" [(ngModel)]="isAllChecked" (click)="selectall($event)"
+                                        name="checkall-{{tab}}" class="custom-control-input checkallP">
+                                    <label  class="custom-control-label"
+                                        for="checkall-{{tab}}"></label>
+                                </div>
+                            </th>
+                            <th [style.top]="inverseOfTranslation">Product Image</th>
+                            <!-- <th style="min-width: 140px;">Order Date <app-sorting></app-sorting>  </th> -->
+                            <th [style.top]="inverseOfTranslation" style="min-width: 155px;">Order Id
+                                <!-- <app-filter [multipleColumns]="orderFilters"
+        (filterObj)="filterChange($event)" [isMultiple]="'false'"></app-filter> -->
+                            </th>
+                            <th [style.top]="inverseOfTranslation" style="min-width: 150px">General </th>
+                            <th [style.top]="inverseOfTranslation" style="min-width:150px">Shipping Details
+                            </th>
+                            <th [style.top]="inverseOfTranslation" style="min-width:300px">Product
+                                <!-- <app-sorting></app-sorting> &nbsp; <app-filter (filterObj)="filterChange($event)"
+        [isMultiple]="'true'" [multipleColumns]="productFilters"></app-filter> -->
+                            </th>
+                            <th [style.top]="inverseOfTranslation"
+                                style="min-width: 150px;font-size: 11px;">Qty <br>Item Total / Ship Cost
+                            </th>
+                            <!-- <th style="min-width: 110px"> <app-sorting></app-sorting>
+    </th> -->
+                            <th [style.top]="inverseOfTranslation" style="min-width:300px">Ship Address</th>
+                            <!-- <th>Notes </th> -->
+                            <!-- <th>Actions</th> -->
+                        </tr>
+                    </thead>
+                    <tbody class="text-left" style="font-size: 11px;font-weight: 500;">
+                        <!-- labelPdfs -->
+                        <!-- [ngClass]="sale.selected?'badge-success text-white':''" -->
+
+
+                        <tr *cdkVirtualFor="let sale of allSales; index as i;" class="list-element"
+                            [contextMenu]="basicMenu" [contextMenuSubject]="sale">
+                            <td>
+                                <div class="custom-control custom-checkbox"
+                                    *ngIf="sale.orderStatus!='Pending'">
+                                    <input [(ngModel)]="sale.selected" (change)="individualselection(sale, $event)"
+                                         type="checkbox" [id]="sale.id"
+                                         [name]="sale.id"
+                                        class="custom-control-input checkallP">
+                                    <label class="custom-control-label" for="{{sale.id}}"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <a [src]="sale.imageUrl" title="{{sale.title}}"> <img alt="img"
+                                            [src]="sale.imageUrl" class="img-responsive prod-img"></a>
+                                </div>
+                                <!-- <br>
+                                <a [href]="sale.imageUrl" target="_blank" *ngIf="sale.channel == 'amazon'">External image</a> -->
+                            </td>
+                            <!-- <td>{{sale.purchaseDate | date:'dd/MM/yyyy h:mm:ss'}}</td> -->
+                            <td>
+                                {{sale.purchaseDate | date:'dd/MM/yyyy H:mm:ss'}}<br> #{{sale.orderId}} <br>
+                                <span class="badge badge-success badge-pill"> {{sale.channelOrderId}}</span>
+                            </td>
+                            <td>
+                                <img style="height: 15px;" class="img-responsive"
+                                    [src]="getImage(sale.channel)">
+                                <img *ngIf="sale.site" class="img-responsive"
+                                    [src]="getSiteImage(sale.site)"><br>
+                                <span>{{sale.channelUsername}}</span><br>
+                                <span class="label "
+                                    [ngClass]="sale.orderStatus=='Unshipped'?'label-danger':sale.orderStatus=='Pending'?'label-warning':'label-success' ">{{sale.orderStatus}}</span><br>
+                                <div class="row fa-lg m-t-5">
+                                    <!--  -->
+                                    <i [ngClass]="sale.invoicePrinted?'icon-space':'icon-space-notdone'"
+                                        class=" fas  fa-print"
+                                        [title]="sale.invoicePrinted?'Invoice Printed':''"></i>
+                                    <i (click)="openPdfUrl(sale)" *ngIf="sale?.labelPdfs?.length>0 && sale?.field1 == null"
+                                        [ngClass]="(sale?.labelPdfs?.length>0) ? 'icon-space' : 'icon-space-notdone'"
+                                        class=" fas fa-file-pdf"
+                                        [title]="sale?.labelPdfs?.length>0?'Label Generated':'' "></i>
+                                    <i (click)="openPdfUrl(sale)" *ngIf="sale?.field1 != null && sale?.labelPdfs?.length == 0"
+                                        [ngClass]="(sale?.field1 != null)? 'icon-space-error' : 'icon-space-notdone'"
+                                        class=" fas fa-file-pdf"
+                                        [title]="(sale?.field1 != null)?sale?.field1:''"></i>
+                                    <i (click)="openPdfUrl(sale)"
+                                        *ngIf="sale?.field1 == null && sale?.labelPdfs?.length == 0"
+                                        [ngClass]="'icon-space-notdone'" class=" fas fa-file-pdf"
+                                        [title]=""></i>
+                                    <i class="fas fa-microchip"
+                                        [ngClass]="sale.microchip?'icon-space':'icon-space-notdone'"
+                                        [title]="sale.microchip?'Order processed':''"></i>
+                                    <!-- <i (click)="openPdfUrl(sale.labelPdfs)" [ngClass]="sale.labelPdfs?.length > 0?'icon-space':'icon-space-notdone'"  class=" fas fa-envelope" [title]="sale.labelPrinted?'Label Generated':''"></i> -->
+                                    <!-- <i class="fas fa-microchip" [ngClass]="sale.microchip?'icon-space':'icon-space-notdone'" [title]="sale.microchip?'Order processed':''"></i> -->
+                                    <i class="far  fa-money-bill-alt"
+                                        [title]="(sale.paymentsStatus!=null || sale.orderStatus=='Unshipped')?'Paid':''"
+                                        [ngClass]="(sale.paymentsStatus!=null || sale.orderStatus=='Unshipped')?'icon-space':'icon-space-notdone'"></i>
+                                    <!-- <i *ngIf="sale.isPrime" class="fas icon-space fa-gift" title="Prime Order"></i> -->
+                                </div>
+
+                                <span *ngIf="sale.khubOrderId" class="label label-warning">Merged</span><br>
+                                <!-- class="label label-info" -->
+                                <span *ngIf="sale.isPrime">
+                                    <!-- Prime Order -->
+                                    <img style="height: 20px;" class="img-responsive m-l-5"
+                                        src="https://khubweb.s3.us-west-1.amazonaws.com/web/2560px-Amazon_Prime_Logo.svg.png">
+
+                                </span>
+                                <span>
+                                    <img style="height: 24px;cursor: pointer;" class="img-responsivec m-l-5"
+                                        data-toggle="tooltip" data-placement="top"
+                                        title="Shipping rule applied " src="assets/images/gear_active.png"
+                                        *ngIf="sale.shippingRuleStatus">
+                                    <img style="height: 24px;cursor: pointer;" class="img-responsive m-l-5"
+                                        data-toggle="tooltip" data-placement="top"
+                                        title="Shipping rule not applied "
+                                        src="assets/images/gear_inactive.png"
+                                        *ngIf="!sale.shippingRuleStatus">
+                                </span>
+                                <br>
+                                <!-- <span *ngIf="sale.isPrime" class="label label-info">Prime Order</span><br> -->
+                                <!-- <span *ngIf="sale.khubOrderId" class="label label-warning">Split</span><br> -->
+
+                            </td>
+                            <td>
+                                <!-- <img style="height: 15px;" class="img-responsive"
+                                    [src]="getImage(sale.channel)">
+                                <img *ngIf="sale.site" class="img-responsive"
+                                    [src]="getSiteImage(sale.site)">
+                                <br><span>{{sale.channelUsername}}</span> -->
+                                <i class=" fas fa-shipping-fast" title="Shipping Method"></i> &nbsp;
+                                <span>
+                                    {{sale.shippingMethod!=null &&
+                                    sale.shippingMethod!=''?sale.shippingMethod:'Unknown'}}
+                                </span>
+                                <br>
+                                <span>
+                                    <i class=" fas fa-tags" title="Tracking Number"></i> &nbsp;
+                                    {{sale.trackingNumber}}
+                                </span>
+                                <br>
+                                LWD : {{ sale.length!}}
+                                {{sale.width}}
+                                {{sale.depth}}
+                                <br>
+                                Weight : {{sale.weight}}
+                            </td>
+                            <td>
+                                SKU : {{sale.sku}}
+                                <br> Item Id: {{sale.id}}
+                                <!-- <b> Item id :{{sale.orderItemId}} </b>
+        <br> -->
+                                <br>
+                                <b>Title: {{sale.title}}</b>
+                                <!-- <br>
+                                <b>Category: {{sale.title}}</b> -->
+                            </td>
+                            <td><span class="badge badge-info badge-pill">{{sale.quantityPurchased}}</span>
+                                <br>
+                                <span class="badge badge-success badge-pill">{{sale.totalPrice}}
+                                    {{sale.currencyCode}} /
+                                    {{sale.shippingfee}} </span>
+                            </td>
+                            <!-- <td><span class="badge badge-success badge-pill">{{sale.totalPrice}} / {{sale.shippingfee}}</span>
+                             </td> -->
+                            <td>
+                                <span>
+                                    <b><span style="color: #041a41;">Name :</span></b>{{
+                                    sale.buyerName!=null && sale.buyerName!=''?sale.buyerName:'Unknown'}}
+                                </span>
+                                <br />
+                                <span>
+                                    <b><span style="color: #041a41;">Email :</span>
+                                    </b>{{sale.buyerEmail!=null &&
+                                    sale.buyerEmail!=''?sale.buyerEmail:'Unknown'}}
+                                </span>
+                                <br />
+                                <span>
+                                    <b>
+                                        <span style="color: #041a41;">Address :</span>
+                                    </b>
+                                    <span *ngIf="sale.shipAddress1 && sale.shipAddress1!=''">
+                                        {{sale.shipAddress1!="null"&& sale.shipAddress1!=null &&
+                                        sale.shipAddress1 !=''?sale.shipAddress1:'Unknown'}},
+                                    </span>
+                                    <span *ngIf="sale.shipAddress1 && sale.shipAddress1!=''">
+                                        {{sale.shipAddress1!="null"&& sale.shipAddress1!=null &&
+                                        sale.shipAddress1 !=''?sale.shipAddress1:'Unknown'}},
+                                    </span>
+                                    <span *ngIf="sale.shipAddress2 && sale.shipAddress2!=''">
+                                        {{sale.shipAddress2!="null" && sale.shipAddress2
+                                        !=''?sale.shipAddress2:'Unknown'}},
+                                    </span>
+                                    <span *ngIf="sale.shipAddress3 && sale.shipAddress3!=''">
+                                        {{sale.shipAddress3!="null" &&
+                                        sale.shipAddress3!=''?sale.shipAddress3:'Unknown'}},
+                                    </span>
+                                    <span *ngIf="sale.shipCity && sale.shipCity!=''">
+                                        {{sale.shipCity!="null" &&
+                                        sale.shipCity!=''?sale.shipCity:'Unknown'}},
+                                    </span>
+                                    <span *ngIf="sale.shipState && sale.shipState!=''">
+                                        {{sale.shipState!="null" &&
+                                        sale.shipState!=''?sale.shipState:'Unknown'}}
+                                    </span>
+                                    <br />
+                                    <span>
+                                        <b><span style="color: #041a41;">PostCode:</span> </b>
+                                        {{sale.shipPostalCode!="null" &&
+                                        sale.shipPostalCode!=''?sale.shipPostalCode:'Unknown'}}
+                                    </span>
+                                    <br />
+                                    <span>
+                                        <b><span style="color: #041a41;">Country:</span> </b>
+                                        {{sale.shipCountry!=null &&
+                                        sale.shipCountry!=''?sale.shipCountry:'Unknown'}}
+                                    </span>
+                                    <br />
+
+                                </span>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </cdk-virtual-scroll-viewport>
+        </div>
+          <div class="form-actions text-right">
+
+            <button type="button"  (click)="resetView()" class="btn btn-danger m-l-15">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <h2>Coming soon..</h2> -->
+</div>
+
+

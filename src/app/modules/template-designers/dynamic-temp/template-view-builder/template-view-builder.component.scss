@@ -1,0 +1,22 @@
+.angular-editor-textarea{
+    border: none !important;
+    resize: none;
+}
+
+// .angular-editor-textarea{
+
+// }
+
+.angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    min-height: 5rem;
+    padding: 0.5rem 0.8rem 1rem;
+    border: none !important;
+    resize: none;
+    background-color: transparent;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+.angular-editor-textarea {
+    border: none !important;
+}

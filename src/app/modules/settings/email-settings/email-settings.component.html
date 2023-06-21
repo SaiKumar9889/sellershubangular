@@ -1,0 +1,73 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <div class="row">
+        <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table1 table stylish-table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">SMTP setting</th>
+                            <th class="text-left">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h6>SMTP Host</h6>
+                            </td>
+                            <td class="text-left">
+                                <div class="form-group">
+                                    <input type="text" id="smtHost" name="smtHost" [(ngModel)]="smtHost" class="form-control" placeholder="SMTP Host">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6>SMTP Port</h6>
+                            </td>
+                            <td class="text-left">
+                                <div class="form-group">
+                                    <input type="text" id="mailPort" name="mailPort" [(ngModel)]="mailPort" class="form-control" placeholder="SMTP Port">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6>SMTP Username</h6>
+                            </td>
+                            <td class="text-left">
+                                <div class="form-group">
+                                    <input type="text" id="smtpName" name="smtpName" [(ngModel)]="smtpName" class="form-control" placeholder="SMTP Username">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6>SMTP Password</h6>
+                            </td>
+                            <td class="text-left">
+                                <div class="form-group">
+                                    <input type="password" id="smtpPass" name="smtpPass" [(ngModel)]="smtpPass" class="form-control" placeholder="SMTP Password">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6>From Email Address</h6>
+                            </td>
+                            <td class="text-left">
+                                <div class="form-group">
+                                    <input type="text" id="mailFrom" name="mailFrom" [(ngModel)]="mailFrom" class="form-control" placeholder="Email Address">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button (click)="saveConnection();auditTrack(1)" type="button" class="btn btn-sm btn-success">Save</button>&nbsp;&nbsp;
+                <button (click)="testconnection();auditTrack(2)" type="button" class="btn btn-sm btn-success">Test Connection</button>&nbsp;&nbsp;
+                <button (click)="resetForm();auditTrack(3)" type="button" class="btn btn-sm btn-success">Remove Settings</button>
+            </div>
+        </div>
+    </div>
+</div>
+

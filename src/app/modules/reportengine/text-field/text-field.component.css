@@ -1,0 +1,22 @@
+.form-control {
+    color: #212529;
+    border: solid 1px;
+}
+
+.lable-weight {
+    font-weight: 400;
+}
+
+.showoptions:hover .hide {
+    display: block;
+}
+
+.showoptions:hover {
+    border: solid 1px;
+    border-color: #d8dadc;
+    background-color: lightgray
+}
+
+.hide {
+    display: none;
+}

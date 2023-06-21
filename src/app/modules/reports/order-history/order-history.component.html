@@ -1,0 +1,153 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+
+      <!-- <div class="card">
+        <div class="card-body" style="border-left: solid 5px orange">
+          <h5 class="card-title">During this time period your top product was </h5>
+        </div>
+      </div> -->
+      <div class="card">
+        <div class="card-body ">
+
+          <div class="col-lg-12 col-md-12 row option-alignment">
+            <div class="col-lg-12 col-sm-12 col-md-12 row" style="padding: 0px">
+              <h4 class="card-title" style="padding-top:5px">Order History Report</h4>
+              <button title="Description" (click)="toggleDesc()" type="button"
+                class="btn-sm m-l-15 btn btn-dark btn-circle"><i class=" fas fa-info"></i> </button>
+            </div>
+          </div>
+          <div class="card" *ngIf="isDescEnables">
+            <div class="card-body  box bg-warning">
+              <h5 class="text-left text-white">Description : </h5>
+              <p class="text-left"> This report will show you all orders created during the specified time period.
+                Both closed and open orders will be included in this report. All orders that were input into
+                Sellershub during the time period will be used to present the data.</p>
+            </div>
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12 row m-b-15">
+            <div class="col-lg-9 col-sm-9 col-md-9 row ">
+              <div class="m-r-15">
+                <app-app-date-picker  [isclear]="isclear"  lable="From Date" (selectedDate)="selectedFormDate($event)"></app-app-date-picker>
+              </div>
+              <div class="m-r-15">
+                <app-app-date-picker  [isclear]="isclear"  lable="To Date" (selectedDate)="selectedToDate($event)"></app-app-date-picker>
+              </div>
+              <div class="m-r-15">
+                <app-app-date-picker  [isclear]="isclear"  lable="End Date" (selectedDate)="selectedEndDate($event)"></app-app-date-picker>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 m-t-30">
+              <div class="m-r-15">
+                <button title="Clear" type="button" (click)="clear()" class="btn btn-success btn-circle"><i
+                    class=" fas fa-times-circle"></i> </button>
+                <button title="Search" type="button" (click)="searchField()" class="btn btn-primary btn-circle"><i
+                    class="fas fa-search"></i> </button>
+                <button title="Download" (click)="download()" type="button" class="btn btn-warning btn-circle"><i
+                    class="fas fa-download"></i> </button>
+                <!-- <button title="Description" (click)="toggleDesc()" type="button" class="btn btn-dark btn-circle"><i
+                    class=" fas fa-question"></i> </button> -->
+              </div>
+            </div>
+
+
+          </div>
+          <div>
+            <div class="row m-t-20">
+              <!-- Column -->
+              <div class="col-md-6 col-lg-3 col-xlg-3">
+                <div class="card">
+                  <div class="box bg-info text-center">
+                    <h1 class="font-light text-white">{{ totalOrderValue }}</h1>
+                    <h6 class="text-white">Total Order Value</h6>
+                  </div>
+                </div>
+              </div>
+              <!-- Column -->
+              <div class="col-md-6 col-lg-3 col-xlg-3">
+                <div class="card">
+                  <div class="box bg-primary text-center">
+                    <h1 class="font-light text-white">{{ totalUnits }}</h1>
+                    <h6 class="text-white">Total Units</h6>
+                  </div>
+                </div>
+              </div>
+              <!-- Column -->
+              <div class="col-md-6 col-lg-3 col-xlg-3">
+                <div class="card">
+                  <div class="box bg-success text-center">
+                    <h1 class="font-light text-white">{{ totalOrder }}</h1>
+                    <h6 class="text-white">Number of Orders</h6>
+                  </div>
+                </div>
+              </div>
+              <!-- Column -->
+              <div class="col-md-6 col-lg-3 col-xlg-3">
+                <div class="card">
+                  <div class="box bg-dark text-center">
+                    <h1 class="font-light text-white">{{ numberCustomer}}</h1>
+                    <h6 class="text-white">Total Customers</h6>
+                  </div>
+                </div>
+              </div>
+              <!-- Column -->
+            </div>
+          </div>
+          <!-- <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">           
+            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+    
+                <div>
+                  <select class="form-control custom-select">
+                    <option value="">5</option>
+                    <option value="">10</option>
+                    <option value="">15</option>
+                    <option value="">25</option>
+                    <option value="">50</option>
+                    <option value="">100</option>
+                    <option value="">500</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+          <table id="printabletable" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0"
+            width="100%">
+            <thead class="text-center">
+              <tr>
+                <th>DATE </th>
+                <th>SUB TOTAL </th>
+                <th>S&H</th>
+                <th>TAX</th>
+                <th>TOTAL</th>
+                <th>TOTAL (%)</th>
+                <th>TOTAL (INC TAX)</th>
+                <th>UNITS</th>
+                <th>UNITS %</th>
+                <th>PRICE/UNIT</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr *ngFor="let prod of allhistory;let i=index">
+                <td>{{ prod.date | date:'dd MMM yyyy' }}</td>
+                <td>{{ prod.subtotal }}</td>
+                <td>{{ prod.shipping }}</td>
+                <td>{{ prod.tax }}</td>
+                <td>{{ prod.total }}</td>
+                <td>{{ prod.totalpercent }}</td>
+                <td>{{ prod.totalextax }}</td>
+                <td>{{ prod.units }}</td>
+                <td>{{ prod.unitspercent }}</td>
+                <td>{{ prod.price }}</td>
+              </tr>
+            </tbody>
+          </table>       
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

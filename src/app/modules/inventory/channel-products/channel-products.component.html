@@ -1,0 +1,523 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body" *ngIf="!editChannel">
+          <!-- <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right " style="padding-right: 0px;">
+            <div class="d-flex justify-content-end align-items-center">
+              <div class="">
+                <select class="form-control custom-select" [(ngModel)]="channelType" name="channelType">
+                  <option value="all" disabled>--Select Channel--</option>
+                  <option class="form-control" *ngFor="let channel of channels" value="{{channel.id}}">
+                    {{channel.type}}-{{channel.name}}</option>
+                </select>
+              </div>
+              <div class="m-l-5">
+                <select class="form-control custom-select" [(ngModel)]="fliter" name="fliter">
+                  <option value="0" disabled>--Select Filter--</option>
+                  <option class="form-control" value="0">Sort By</option>
+                  <option class="form-control" value="1">SKU Ascending</option>
+                  <option class="form-control" value="2">SKU Descending</option>
+                  <option class="form-control" value="3">Price low to high</option>
+                  <option class="form-control" value="4">Price High to low</option>
+                  <option class="form-control" value="5">Title A-Z</option>
+                  <option class="form-control" value="6">Title Z-A</option>
+                </select>
+              </div>
+              <button (click)="refresh()" type="button" class="btn btn-success d-lg-block m-l-15"><i
+                  class="fa fa-plus-circle"></i> Apply Filter</button>
+              <button (click)="reset()" type="button" class="btn btn-warning d-lg-block m-l-15"><i
+                  class="fa fa-plus-circle"></i> Reset</button>
+            </div>
+          </div> -->
+          <br>
+          <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+            <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+              style="padding-right: 0px;">
+              <div class="d-flex justify-content-end align-items-center">
+                <!-- <div>
+                  <button type="button" (click)="openCurrencyConverterModal()"
+                    class="btn btn-success d-lg-block m-r-15"><i class="fas fa-exchange-alt"></i> Currency
+                    Convertor</button>
+                </div> -->
+                <div class=" row">
+                  <select class="col-sm-6 form-control custom-select" [(ngModel)]="channelType" id="searchname">
+                    <option value="0">Search by</option>
+																					<option value="1">SKU</option>
+																					<option value="2">Channel</option>
+																					<option value="3">Title</option>
+                  </select>
+                  <div class="col-sm-6">
+                    <div class="input-group">
+                      <input type="text" [(ngModel)]="fliter" class="form-control" id="pass3"
+                        placeholder="Enter Search Value">
+                        <div class="input-group-append" (click)="getChannelProducts();auditTrack(1)"><span class="input-group-text"><i class="ti-search"></i></span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button (click)="reset();auditTrack(2)" type="button" class="btn btn-warning d-lg-block m-l-15"><i
+                    class="fa fa-plus-circle"></i> Reset</button>
+
+                </div>
+                <div class="m-l-5">
+
+                  <button type="button" (click)="openBulkReviseModal();auditTrack(3)" class="btn btn-success d-lg-block m-r-15"><i
+                      class=" far fa-money-bill-alt"></i> Bulk Revise Prices</button>
+                </div>
+                <div>
+                  <!-- <button type="button" (click)="openScheduleModal()" class="btn btn-success d-lg-block m-r-15"><i
+                      class="far fa-clock"></i> Scheduled Listing</button> -->
+                </div>
+                <div>
+                  <button (click)="listnow();auditTrack(4)" type="button" data-toggle="modal"
+                    class="btn btn-success d-lg-block m-r-15"><i class="far fa-clock"></i> List Now</button>
+                </div>
+                <div>
+                  <button  (click)="removeAll();auditTrack(5)" type="button" data-toggle="modal" class="btn btn-success d-lg-block m-r-15"><i
+                      class="fas fa-times-circle"></i> Remove All</button>
+                </div>
+
+                <div>
+                  <select (change)="getChannelProducts()" class="form-control custom-select" [(ngModel)]="pageSize">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-sm-12 col-md-12 text-right">
+            <div *ngIf="selectedItemsLength > 0">
+                <span style="font-weight: bold;" *ngIf="selectedItemsLength == 1">{{selectedItemsLength}}
+                    product selected</span>
+                <span style="font-weight: bold;" *ngIf="selectedItemsLength > 1">{{selectedItemsLength}}
+                    products selected</span>
+            </div>
+        </div>
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table class="table table color-bordered-table success-bordered-table table-bordered">
+              <thead class="text-center">
+                <th>
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="selectall($event)" type="checkbox" id="checkall" [checked]="isAllChecked" name="checkall" class="custom-control-input checkallP">
+                    <label class="custom-control-label" for="checkall"></label>
+                  </div>
+                </th>
+                <th>Image </th>
+                <th>SKU </th>
+                <th>Product ID</th>
+                <th>Title</th>
+                <th>Selling Price</th>
+                <th>Channel</th>
+                <th>Total Quantity</th>
+                <th>Listing Quantity</th>
+                <th>Modified Date</th>
+                <th>Action</th>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let prod of allChannelProducts">
+                  <td>
+                    <div class="custom-control custom-checkbox">
+                      <input [checked]="prod?.selected" (click)="individualselection(prod, $event)" type="checkbox" [id]="prod.id" [name]="test"
+                        class="custom-control-input checkallP">
+                      <label class="custom-control-label" for="{{prod.id}}"></label>
+                    </div>
+                  </td>
+                  <td><img [src]="prod.imageUrl" class="prod-img img-responsive"></td>
+                  <td><span class="sku">{{ prod?.sku }}</span></td>
+                  <td>{{ prod?.product_id }}</td>
+                  <td><span class="title">{{ prod?.title }}</span></td>
+                  <td>{{ prod?.sellingPrice }}</td>
+                  <td>
+                    <img height="40" class="img-responsive prod-imgs"
+                      src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhub{{ prod.channel }}.png"><br>
+                    <!-- <img class="img-responsive"
+                      src="https://s3-us-west-1.amazonaws.com/khubweb/web/{{ prod.site }}.png"> -->
+                  </td>
+                  <td><span class="badge badge-pill badge-warning">{{ prod?.listingQty }}</span>
+                    <i (click)="editChannelProduct(prod)" style="cursor: pointer;color: #fec107;"
+                      class="m-l-5 fas fa-edit"></i>
+                  </td>
+                  <td>{{ prod?.listingQty }}</td>
+                  <td>{{ prod?.modifiedDate | date:'dd/MM/yyyy H:mm:ss' }}</td>
+                  <td>
+                    <!-- <button type="button" class="btn btn-warning" (click)="editproduct(prod)"> Edit Sellershub product
+                    </button> -->
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="ti-settings"></i>
+                      </button>
+
+                      <div class="dropdown-menu  animated flipInY ">
+                        <a class="dropdown-item" href="javascript:void(0)"(click)="updateView(prod)">Edit channel Product</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="editproduct(prod)">Edit Sellershub product</a>
+                        <!-- <a class="dropdown-item" href="javascript:void(0)" (click)="updateproduct(prod)">Update to channel</a> -->
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="removeKartzhubproduct(prod)">Remove</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row col-lg-12 col-md-12">
+            <div class="col-lg-6 col-md-6 ">
+              <span>Showing {{pageSize <= collectionsize ? pageSize : collectionsize}} of {{collectionsize}}
+                  entries</span>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+              <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+              </ngb-pagination>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body" *ngIf="editChannel">
+          <app-ebay-channel [channelId]="channelId" (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'ebay'"
+          [channelId]="channelId" [product]="selectedProduct"
+          [channelProduct]="channelProduct" [productImages]="productImages"></app-ebay-channel>
+          <app-onbuy  (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'onbuy'"
+          [channelId]="channelId"
+          [channelProduct]="channelProduct" [productImages]="productImages"></app-onbuy>
+          <app-amazon-channel (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'amazon'"
+          [channelId]="channelId"
+          [channelProduct]="channelProduct" [productImages]="productImages"></app-amazon-channel>
+          <app-etsy-channel  (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'etsy'"
+          [channelId]="channelId"
+          [channelProduct]="channelProduct" [productImages]="productImages"></app-etsy-channel>
+          <app-shopify-channel (closeEvent)="closeEditProduct()" *ngIf="selectedChannel === 'shopify'"
+          [channelId]="channelId"
+          [channelProduct]="channelProduct" [productImages]="productImages"></app-shopify-channel>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="currency-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Currency Converter
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="colseCurrencyModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <label class="control-label">From Currency</label>
+              <ng-multiselect-dropdown (onSelect)="onItemSelect($event)" [settings]="dropdownSettings_currency"
+                [placeholder]="'Select From Currency'" id="fromcurrency" name="fromcurrency" [data]="allCurrencies"
+                ngDefaultControl [(ngModel)]="fromcurrency">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <label class="control-label">To Currency</label>
+              <ng-multiselect-dropdown (onSelect)="onItemToSelect($event)" [settings]="dropdownSettings_currency"
+                [placeholder]="'Select To Currency'" id="tocurrency" name="tocurrency" [data]="allCurrencies"
+                ngDefaultControl [(ngModel)]="tocurrency">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12">
+            <div class="form-group">
+              <label class="control-label">Currency Exchange Rate</label>
+              <input type="text" id="firstName" class="form-control" placeholder="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success">Save</button>
+        <button type="button" (click)="colseCurrencyModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="bulik-revise-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Bulk Revise Product
+          Prices
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="colseBulkReviseModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <select class="form-control custom-select" aria-placeholder="filter By" [(ngModel)]="bulkRevisePriceType">
+                <option [value]="'pricebypercentage'">By Percentage</option>
+                <option [value]="'pricebynumber'">By Number</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <!-- <label class="control-label">First Name</label> -->
+              <input type="number" id="firstName" class="form-control" placeholder="John doe"
+                [(ngModel)]="bulkRevisePrice">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success"
+          (click)="updateBulkRevisePrice('increase')">Increase</button>
+        <button type="button" class="btn waves-effect waves-light btn-success"
+          (click)="updateBulkRevisePrice('decrease')">Decrese</button>
+        <button type="button" (click)="colseBulkReviseModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="schedule-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Please select a time to
+          schedule listing</h2>
+        <button type="button" class="close" data-dismiss="modal" (click)="colseScheduleModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <table class="table  table-bordered  table-striped">
+            <thead>
+              <tr>
+                <td>Scheduled Date</td>
+                <td>Time (hour)</td>
+                <td>Time (minutes)</td>
+                <td>Time Zone</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <app-app-date-picker [selectedIpDate]="schdate" (selectedDate)="dateEvt($event)" lable=""></app-app-date-picker>
+                </td>
+                <td>
+                  <div class="form-group has-success">
+                    <select class="form-control custom-select" [(ngModel)]="schedulehh">
+                      <option disabled value="">--Select HH--</option>
+                      <option [value]="houur" *ngFor="let houur of scheduleResponse?.hours">{{houur}}</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group has-success" >
+                    <select class="form-control custom-select" [(ngModel)]="schedulemm">
+                      <option disabled value="">--Select MM--</option>
+                      <option [value]="min" *ngFor="let min of scheduleResponse?.minutes">{{min}}</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group has-success">
+                    <select class="form-control custom-select" [(ngModel)]="scheduletimezone">
+                      <option disabled value="">--Select Timezone--</option>
+                      <option value="GMT">GMT</option>
+                      <option value="EST">EST</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="saveScheduleDetails()" type="button" class="btn waves-effect waves-light btn-success">Start Scheduling</button>
+        <button type="button" (click)="colseScheduleModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="editqty-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Update Quantity for the product
+          {{editedProductDetails?.title}} - SKU {{editedProductDetails?.sku}}</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeChannelProductModal()"
+          aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-3 col-lg-3">
+            <label for="example-text-input" class="col-form-label">New Total Quantity :</label>
+            <label for="example-text-input" class="col-form-label">Price :</label>
+          </div>
+          <div class="col-md-3 col-lg-3" *ngIf="channelDet&&channelDet.kartzhubproduct">
+            <input appNumber class="form-control" type="text" [(ngModel)]="channelDet.kartzhubproduct.qty"
+              id="example-text-input">
+            <input appNumber class="form-control" type="text" [(ngModel)]="channelDet.kartzhubproduct.sellingPrice"
+              id="example-text-input">
+          </div>
+          <div class="col-md-3 col-lg-3">
+            <div class="form-group">
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input (click)="changListFull()" [checked]="listfullQuantity" type="checkbox"
+                  class="custom-control-input" id="listfullQuantity" value="check">
+                <label class="custom-control-label" for="listfullQuantity">List Full Quantity</label>
+              </div>
+            </div>
+
+          </div>
+          <!-- <div class="col-md-3 col-lg-3">
+            <button type="button" class="btn waves-effect waves-light btn-success">Update</button>
+          </div> -->
+        </div>
+
+        <div class="col-md-12 col-lg-12 ">
+          <h4 class="col-form-label"> This will update the quantity for all the
+            products with SKU {{channelDet?.kartzhubproduct?.sku}}</h4>
+        </div>
+        <div class="col-md-12 col-lg-12 well" *ngIf="channelDet?.child?.length>0">
+          <table class="table table-responsive table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>
+                  Image
+                </th>
+                <th>
+                  Variation SKU
+                </th>
+                <th>
+                  Variation Theme
+                </th>
+                <th>
+                  Variation Total Qty
+                </th>
+                <th>
+                  Listing Full Qty
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let child of channelDet?.child">
+                <td><img [src]="child?.imageUrl" height="30"></td>
+                <td>{{child.sku}}</td>
+                <td>{{child.variations}}</td>
+                <td>
+                  <input [(ngModel)]="child.qty" class="form-control" name="variations" type="text" value="0">
+                </td>
+                <td>
+                  <div class="custom-control custom-checkbox mr-sm-2">
+                    <input (click)="changVariationStatus(child)" [checked]="child.variationSelected" type="checkbox"
+                      class="custom-control-input" id="{{child.sku}}" value="check">
+                    <label class="custom-control-label" [for]="child.sku"></label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-12 col-lg-12 p-10 text-white label-info">
+          <div class="form-group">
+            <div class="custom-control custom-checkbox mr-sm-2">
+              <input (click)="changeRelist()" [checked]="relistClosedItems" type="checkbox" class="custom-control-input"
+                id="relistClosedItems" value="check">
+              <label class="custom-control-label" for="relistClosedItems"> Relist Closed Items</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12 label-warning m-t-5 p-10 text-white">
+          <strong>Channel Products associated with this SKU and variation SKUs are shown below</strong><br>
+          <span>You can adjust listng quantity for each channel below.</span>
+        </div>
+        <div class="col-md-12 col-lg-12 well">
+          <table class="table table-responsive table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>
+                  Channel
+                </th>
+                <th>
+                  SKU
+                </th>
+                <th>
+                  Variation Theme
+                </th>
+                <th>
+                  Total Qty
+                </th>
+                <th>
+                  Listing Qty
+                </th>
+                <th>
+                  Selling Price
+                </th>
+                <th>
+                  Listing Status
+                </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cp of channelDet?.products">
+                <td>
+                  <img [src]="getImage(cp.channel)" height="30">
+                </td>
+                <td>
+                  {{cp.sku}}
+                </td>
+                <td>
+                  {{cp.variationTheme}}
+                </td>
+                <td>
+                  {{cp.qty}}
+                </td>
+                <td>
+                  <input [(ngModel)]="cp.listingQty" class="form-control" name="updateqtylistingqtyinput" type="text"
+                    value="0">
+                </td>
+                <td>
+                  <input disabled [(ngModel)]="cp.sellingPrice" class="form-control" id="updatesellingpriceinput"
+                    type="text" value="">
+                </td>
+                <td>
+                  {{cp.listingStatus}}
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="updateProductQty()" type="button"
+          class="btn waves-effect waves-light btn-success">Update</button>
+        <button type="button" (click)="closeChannelProductModal()" class="btn btn-danger waves-effect"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

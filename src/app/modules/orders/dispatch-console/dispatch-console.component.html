@@ -1,0 +1,482 @@
+<div class="container-fluid" style="margin-top: 2px">
+    <ul class="nav nav-tabs customtab2" role="tablist">
+        <li class="nav-item"> <a class="nav-link active" data-toggle="tab"
+                (click)="batchOrderId = false; byOrderId = true;byBarcode = false;" role="tab"
+                aria-selected="false"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">By
+                    Order Id</span></a>
+        </li>
+        <li class="nav-item"> <a class="nav-link pointer" data-toggle="tab"
+                (click)="batchOrderId = true; byOrderId = false;byBarcode = false;" role="tab"
+                aria-selected="false"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Batch
+                    Process by Order Id</span></a> </li>
+        <!-- <li class="nav-item"> <a class="nav-link pointer" data-toggle="tab"
+                (click)="batchOrderId = false; byOrderId = false;byBarcode = true;" role="tab"
+                aria-selected="false"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">By
+                    Item Barcode</span></a> </li> -->
+
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active p-20" *ngIf="!batchOrderId && !byBarcode && byOrderId " role="tabpanel">
+            <!-- <app-apploader [Uloading]="loading" *ngIf="isEdit && loading"></app-apploader> -->
+            <div class="col-md-12">
+                <app-apploader [Uloading]="loading" *ngIf="!isEdit && loading"></app-apploader>
+                <app-apploader [Uloading]="loading" [loadingMessage]="loadingMessage"
+                    *ngIf="isEdit && loading"></app-apploader>
+                <div *ngIf="!searchDetails">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Search By SellersHub Order ID</label>
+                            <input [(ngModel)]="dispatch_order_id" type="text" id="firstName" class="form-control" [ngClass]="{'has-error': selectedOrderDet?.channelSales.length == 0}">
+                        </div>
+                        <div class="text-center">
+                        <span *ngIf="selectedOrderDet?.channelSales.length == 0" class="text-danger">Order does not exist</span>
+                        </div>
+                        <div class="text-center">
+                            <span *ngIf="onGoingOrderDet?.currentSale[0]?.orderStatus == 'Shipped'" class="text-success">Order Processed</span>
+                            </div>
+                        <!-- <h4>(Or)</h4> -->
+                        <!-- <div class="form-group">
+  <label class="control-label">By Item Barcode</label>
+  <input [(ngModel)]="dispatch_bar_code" type="text" id="firstName" class="form-control">
+</div> -->
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                        <button type="button" class=" btn btn-success waves-effect" (click)="getDetails()"><i
+                                class=" fas fa-search"></i> Search </button>
+                    </div>
+                </div>
+                <div *ngIf="searchDetails">
+                    <div class="col-md-12 col-lg-12 col-sm-12 row" style="background-color: gainsboro;">
+                        <div class="col-md-3 col-lg-3 col-sm-3 mt-2">
+                            <div class="form-group">
+                                <label>Process Order :</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-3 mt-2">
+                            <div class="form-group">
+                                {{onGoingOrderDet?.currentSale[0]?.orderId}}
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-3 mt-2">
+                            <div class="form-group">
+                                {{onGoingOrderDet?.currentSale[0]?.channelOrderId}}
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-3 mt-2">
+                            <div class="form-group">
+                                <span class="label "
+                                    [ngClass]="onGoingOrderDet?.currentSale[0]?.paymentsStatus!=null || onGoingOrderDet?.currentSale[0].orderStatus=='Unshipped'? 'label-success' :'' ">Paid</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-sm-12 row mt-2">
+                        <div class="col-md-3 col-lg-3 col-sm-3">
+                            <div class="form-group">
+                                <label>Shipping Address :</label>
+                                <textarea class="form-control" rows="8">
+        {{onGoingOrderDet?.currentSale[0]?.shipAddress1}},
+        {{onGoingOrderDet?.currentSale[0]?.shipAddress2}},
+        {{onGoingOrderDet?.currentSale[0]?.shipAddress3}},
+        {{onGoingOrderDet?.currentSale[0]?.shipCity}},
+        {{onGoingOrderDet?.currentSale[0]?.shipCountry}},
+        {{onGoingOrderDet?.currentSale[0]?.shipPostalCode}},
+        {{onGoingOrderDet?.currentSale[0]?.shipPhoneNumber}}
+    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-lg-9 col-sm-9">
+                            <div class="col-md-12 col-lg-12 col-sm-12 row">
+                                <div class="col-md-3 col-lg-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Shipping Courier : </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <input type="text" id="firstName" class="form-control"
+                                        [(ngModel)]="selectedCarrier_v2">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 row mt-2">
+                                <div class="col-md-3 col-lg-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Tracking Number :</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" id="firstName" class="form-control"
+                                            [(ngModel)]="trackingNumber">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-12 col-lg-12 col-sm-12 row mt-2">
+                            <div class="col-md-3 col-lg-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Dimensions :</label>
+                                    <sub>(Length,Width,Depth,Weight)</sub>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-6 mt-2">
+                                {{dclength}} * {{dcwidth}} * {{dcheight}} * {{dcweight}}
+                            </div>
+                        </div> -->
+                            <!-- <div class="col-md-12 col-lg-12 col-sm-12 row mt-2">
+                            <div class="col-md-3 col-lg-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Scan bar code and verify :</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-6">
+                                <div class="form-group">
+                                    <select class="form-control custom-select" aria-placeholder="filter By"
+                                        [(ngModel)]="dcscan">
+                                        <option value="">SKU</option>
+                                        <option value="">UPC/EAN</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+                            <!-- <div class="col-md-12 col-lg-12 col-sm-12 row mt-2">
+                            <div class="col-md-3 col-lg-3 col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Default Shipping Courier :</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" id="firstName" class="form-control">
+                                </div>
+                            </div>
+                        </div> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 row pb-1" style="padding-right: 0px;">
+                        <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right search-alignment "
+                            style="padding-right: 0px;">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <button type="button" (click)="dcSplitOrder()"
+                                    class="btn waves-effect waves-light btn-success">Split Order</button>
+                                <div class="btn-group mr-1 m-l-15">
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                        title="Print Invoice" aria-haspopup="true" aria-expanded="false">
+                                        <i class=" fas fa-print mr-1"></i>Print Invoice
+                                    </button>
+                                    <div class="dropdown-menu animated flipInX">
+                                        <div>
+                                            <select [(ngModel)]="selectedPrinter" class="form-control custom-select"
+                                                (click)="$event.stopPropagation()"
+                                                *ngIf="selectedCarrier != 'RM Click & Drop'  && selectedCarrier_code != 'amazonbuyshipping' && selectedCarrier != 'Amazon Shipping'">
+                                                <option value="0">--Select Printer --</option>
+                                                <option value="{{printer.id}}" *ngFor="let printer of allPrinters">
+                                                    {{printer.printerName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <a class="dropdown-item" (click)="dcPrintInvoice('default')"
+                                            href="javascript:void(0)">Print Invoice</a>
+                                    </div>
+                                </div>
+                                <div class="btn-group mr-1 m-l-15">
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                        title="Print Label" aria-haspopup="true" aria-expanded="false">
+                                        <i class=" fas fa-print mr-1"></i>Print Label
+                                    </button>
+                                    <div class="dropdown-menu animated flipInX">
+                                        <div>
+                                            <select [(ngModel)]="selectedPrinter" class="form-control custom-select"
+                                                (click)="$event.stopPropagation()"
+                                                *ngIf="selectedCarrier != 'RM Click & Drop'  && selectedCarrier_code != 'amazonbuyshipping' && selectedCarrier != 'Amazon Shipping'">
+                                                <option value="0">--Select Printer --</option>
+                                                <option value="{{printer.id}}" *ngFor="let printer of allPrinters">
+                                                    {{printer.printerName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <a class="dropdown-item" (click)="printPDFS()"
+                                            href="javascript:void(0)">Default</a>
+                                        <a class="dropdown-item" (click)="dcPrintLableOpen(opt)"
+                                            href="javascript:void(0)"
+                                            *ngFor="let opt of allPrintLables">{{opt.mname}}</a>
+                                    </div>
+                                </div>
+                                <button type="button" (click)="dcConfirmShipmentTest()"
+                                    class="btn waves-effect waves-light btn-primary m-l-15"
+                                    >Process
+                                    Order</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table color-bordered-table success-bordered-table">
+                            <thead class="text-center">
+                                <th>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="checkall-{{tab}}" [(ngModel)]="isAllChecked"
+                                            (click)="selectall($event)" name="checkall-{{tab}}"
+                                            class="custom-control-input checkallP">
+                                        <label class="custom-control-label" for="checkall-{{tab}}"></label>
+                                    </div>
+                                </th>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>SKU </th>
+                                <th>Channel</th>
+                                <th>Quantity</th>
+                                <th style="min-width: 90px;">Weight(KG)</th>
+                                <th style="min-width: 90px;">Length(cm)</th>
+                                <th style="min-width: 90px;">Depth(cm)</th>
+                                <th style="min-width: 90px;">Width(cm)</th>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr *ngFor="let sale of onGoingOrderDet?.currentSale;let i=index">
+                                    <td>
+                                        <div class="custom-control custom-checkbox" *ngIf="sale.orderStatus!='Pending'">
+                                            <input [(ngModel)]="sale.selected"
+                                                (change)="individualselection(sale)" type="checkbox"
+                                                [id]="sale.id" [name]="sale.id" class="custom-control-input checkallP">
+                                            <label class="custom-control-label" for="{{sale.id}}"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <img alt="img" [src]="sale.imageUrl" class="img-responsive prod-img">
+                                        </div>
+                                        <!-- <br>
+                        <a [href]="sale.imageUrl" target="_blank" *ngIf="sale.channel == 'amazon'">External image</a> -->
+                                    </td>
+                                    <td>{{sale.title}}</td>
+                                    <td>{{sale.sku}}</td>
+                                    <td>{{sale.channel}}</td>
+                                    <td>{{sale.quantityPurchased}}</td>
+                                    <td>
+                                        <input [(ngModel)]="sale.weight" [name]="sale.id+'price'" type="text"
+                                            class="form-control text-center" [id]="sale.id+'quan'">
+                                    </td>
+                                    <td>
+                                        <input [(ngModel)]="sale.length" [name]="sale.id+'price'" type="text"
+                                            class="form-control text-center" [id]="sale.id+'quan'">
+                                    </td>
+                                    <td>
+                                        <input [(ngModel)]="sale.depth" [name]="sale.id+'price'" type="text"
+                                            class="form-control text-center" [id]="sale.id+'quan'">
+                                    </td>
+                                    <td>
+                                        <input [(ngModel)]="sale.width" [name]="sale.id+'price'" type="text"
+                                            class="form-control text-center" [id]="sale.id+'quan'">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="col-md-12 col-lg-12 text-right row m-t-15">
+                    <div class="col-md-4 col-lg-4">
+                        <h4>Total Orders : {{totalOrders}}</h4>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <h4>Dispatched Orders : {{dispatchedOrders}}</h4>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <h4>Remaining Orders : {{remainingOrders}}</h4>
+                    </div>
+                </div> -->
+                
+                </div>
+            </div>
+        </div>
+        <div class=" p-20" *ngIf="batchOrderId && !byBarcode && !byOrderId " role="tabpanel">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">Search By Order ID</label>
+                    <input [(ngModel)]="batch_order_id" type="text" id="firstName" class="form-control">
+                </div>
+                <!-- <h4>(Or)</h4> -->
+                <!-- <div class="form-group">
+<label class="control-label">By Item Barcode</label>
+<input [(ngModel)]="dispatch_bar_code" type="text" id="firstName" class="form-control">
+</div> -->
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                <button type="button" class=" btn btn-success waves-effect" (click)="getOrderDetails()"><i
+                        class=" fas fa-search"></i> Scan and Proceed </button>
+            </div>
+        </div>
+        <div class=" p-20" *ngIf="!batchOrderId && byBarcode && !byOrderId " role="tabpanel">
+            <div class="col-md-6 col-lg-6 col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">Search By Item Barcode</label>
+                    <input [(ngModel)]="dispatch_order_id" type="text" id="firstName" class="form-control">
+                </div>
+                <!-- <h4>(Or)</h4> -->
+                <!-- <div class="form-group">
+<label class="control-label">By Item Barcode</label>
+<input [(ngModel)]="dispatch_bar_code" type="text" id="firstName" class="form-control">
+</div> -->
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                <button type="button" class=" btn btn-success waves-effect" (click)="getDetails()"><i
+                        class=" fas fa-search"></i> Search </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="split-order" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+        style="display: none;">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Split Order</h2>
+                    <button type="button" class="close" data-dismiss="modal" (click)="modalSplitClose()"
+                        aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body" style="max-height: 70vh;overflow-y: scroll; padding-right: 0%;">
+                    <div class="col-md-12 col-lg-12 row p-0">
+                        <div class="col-md-3 col-lg-3">
+                            <h4>Order Details</h4>
+                            <p *ngIf="splitAddressItems.length>0">{{splitAddressItems[0].shippingAddress1}}</p>
+                            <p *ngIf="splitAddressItems.length>0">{{splitAddressItems[0].shippingAddress2}}</p>
+                            <p *ngIf="splitAddressItems.length>0">{{splitAddressItems[0].shippingAddress3}}</p>
+                            <p *ngIf="splitAddressItems.length>0">{{splitAddressItems[0].shipCity}}</p>
+                            <p *ngIf="splitAddressItems.length>0">{{splitAddressItems[0].shipState}}</p>
+                            <p *ngIf="splitAddressItems.length>0">{{splitAddressItems[0].shipCountry}}</p>
+                            <p *ngIf="splitAddressItems.length>0">{{splitAddressItems[0].shipPostalCode}}</p>
+                        </div>
+                        <div class="col-md-9 col-lg-9 p-0">
+                            <div class="table-responsive">
+                                <table class="table color-bordered-table info-bordered-table">
+                                    <thead>
+                                        <tr>
+                                            <th>S</th>
+                                            <th>SKU</th>
+                                            <th>Title</th>
+                                            <th>Quantity</th>
+                                            <!-- <th>Move</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let orderItem of splitOrderItems">
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input (click)="splitIndividualSelection(orderItem)"
+                                                        [checked]="orderItem.selected" type="checkbox"
+                                                        [id]="orderItem.sku+orderItem.id" [value]="orderItem.selected"
+                                                        [name]="test" class="custom-control-input checkallSplit">
+                                                    <label class="custom-control-label"
+                                                        for="{{orderItem.sku}}{{orderItem.id}}"></label>
+                                                </div>
+                                            </td>
+                                            <td>{{orderItem.sku}}</td>
+                                            <td>{{orderItem.title}}</td>
+                                            <td>{{orderItem.quantityPurchased}}</td>
+                                            <!-- <td>{{orderItem.quantityPurchased}}</td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12  align-self-center text-right "
+                        style="padding-right: 0px;">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <!-- <button type="button" class="btn btn-info d-lg-block m-l-5"><i class=" fas fa-file-excel"></i> Auto
+              Split</button> -->
+                            <button (click)="individualSplit()" type="button" class="btn btn-info d-lg-block m-l-5"><i
+                                    class=" fas fa-print"></i>Manual Split</button>
+                            <button (click)="oneinSplit()" type="button" class="btn btn-info d-lg-block m-l-5"><i
+                                    class=" fas fa-print"></i> One in each
+                                split</button>
+                            <button (click)="clearSplitItems()" type="button"
+                                class="btn btn-danger d-lg-block m-l-5 m-r-5"><i class=" fas fa-print"></i> Clear
+                                All</button>
+                        </div>
+                    </div>
+                    <div class="row m-r-0 m-l-0 m-t-10">
+                        <div class="col-md-6 col-lg-6" *ngFor="let it of splitViewItems">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table color-bordered-table info-bordered-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>SKU</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let orderItem of it">
+                                                    <td>{{orderItem.sku}}</td>
+                                                    <td>{{orderItem.quantityPurchased}}</td>
+                                                    <td>{{orderItem.totalPrice}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="openSplitSwal()" type="button"
+                        class="btn waves-effect waves-light btn-success">Split
+                        Orders</button>
+                    <button type="button" class="btn btn-danger waves-effect" (click)="modalSplitClose()"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="tab != 'error_labels'">
+        <div id="error-labels" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         >
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Labels Jobs</h2>
+      
+                  </div>
+                  <div class="modal-body" style="max-height: 70vh;overflow-y: scroll; padding-right: 0%;">
+                    <div class="alert alert-success" style="cursor: pointer;" data-dismiss="modal" (click)="goToPrintedLabels()">
+                      <strong>{{successOders.length}} / {{selectedItemsLengthTemp}} Printed Labels</strong>
+                    </div>
+                    <div class="alert alert-danger" style="cursor: pointer;" data-dismiss="modal" (click)="goToErrorLabels()">
+                      <strong>{{errorOders.length}} / {{selectedItemsLengthTemp}} Error Labels</strong>
+                    </div>
+      
+                   </div>
+                  <div class="modal-footer">
+      
+                      <button type="button" class="btn btn-danger waves-effect" (click)="errorLabelsClose()"
+                          data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </ng-container>
+      <ng-container *ngIf="tab == 'error_labels'">
+        <div id="error-labels1" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         >
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2 class="modal-title" style="color: rgb(255 165 0);font-weight: 400">Labels Jobs</h2>
+      
+                  </div>
+                  <div class="modal-body" style="max-height: 70vh;overflow-y: scroll; padding-right: 0%;">
+                    <div class="alert alert-success" style="cursor: pointer;" data-dismiss="modal" (click)="goToPrintedLabels()">
+                      <strong>{{successOders.length}} / {{selectedItemsLengthTemp}} Printed Labels</strong>
+                    </div>
+                    <div class="alert alert-danger" style="cursor: pointer;" data-dismiss="modal" (click)="goToErrorLabels()">
+                      <strong>{{errorOders.length}} / {{selectedItemsLengthTemp}} Error Labels</strong>
+                    </div>
+      
+                   </div>
+                  <div class="modal-footer">
+      
+                      <button type="button" class="btn btn-danger waves-effect" (click)="errorLabelsClose()"
+                          data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </ng-container>

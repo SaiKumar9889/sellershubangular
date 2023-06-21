@@ -1,0 +1,35 @@
+<div class="col-md-12 col-lg-12" style="padding: 0px;">
+    <div class="card">
+        <div class="card-body p-b-0 table-responsive">
+            <table id="printabletable" class="display nowrap table table-hover table-striped table-bordered"
+            cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Time </th>
+                    <th>In/Out </th>
+                    <th>Stock Level</th>
+                    <!-- <th>Stock Value</th> -->
+                    <th>Note</th>
+                    <th>Stock Level Change</th>
+                    <!-- <th>Stock Value Change</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let history of allTransactions;let i=index">
+                    <td>{{history.createdDate | date:'dd/MM/yyyy H:mm:ss' }}</td>
+                    <td>
+                        <i style="color:#fb9678" *ngIf="history.qtyIncDec<0" class=" fas fa-arrow-down"></i>
+                        <i style="color:#00c292" *ngIf="history.qtyIncDec>0" class=" fas fa-arrow-up"></i>
+                        {{history.qtyIncDec}}
+                    </td>
+                    <td>{{history.kartzhubProductQty}}</td>
+                    <!-- <td>{{history.kartzhubProductCostPrice * history.kartzhubProductQty}}</td> -->
+                    <td>{{history.description}}</td>
+                    <td>{{history.qtyIncDec}}</td>
+                    <!-- <td>{{history.kartzhubProductCostPrice * history.qtyIncDec}}</td> -->
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>

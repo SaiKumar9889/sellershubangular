@@ -1,0 +1,17 @@
+.hand-icon {
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.my-custom-class {
+  background: aliceblue;
+  font-size: 125%;
+}
+
+.my-custom-class .arrow::after {
+  border-top-color: aliceblue;
+}
+
+.filter-selected{
+  color: rgb(11, 116, 37);
+}

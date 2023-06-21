@@ -1,0 +1,672 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="col-lg-12 col-sm-12 col-md-12 align-self-center text-right">
+    <div class="d-flex justify-content-end align-items-center">
+      <button (click)="closeIntegration()" type="button" class="btn btn-warning d-lg-block m-l-15"><i
+          class="fas fa-arrow-left"></i> Back To List</button>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-12 text-center m-t-10">
+    <img src="https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubetsy.png" alt="user"
+      class="img-responsive img-fixed img-fluid">
+  </div>
+  <div class="card-body p-b-0">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs customtab2" role="tablist">
+      <li class="nav-item"> <a class="nav-link active" data-toggle="tab"
+          (click)="listing= false; integration= true;emailConf=false;emailInte=false;autoSplit=false;setStepper(true)"
+          role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span
+            class="hidden-xs-down font"> Integration</span></a>
+      </li>
+      <!-- <li class="nav-item"> <a class="nav-link pointer" data-toggle="tab"
+        (click)="listing= false; integration = false;locationMap = true;mapping = false;setStepper(false)"
+        role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span
+          class="hidden-xs-down"> Location Mapping</span></a> </li> -->
+      <li class="nav-item"> <a class="nav-link pointer" data-toggle="tab"
+          (click)="listing= false; integration = false;emailConf = false;emailInte=false;mapping = true;autoSplit=false;setStepper(false)"
+          role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span
+            class="hidden-xs-down font"> Mapping</span></a> </li>
+      <li class="nav-item"> <a class="nav-link" data-toggle="tab"
+          (click)="listing= true; integration= false;emailConf=false;emailInte=false;autoSplit=false;setStepper(false)"
+          role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span
+            class="hidden-xs-down font"> Listing Templates</span></a> </li>
+
+      <li class="nav-item"> <a class="nav-link" data-toggle="tab"
+          (click)="listing= false; integration= false;emailConf=true;emailInte=false;autoSplit=false;setStepper(false)"
+          role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span
+            class="hidden-xs-down font"> Email Configurations</span></a></li>
+      <li class="nav-item"> <a class="nav-link pointer" data-toggle="tab"
+          (click)="listing= false; integration = false;emailConf = false;emailInte=false;locationMap = false;mapping = false;autoSplit=true;setStepper(false)"
+          role="tab" aria-selected="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span
+            class="hidden-xs-down font"> Auto Split Rules</span></a> </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" *ngIf="!listing && !emailConf &&!emailInte && !locationMap && !mapping && !autoSplit"
+        role="tabpanel">
+        <div class="col-md-12">
+          <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+          <div id="stepper1" class="bs-stepper">
+            <div class="bs-stepper-header">
+              <div class="step" data-target="#test-l-1">
+                <button class="step-trigger">
+                  <span class="bs-stepper-label">Integration</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#test-l-2">
+                <button class="step-trigger">
+                  <span class="bs-stepper-label">Inventory and Price Update</span>
+                </button>
+              </div>
+              <div class="line"></div>
+              <div class="step" data-target="#test-l-3">
+                <button class="step-trigger">
+                  <span class="bs-stepper-label">Order</span>
+                </button>
+              </div>
+              <!-- <div class="line"></div>
+            <div class="step" data-target="#test-l-4">
+              <button class="step-trigger">
+                <span class="bs-stepper-label">FBA</span>
+              </button>
+            </div> -->
+              <div class="line"></div>
+              <div class="step" data-target="#test-l-4">
+                <button class="step-trigger">
+                  <span class="bs-stepper-label">Listings</span>
+                </button>
+              </div>
+              <!-- <div class="line"></div>
+            <div class="step" data-target="#test-l-6">
+              <button class="step-trigger">
+                <span class="bs-stepper-label">Price Update</span>
+              </button>
+            </div> -->
+            </div>
+            <div class="bs-stepper-content">
+              <div id="test-l-1" class="content">
+                <div class="p-20">
+                  <div class="col-md-12 col-lg-12 text-right">
+                    <button (click)="saveOnbuyDetails()" *ngIf="isNewIntegration" type="button"
+                      class="btn btn-success m-r-10"> <i class="fa fa-check"></i> Save</button>
+                    <button (click)="updateOnbuyDetails()" *ngIf="!isNewIntegration" type="button"
+                      class="btn btn-success m-r-10"> <i class="fa fa-check"></i> Update</button>
+                    <button (click)="testConnection()" *ngIf="!isNewIntegration" type="button"
+                      class="btn btn-success m-r-10"> <i class="fa fa-check"></i> Test Connection</button>
+                    <button (click)="deleteOnbuyAccount()" *ngIf="!isNewIntegration" type="button"
+                      class="btn btn-success m-r-10"> <i class="fa fa-check"></i> Remove</button>
+                    <button (click)="downloadOrders()" *ngIf="!isNewIntegration" type="button"
+                      class="btn btn-success m-r-10"> <i class="fa fa-check"></i> Catalog download </button>
+                    <button (click)="closeIntegration()" type="button" class="btn btn-danger">Close</button>
+                  </div>
+                  <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 row">
+                      <div class="col-md-6 col-lg-6">
+                        <div class="form-body">
+                          <div class="row p-t-20">
+                            <div class="col-md-12">
+                              <div class="form-group has-success">
+                                <label class="control-label">Channel Name</label>
+                                <input type="text" id="firstName" class="form-control" placeholder=""
+                                  [(ngModel)]="channelName">
+                              </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-12" *ngIf="!isNewIntegration">
+                              <div class="form-group has-success">
+                                <label class="control-label">Etsy Access Token</label>
+                                <input disabled type="text" id="lastName" class="form-control" [(ngModel)]="tocken">
+                              </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 text-right" *ngIf="!isNewIntegration">
+                              <button (click)="generateTocken()" type="button"
+                                class="btn waves-effect waves-light btn-warning"><i class=" fas fa-key"></i>
+                                Generate Token</button>
+                            </div>
+
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label class="custom-control custom-checkbox m-b-0">
+                                  <input id="catLogIsChecked" (click)="catlogChanged('a')" [value]="catLogIsChecked"
+                                    [checked]="catLogIsChecked" type="checkbox" class="custom-control-input">
+                                  <span for="catLogIsChecked" class="custom-control-label"> Download the catalog into
+                                    Sellershub</span>
+                                </label>
+                              </div>
+                              <div class="form-group">
+                                <label class="custom-control custom-checkbox m-b-0">
+                                  <input id="ordersIsChecked" (click)="catlogChanged('b')" [value]="ordersIsChecked"
+                                    [checked]="ordersIsChecked" type="checkbox" class="custom-control-input">
+                                  <span for="ordersIsChecked" class="custom-control-label">Download the orders into
+                                    Sellershub</span>
+                                </label>
+                              </div>
+                              <div class="form-group">
+                                <label class="custom-control custom-checkbox m-b-0">
+                                  <input id="outofStockItems" (click)="catlogChanged('c')" [value]="outofStockItems"
+                                    [checked]="outofStockItems" type="checkbox" class="custom-control-input">
+                                  <span for="outofStockItems" class="custom-control-label"> Download Out of Stock
+                                    Items</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6">
+                        <label>SKU in title</label>
+                        <div class="form-group">
+                          <label class="custom-control custom-checkbox m-b-0">
+                            <input id="skuEndOfTitle" (click)="catlogChanged('d')" [value]="skuEndOfTitle"
+                              [checked]="skuEndOfTitle" type="checkbox" class="custom-control-input">
+                            <span for="skuEndOfTitle" class="custom-control-label">SKU at the end of the title</span>
+                          </label>
+                        </div>
+                        <label>Make Items Inactive for out of stock items</label>
+                        <div class="form-group">
+                          <label class="custom-control custom-checkbox m-b-0">
+                            <input id="enabled" (click)="catlogChanged('e')" [value]="enabled" [checked]="enabled"
+                              type="checkbox" class="custom-control-input">
+                            <span for="enabled" class="custom-control-label"> If this is enable, Etsy items will not be
+                              removed and moved to inactive. Sellershub will make the item active when the item is in
+                              stock</span>
+                          </label>
+                        </div>
+
+                        <div class="col-md-12">
+                          <div class="form-group has-success">
+                            <label class="control-label">Etsy Shop Language <span style="color:red">*</span></label>
+                            <select name="amazonSite" class="form-control custom-select" [(ngModel)]="defaultLanguage">
+                              <option disabled value="">--Select Launguage--</option>
+                              <option value="en">English</option>
+                              <option value="de">German</option>
+                              <option value="fr">French</option>
+                              <option value="es">Spanish</option>
+                              <option value="it">Italy</option>
+                              <option value="jp">Japaneese</option>
+                              <option value="nl">Dutch</option>
+                              <option value="pt">Portuguese</option>
+                              <option value="ru">Russian</option>
+                            </select>
+                            <small>By default lanuage is set to English</small>
+                          </div>
+                        </div>
+                        <label>The term 'Etsy' is a trademark of Etsy, Inc. This application uses the Etsy API but is
+                          not endorsed or certified by Etsy, Inc.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-12 col-lg-12 text-right">
+                  <button (click)="next('inventory')" class="btn btn-primary">Next</button>
+                </div> -->
+              </div>
+              <div id="test-l-2" class="content">
+                <div class="col-md-12 col-lg-12 text-right">
+                  <button *ngIf="isNewIntegration" (click)="saveOnbuyDetails()" type="button"
+                    class="m-r-5 btn btn-primary">
+                    <i class="fa fa-check"></i> Save</button>
+                  <button *ngIf="!isNewIntegration" (click)="updateOnbuyDetails()" type="button"
+                    class="m-r-5 btn btn-primary">
+                    <i class="fa fa-check"></i> Save</button>
+
+
+                </div>
+
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group has-success">
+                        <label class="custom-control custom-checkbox m-b-0">
+                          <input name="updateInventory" type="checkbox" class="custom-control-input"
+                            [(ngModel)]="updateInventory">
+                          <span class="custom-control-label">Update Inventory</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group has-success">
+                        <label class="custom-control custom-checkbox m-b-0">
+                          <input type="checkbox" class="custom-control-input" name="username" placeholder="End When"
+                            [(ngModel)]="priceChange">
+                          <span class="custom-control-label">Price Change</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group has-success">
+                        <label class="control-label">Max Listed</label>
+                        <input type="number" name="username" class="form-control" placeholder="Max Listed"
+                          [(ngModel)]="maxListed">
+
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group has-success">
+                        <label class="control-label">Stock Percentage</label>
+                        <input type="number" name="username" class="form-control" placeholder="Stock Percentage"
+                          [(ngModel)]="stockPercentage">
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group has-success">
+                        <label class="control-label">Ends When</label>
+                        <input type="text" name="username" class="form-control" placeholder="End When"
+                          [(ngModel)]="endWhen">
+
+                      </div>
+                    </div>
+
+
+
+
+                  </div>
+                </div>
+                <!-- <div class="col-md-12 col-lg-12 row mt-2">
+                  <div class="col-md-6 text-left">
+                    <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <button (click)="next('order')" class="btn btn-primary">Next</button>
+                  </div>
+                </div> -->
+              </div>
+              <div id="test-l-3" class="content" style="min-height: 80vh;">
+                <div class="col-md-12">
+                  <div class="row">
+                    <!-- <div class="col-md-12">
+                      <div class="form-group has-success">
+                        <label class="custom-control custom-checkbox m-b-0">
+                          <input name="downInven" type="checkbox" class="custom-control-input">
+                          <span class="custom-control-label">Dispatch Notes</span>
+                        </label>
+                      </div>
+                      <div class="form-group has-success">
+                        <label class="custom-control custom-checkbox m-b-0">
+                          <input name="downOrders" type="checkbox" class="custom-control-input">
+                          <span class="custom-control-label">Order cancellations</span>
+                        </label>
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group has-success">
+                          <label class="control-label">Order Sync Date</label>
+                          <input class="form-control" name="tknexp" type="text" readonly [(ngModel)]="lastUpdatetime" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group has-success">
+                          <label class="control-label">last Order Download Time</label>
+                          <input class="form-control" name="tknexp" type="text" readonly
+                            [(ngModel)]="lastOrderDownloadTime" />
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                </div>
+                <!-- <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6 text-left">
+                    <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                  </div>
+                  <div class="col-md-6 col-lg-6 text-right">
+                    <button (click)="next('listings')" class="btn btn-primary">Next</button>
+                  </div>
+                </div> -->
+
+              </div>
+              <!-- <div id="test-l-4" class="content" style="min-height: 80vh;">
+                <h4>FBA</h4>
+                <div class="col-md-12 col-lg-12 row">
+                  <div class="col-md-6 col-lg-6 text-left">
+                    <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                  </div>
+                  <div class="col-md-6 col-lg-6 text-right">
+                    <button (click)="next('listings')" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+
+              </div> -->
+              <div id="test-l-4" class="content" style="min-height: 80vh;">
+                <!-- <div class="col-md-12">
+                  <div class="row">
+                    <div class="form-group has-success">
+                      <label class="custom-control custom-checkbox m-b-0">
+                        <input name="outStock" type="checkbox" class="custom-control-input">
+                        <span class="custom-control-label">Download Full Listings</span>
+                      </label>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center">
+                      <div>
+                        <button type="button" class="btn btn-warning btn-sm d-lg-block m-r-15"> Download
+                          Settings</button>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group has-success">
+                        <label class="control-label">Product Download Time</label>
+                        <input class="form-control" name="tknexp" type="text" readonly [(ngModel)]="downloadStart" />
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                      <div class="form-group has-success">
+                        <label class="control-label">Last Listing Download Completion Time</label>
+                        <input class="form-control" name="tknexp" type="text" readonly />
+                      </div>
+                    </div> -->
+                  </div>
+                  <div class="col-md-12 col-lg-12 row">
+                    <!-- <div class="col-md-6 col-lg-6 text-left">
+                      <button (click)="pevious()" class="btn btn-primary">Previous</button>
+                    </div> -->
+                    <!-- <div class="col-md-6 col-lg-6 text-right">
+                      <button (click)="next('priceUpdate')" class="btn btn-primary">Next</button>
+                    </div> -->
+                  </div>
+
+                </div>
+              </div>
+              <!-- <div id="test-l-6" class="content" style="min-height: 80vh;">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group has-success">
+                        <label class="custom-control custom-checkbox m-b-0">
+                          <input name="downInven" type="checkbox" class="custom-control-input">
+                          <span class="custom-control-label">Price Change</span>
+                        </label>
+                      </div>
+
+                    </div>
+
+
+
+                  </div>
+                </div>
+
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" p-20" *ngIf="locationMap && !mapping && !listing && !emailConf && !integration && !autoSplit"
+        role="tabpanel">
+        <div class="row p-t-20">
+          <div class="col-md-6 col-lg-6">
+            <div class="col-md-12">
+              <div class="form-group has-success">
+                <label class="control-label">Order Download Location</label>
+                <input name="sellerId" type="text" id="sellerId" class="form-control" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group has-success">
+                <label class="control-label">Sync Inventory From Locations</label>
+                <input name="marketPlaceID" type="text" id="marketPlaceID" class="form-control" placeholder="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" p-20" *ngIf="mapping && !listing && !emailConf && !integration && !autoSplit" role="tabpanel">
+        <app-sku-mapping [channelId]="channelId"></app-sku-mapping>
+      </div>
+      <div class="p-20" *ngIf="listing && !emailConf && !autoSplit" role="tabpanel">
+        <app-etsy-listing-template [channelId]="channelId"></app-etsy-listing-template>
+      </div>
+      <div class=" p-20" *ngIf="emailConf && !listing && !integration && !autoSplit" role="tabpanel">
+        <app-email-config [channelId]="channelId" [type]="'CHANNEL'"></app-email-config>
+      </div>
+      <!-- <div class=" p-20"  *ngIf="emailInte&&!emailConf && !listing && !integration" role="tabpanel">
+        <app-template (selectedChannlesForsave)="selectedChannlesForsave($event)" [apiData]="apiData"></app-template>
+       </div> -->
+      <div class=" p-20" *ngIf="autoSplit && !emailConf && !listing && !integration" role="tabpanel">
+        <!-- <app-split-rules [channelId]="channelId" [channel]="'CHANNEL'"></app-split-rules> -->
+        <div class=" row m-t-20">
+          <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+          <!-- <div class="col-md-6">
+            <div class="form-group ">
+              <label class="control-label">Split type</label>
+              <select type="text" name="splittype" placeholder="" class="form-control" [(ngModel)]="splitRule.ruleType">
+                <option value="'NONE'">NONE</option>
+                <option value="PACKAGE">Split order into packages of maximum values</option>
+                <option value="WEIGHT">Split order into packages of maximum weight</option>
+                <option value="SINGLE_ITEM">Split order into packages of single items</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group ">
+              <label class="control-label">Min Value</label>
+              <input type="number" name="minvalue" placeholder="0" class="form-control " [(ngModel)]="splitRule.minValue"
+                min="0">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="control-label">Max Value</label>
+              <input type="text" name="maxvalue" placeholder="0" class="form-control " [(ngModel)]="splitRule.maxValue" min="0">
+            </div>
+          </div> -->
+          <!-- <div class="col-md-12">
+            <div class="form-group row">
+              <label class="control-label text-left col-md-3">Channel</label>
+              <div class="col-md-4">
+                <select [(ngModel)]="channelName" (click)="getchannel($event)" name="shipapplyrule"
+                  class="form-control custom-select">
+                  <option value="">Select Channel</option>
+                  <option value="{{channel.name}}" *ngFor="let channel of allChannel">{{channel.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-left col-md-3">Shipping Country:</label>
+                  <div class="col-md-4">
+                    <ng-multiselect-dropdown (onSelect)="onItemSelect($event)" [settings]="dropdownSettings_channel"
+                      [placeholder]="'Select Country'" id="channel" name="channel" style="width: 100%;"
+                      [data]="allChannels" ngDefaultControl [(ngModel)]="selectedCountries">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+              </div> -->
+          <!-- <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-left col-md-3">Shipping Postcode:</label>
+                  <div class="col-md-4">
+                    <input type="text" [(ngModel)]="shippostcode" name="shippostcode"
+                      class="form-control form-control-danger" placeholder="Multiple Postcodes by Comma">
+                  </div>
+                </div>
+              </div> -->
+          <!--/span -->
+          <!-- <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-left col-md-3">Sales Channel Shipping Service:</label>
+                  <div class="col-md-4">
+                    <input type="text" [(ngModel)]="shippingServices" name="shipsaleservice"
+                      class="form-control form-control-danger" placeholder="Multiple Shipping Service by Comma">
+                  </div>
+                </div>
+              </div> -->
+          <!--/span-->
+          <!-- <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-left col-md-3">Apply the rule to orders from the following sales
+                    channel:</label>
+                  <div class="col-md-4">
+                    <select [(ngModel)]="shipapplyruleto" (click)="getsaleschannel($event)" name="shipapplyruleto"
+                      class="form-control custom-select">
+                      <option value="draft">Select Channel</option>
+                      <option value="amazon">Amazon</option>
+                      <option value="ebay">Ebay</option>
+                      <option value="etsy">Etsy</option>
+                      <option value="onbuy">OnBuy</option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+          <!-- <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-left col-md-3">SKU:</label>
+                  <div class="col-md-4">
+                    <ng-multiselect-dropdown [settings]="dropdownSettings_supplier" [placeholder]="'Select Sku'"
+                      id="supplier" name="supplier" [data]="skuList" ngDefaultControl [(ngModel)]="selectedSku"
+                      (onFilterChange)="getSkuList($event)" (onSelect)="setSelectedSku($event, selectedSku)">
+                    </ng-multiselect-dropdown>
+        
+                  </div>
+                </div>
+              </div> -->
+          <!-- <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-left col-md-3">Total Order Value (GBP):</label>
+                  <div class="col-md-9 col-lg-9 row">
+                    <div class="col-md-6 col-lg-6">
+                      <input type="text" [(ngModel)]="totalordervalue1" name="totalordervalue1" class="form-control"
+                        placeholder="Min Order Value">
+                    </div>
+                    <div class="col-md-6 col-lg-6 ">
+                      <input type="text" [(ngModel)]="totalordervalue2" name="totalordervalue2" class="form-control"
+                        placeholder="Max Order Value">
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          <!-- <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="control-label text-left col-md-3">Shipping Charge (GBP):</label>
+                  <div class="col-md-9 col-lg-9 row">
+                    <div class="col-md-6 col-lg-6">
+                      <input type="text" class="form-control" placeholder="" [(ngModel)]="minShippingCharge"
+                        name="minShippingCharge">
+                    </div>
+                    <div class="col-md-6 col-lg-6 ">
+                      <input type="text" class="form-control" placeholder="" [(ngModel)]="maxShippingCharge"
+                        name="maxShippingCharge">
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="control-label text-left col-md-3">Item Count:</label>
+              <div class="col-md-9 col-lg-9 row">
+                <div class="col-md-6 col-lg-6">
+                  <select (change)="onitemCountChange($event)" class="form-control custom-select" name="itemCondition"
+                    [(ngModel)]="itemCondition">
+                    <option value="">Please Select Item Condition</option>
+                    <option value="1">Greater than or equal to</option>
+                    <option value="2">Less than or equal to</option>
+                    <option value="3">Equals</option>
+                  </select>
+                </div>
+                <div class="col-md-6 col-lg-6 ">
+                  <input type="text" [(ngModel)]="itemCount" name="itemcountval2" class="form-control"
+                    placeholder="Item Count">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="control-label text-left col-md-3">Order Weight:</label>
+              <div class="col-md-9 col-lg-9 row">
+                <div class="col-md-6 col-lg-6">
+                  <select (change)="onweightConditionChange($event)" class="form-control custom-select"
+                    name="weightCondition" [(ngModel)]="weightCondition">
+                    <option value="">Please Select Order Weight Condition</option>
+                    <option value="1">Greater than or equal to</option>
+                    <option value="2">Less than or equal to</option>
+                    <option value="3">Equals</option>
+                  </select>
+                </div>
+                <div class="col-md-6 col-lg-6 ">
+                  <input type="text" [(ngModel)]="weightValue" name="weightValue" class="form-control"
+                    placeholder="Order Weight">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row col-md-12">
+
+            <!-- <div class="col-md-6">
+              <div class="form-group ">
+                <label class="control-label text-left col-md-3">Rule Name</label>
+                <div class="col-md-9">
+                  <input placeholder="Enter Rule Name" [(ngModel)]="rulename" name="rulename" type="text"
+                    class="form-control">
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="control-label text-left col-md-3">Split Order</label>
+                <div class="col-md-9">
+                  <select (change)="onsplitorderChange($event)" class="form-control custom-select"
+                    name="shippingService" [(ngModel)]="splitorder">
+                    <option value="">Please Select</option>
+                    <!-- <option value="1">Split order into packages of maximum values</option> -->
+                    <option value="2">Split order into packages of maximum weight</option>
+                    <option value="3">Split order into packages of single items</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="custom-control custom-checkbox  mt-4">
+                  <input type="checkbox" class="custom-control-input" name="splitOrder" placeholder="splitOrder"
+                    [(ngModel)]="splitOrder">
+                  <span class="custom-control-label">Auto Split Order</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row col-md-12">
+            <!-- <div class="col-md-6">
+              <div class="form-group ">
+                <label class="custom-control custom-checkbox m-b-0 ml-2 mt-2">
+                  <input type="checkbox" class="custom-control-input" name="username" placeholder="Enable"
+                    [(ngModel)]="enableservice">
+                  <span class="custom-control-label">Enable</span>
+                </label>
+              </div>
+            </div> -->
+            <!--/span-->
+            <!-- <div class="col-md-6">
+              <div class="form-group row">
+                <label class="control-label text-right col-md-3">Country</label>
+                <div class="col-md-9">
+                  <select class="form-control custom-select">
+                    <option>Country 1</option>
+                    <option>Country 2</option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+            <!--/span-->
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 text-right m-b-10">
+          <button type="button" class="btn btn-primary mr-1 " (click)="updateSpliRulz()"><i
+              class="fa fa-times-circle-o"></i>Save </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>

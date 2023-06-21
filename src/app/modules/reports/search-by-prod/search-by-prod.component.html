@@ -1,0 +1,155 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-lg-12 col-md-12 row option-alignment">
+            <div class="col-lg-12 col-sm-12 col-md-12 row" style="padding: 0px">
+              <h4 class="card-title" style="padding-top:5px">Sales by Product Report</h4>
+              <button title="Description" (click)="toggleDesc()" type="button" class="btn-sm m-l-15 btn btn-dark btn-circle"><i
+                class=" fas fa-info"></i> </button>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 " *ngIf="isDescEnables">
+            <div class="card">
+                <div class="card-body  box bg-warning text-center">
+                    <h5 class="text-left text-white">Description : </h5>
+                    <p class="text-left"> This report will show you all sales for each product during the specified time period. All orders for all variants within a product will be added together to generate the values in this report. All orders that were downloaded into Sellershub during the time period will be used to present the data.</p>                
+                </div>
+            </div>
+          </div>
+          <!-- <div class="col-lg-12 col-md-12 ">
+            <div class="card">             
+              <div class="card-body" style="border-left: solid 5px orange">
+                <h5 class="card-title">{{productTitle}}</h5>   
+                <p>During this time period your top product was</p>            
+              </div>
+            </div>
+          </div> -->
+          <div class="col-lg-12 col-sm-12 col-md-12 row">
+            <div class="m-r-15">
+              <app-app-date-picker [isclear]="isclear" lable="From Date" (selectedDate)="selectedFormDate($event)"></app-app-date-picker>
+            </div>
+            <div class="m-r-15">
+              <app-app-date-picker  [isclear]="isclear" lable="To Date" (selectedDate)="selectedToDate($event)"></app-app-date-picker>
+            </div>           
+            
+            <div class="form-group m-l-20 m-t-30">
+              <select class="form-control custom-select" aria-placeholder="filter By" [(ngModel)]="searchBy">
+                <option value="0" disabled>--Select One--</option>
+                <option value="1">SKU</option>
+                <!-- <option value="2">Order ID</option>
+                <option value="3">Channel</option> -->
+              </select>
+            </div>
+            <div class="form-group m-t-30">
+              <!-- <label class="control-label">First Name</label> -->
+              <input type="text" [(ngModel)]="searchValue" id="value" class="form-control" placeholder="Enter Value">
+            </div>
+            <div class="m-l-15 m-t-30" >
+              <button title="Clear" type="button" (click)="clear()" class="btn btn-success btn-circle"><i
+                  class=" fas fa-times-circle"></i> </button>
+              <button title="Search" type="button" (click)="searchField()" class="btn btn-primary btn-circle"><i
+                  class="fas fa-search"></i> </button>
+              <button title="Download" (click)="download()" type="button" class="btn btn-warning btn-circle"><i
+                  class="fas fa-download"></i> </button>
+             
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+              <div class="m-l-15 m-t-30">
+                <!-- <label class="control-label">Page Size</label> -->
+                <select class="form-control custom-select" [(ngModel)]="pageSize" (change)="changePageSize()">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                <!-- <small class="form-control-feedback"> Select your gender </small> -->
+              </div>
+              <!-- <button type="button" data-toggle="modal" data-target="#search-modal"
+                class="btn btn-success d-lg-block m-l-15"><i class=" fas fa-search"></i> Search</button> -->
+            </div>
+          </div>
+          <div class="row m-t-10">
+            <!-- Column -->
+            <div class="col-md-6 col-lg-3 col-xlg-3">
+              <div class="card">
+                <div class="box bg-info text-center">
+                  <h1 class="font-light text-white">{{topsalepercent}}</h1>
+                  <h6 class="text-white">Sales (%)</h6>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-3 col-xlg-3">
+              <div class="card">
+                <div class="box bg-primary text-center">
+                  <h1 class="font-light text-white">{{topsaleValue}}</h1>
+                  <h6 class="text-white">Product sales</h6>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-3 col-xlg-3">
+              <div class="card">
+                <div class="box bg-success text-center">
+                  <h1 class="font-light text-white">{{topproductpercent}}</h1>
+                  <h6 class="text-white">Top Products(%) sales</h6>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+            <div class="col-md-6 col-lg-3 col-xlg-3">
+              <div class="card">
+                <div class="box bg-dark text-center">
+                  <h1 class="font-light text-white">{{topproductunits}}</h1>
+                  <h6 class="text-white">Units</h6>
+                </div>
+              </div>
+            </div>
+            <!-- Column -->
+          </div>
+          <div class="table-responsive">
+            <app-apploader [Uloading]="loading" *ngIf="loading"></app-apploader>
+            <table class="table table color-bordered-table success-bordered-table table-bordered">
+              <thead class="text-center">                
+                <th>SKU 
+                  <!-- <app-filter></app-filter> -->
+                </th>
+                <th>PRODUCT </th>
+                <th>TOTAL</th>
+                <th>TOTAL (%)</th>
+                <th>UNITS</th>
+                <th>UNITS (%)</th>
+                <th>PRICE/UNITS</th>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let report of allReports">
+                  <td>{{report.sku}}</td>
+                  <td><span class="title">{{report.title}}</span></td>
+                  <td>{{report.totalprice}}</td>
+                  <td>{{report.pricePercent}}</td>
+                  <td>{{report.qty}}</td>
+                  <td>{{report.qtyPercent}}</td>
+                  <td>{{report.price}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-12 col-md-12 row">
+            <div class="col-lg-6 col-md-6">
+              <ngb-pagination [collectionSize]="collectionsize" [pageSize]="pageSize" [(page)]="page" [maxSize]="3"
+                [rotate]="true" [boundaryLinks]="true" (pageChange)="changespage(page);">
+              </ngb-pagination>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+             <span>Showing {{pageSize}} of {{collectionsize}} entries</span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
