@@ -28,6 +28,7 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
                             "src/assets/scss/style.min.css",
                             "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
                             "src/assets/css/responsive.dataTables.min.css",
