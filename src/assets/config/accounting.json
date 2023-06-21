@@ -1,0 +1,30 @@
+[
+    {
+      "channel_id": "1",
+      "channel_title": "KashFlow",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubkashflow.png",
+      "channel_link_path": "kashflow-accounting",
+      "channel_link_website": "https://www.kashflow.com/"
+    },
+    {
+      "channel_id": "2",
+      "channel_title": "QuickBooks",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubquickbooks.png",
+      "channel_link_path": "quickbook-accounting",
+      "channel_link_website": "https://www.quickbooks.co.uk/accounting-software/"
+    },
+    {
+      "channel_id": "3",
+      "channel_title": "SAGE ONE",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubsage.png",
+      "channel_link_path": "sage-accounting",
+      "channel_link_website": "https://www.sageone.com/"
+    },
+    {
+      "channel_id": "4",
+      "channel_title": "XERO",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubxero.png",
+      "channel_link_path": "xero-accounting",
+      "channel_link_website": "https://login.xero.com/"
+    }
+  ]

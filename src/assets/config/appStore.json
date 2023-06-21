@@ -1,0 +1,9 @@
+[
+    {
+      "channel_id": "1",
+      "channel_title": "MailChimp",
+      "channel_logo": "https://s3-us-west-1.amazonaws.com/khubweb/web/kartzhubmailchimp.png",
+      "channel_link_path": "mailchimp-appstore",
+      "channel_link_website": "http://eepurl.com/crBFf5"
+    }
+  ]
