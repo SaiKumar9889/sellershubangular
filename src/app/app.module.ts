@@ -38,6 +38,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
 import { EtsyCallbackComponent } from './etsy-callback/etsy-callback.component';
 import { VerifyComponent } from './verify/verify.component';
+import { MaterialModule } from './material.module';
+import {  ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 1,
@@ -81,7 +84,10 @@ const dbConfig: DBConfig  = {
     FormsModule,
     HttpClientModule,
     PerfectScrollbarModule,
-    CustomcomponentsModule,  
+    CustomcomponentsModule, 
+    MaterialModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
     CommonModule,
     // DynamicTempModule,
     ToastrModule.forRoot({
