@@ -2,7 +2,7 @@ import { TrackMenus } from "./menuForTrack"
 import { pages } from "./pages";
 import { subMenus } from "./subMenuTrack";
 
-export class usertrackInput{
+export interface usertrackInput{
     menu:TrackMenus;
     submenu:subMenus;
     page:pages;

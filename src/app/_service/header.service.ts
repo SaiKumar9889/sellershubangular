@@ -26,13 +26,13 @@ export class HeaderService {
     }
 
     getApi(url:any){
-      let authToken = localStorage.getItem("userToken");
+      let authToken = localStorage.getItem("userToken") as string;
       return this.http.get(url, {
         headers: new HttpHeaders().set("Authorization", authToken),
       });
     }
     getExpiredProducts(){
-      let authToken = localStorage.getItem("userToken");
+      let authToken = localStorage.getItem("userToken") as string;
       return this.http.get(environment.expired_products, {
         headers: new HttpHeaders().set("Authorization", authToken),
       });

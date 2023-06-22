@@ -1,4 +1,4 @@
-export class Successreg {
+export interface Successreg {
     orderId: string;
     purchaseDate: string;
     item_id: string;

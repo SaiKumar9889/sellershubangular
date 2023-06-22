@@ -1,4 +1,4 @@
-export class EmailConfig {
+export interface EmailConfig  {
   id: number;
   smtpHost: string;
   smtpPort: number;

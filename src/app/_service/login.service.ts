@@ -21,7 +21,7 @@ export class LoginService {
   }
 
   getUserProfile(){
-    let authToken = localStorage.getItem("userToken");
+    let authToken = localStorage.getItem("userToken") as string;
     return this.httpClient.get(environment.user_profile, {
       headers: new HttpHeaders().set("Authorization", authToken),
     });

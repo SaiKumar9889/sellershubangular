@@ -1,4 +1,4 @@
-export class ProductSuppliers {
+export interface ProductSuppliers {
   defaultSupplier: string;
   name: string;
   supplierCode: string;
@@ -20,7 +20,7 @@ export class ProductSuppliers {
   modifiedDate: any;
 
   packSize: number;
-  isDefault = false;
+  isDefault:boolean;
   selectedCurrency: any;
 
   cortonSize: number;
@@ -32,11 +32,11 @@ export class ProductSuppliers {
   orderHeaderId: any;
   orderLineStatus: any;
   productLineDetailsJSON: any;
-  taxPercentage = 0;
+  taxPercentage:number;
   stockReceivedDate: any;
   receivedQty: any;
   remarks: any;
-  taxPrice = 0;
+  taxPrice:number;
 
 
 

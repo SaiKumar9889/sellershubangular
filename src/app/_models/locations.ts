@@ -1,4 +1,4 @@
-export class WarehouseLocations {
+export interface WarehouseLocations {
     
   warehouseName: string;
   locationdetails: string;

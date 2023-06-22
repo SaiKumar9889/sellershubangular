@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 export class RegistrationService {
 
   constructor(private httpClient: HttpClient) { }
-  postRegistration(body) {
+  postRegistration(body:any) {
     return this.httpClient.post(environment.reg_registration, body);
   }
 }

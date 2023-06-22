@@ -7,7 +7,7 @@ export class DownloadcsvService {
 
   constructor() { }
 
-  downloadCSVFile(data, filename = 'data') {
+  downloadCSVFile(data:any, filename = 'data') {
     let csvData = this.ConvertToCSV(data, Object.keys(data[0]));
     ////console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
@@ -24,7 +24,7 @@ export class DownloadcsvService {
     dwldLink.click();
     document.body.removeChild(dwldLink);
   }
-  ConvertToCSV(objArray, headerList) {
+  ConvertToCSV(objArray:any, headerList:any) {
     let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     let row = 'S.No,';

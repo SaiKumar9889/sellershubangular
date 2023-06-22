@@ -24,7 +24,7 @@ export class PdftoblobService {
     })
 
     let url = base + '?type=blob';
-    let authToken = localStorage.getItem("userToken");
+    let authToken = localStorage.getItem("userToken") as string;
     // return this.http.get(url,{responseType:'blob',headers: new HttpHeaders().set("Authorization", authToken)});
 
     return await this.http.post(url,{urls : filename}, { responseType: 'blob', headers: new HttpHeaders().set("Authorization", authToken) }).toPromise().then((data: any) => {
@@ -40,7 +40,7 @@ export class PdftoblobService {
     const base = environment.s3Image+'?url='+file;
 
     let url = base ;
-    let authToken = localStorage.getItem("userToken");
+    let authToken = localStorage.getItem("userToken") as string;
     // return this.http.get(url,{responseType:'blob',headers: new HttpHeaders().set("Authorization", authToken)});
 
     return await this.http.post(url,{}, { responseType: 'blob', headers: new HttpHeaders().set("Authorization", authToken) }).toPromise().then((data: any) => {
@@ -56,7 +56,7 @@ export class PdftoblobService {
     const base = environment.s3Image+'?url='+file;
 
     let url = base ;
-    let authToken = localStorage.getItem("userToken");
+    let authToken = localStorage.getItem("userToken") as string;
     // return this.http.get(url,{responseType:'blob',headers: new HttpHeaders().set("Authorization", authToken)});
 
     return await this.http.post(url,{}, { responseType: 'blob', headers: new HttpHeaders().set("Authorization", authToken) }).toPromise().then((data: any) => {
@@ -74,7 +74,7 @@ export class PdftoblobService {
 
 
     let url = base + '?code=&courierId=' + carrierId;
-    let authToken = localStorage.getItem("userToken");
+    let authToken = localStorage.getItem("userToken") as string;
     // return this.http.get(url,{responseType:'blob',headers: new HttpHeaders().set("Authorization", authToken)});
 
     return await this.http.get(url, {headers: new HttpHeaders().set("Authorization", authToken) }).toPromise().then((data: any) => {
@@ -100,7 +100,7 @@ export class PdftoblobService {
     formData.append("urls", filename.join(","));
     formData.append("file", fileob);
     let url = base;
-    let authToken = localStorage.getItem("userToken");
+    let authToken = localStorage.getItem("userToken") as string;
     // return this.http.get(url,{responseType:'blob',headers: new HttpHeaders().set("Authorization", authToken)});
 
     return await this.http.post(url, formData, { responseType: 'blob', headers: new HttpHeaders().set("Authorization", authToken) }).toPromise().then((data: any) => {
