@@ -8,8 +8,30 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+  font-family: Poppins, sans-serif;
+  font-weight: 300;
+  line-height: 1.2;
+  color: inherit;
+}
 .card {
   background-color: #fff;
   border: 0 solid transparent;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  height: 100%;
+}
+h4 {
+  font-size: 1.125rem !important;
 }

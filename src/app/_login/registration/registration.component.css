@@ -31,52 +31,52 @@ Login register and recover password Page
 ******************/
 
 .login-register {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-blend-mode: overlay;
-    height: 100%;
-    width: 100%;
-    padding: 5% 0;
-    position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-blend-mode: overlay;
+  height: 100%;
+  width: 100%;
+  padding: 5% 0;
+  position: fixed;
 }
-.images{
-    height: 100%;
-    width: 100%;
-    margin: 0px;
+.images {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
 }
 .login-box {
-    width: 100%;
-    height: 100%;
-    margin: 0px;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
 }
 
 .login-box .footer {
-    width: 100%;
-    left: 0px;
-    right: 0px;
+  width: 100%;
+  left: 0px;
+  right: 0px;
 }
 
 .login-box .social {
-    display: block;
-    margin-bottom: 30px;
+  display: block;
+  margin-bottom: 30px;
 }
 
 #recoverform {
-    display: none;
+  display: none;
 }
 
 .login-sidebar {
-    padding: 0px;
-    margin-top: 0px;
+  padding: 0px;
+  margin-top: 0px;
 }
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .login-sidebar .login-box {
-    right: 0px;
-    position: absolute;
-    height: 100%;
+  right: 0px;
+  position: absolute;
+  height: 100%;
 }
 /* .hint {
     color: #999;
@@ -108,16 +108,22 @@ Login register and recover password Page
 .mt-10 {
   margin-top: -10px !important;
 }   */
-:host ::ng-deep .multiselect-dropdown .selected-item{
-    max-width: 200px!important;
-  }
-  .btn-gradient{
-    background-color: #FF8A00;
+:host ::ng-deep .multiselect-dropdown .selected-item {
+  max-width: 200px !important;
 }
-.text-gradient{
-    color: #FF8A00;
+.btn-gradient {
+  background-color: #ff8a00;
 }
-.padding{
-    padding-left: 0px;
-    padding-right: 0px;
+.text-gradient {
+  color: #ff8a00;
+}
+.padding {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.card {
+  padding: 1.25rem;
+}
+.text-center {
+  text-align: center;
 }
