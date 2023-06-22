@@ -85,8 +85,17 @@ Login register and recover password Page
 }
 .btn-gradient{
     background-color: #FF8A00;
+    width: 100%;
+    border-radius: 60px;
 }
 .padding{
     padding-left: 0px;
     padding-right: 0px;
 }
+.card {
+    padding: 1.25rem;
+    height: 630px;
+  }
+  .user{
+    width: 100%;
+  }
