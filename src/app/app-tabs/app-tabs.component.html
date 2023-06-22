@@ -1,0 +1,74 @@
+<div class="container-fluid" style="margin-top: 2px">
+  <div class="col-md-12 col-lg-12 col-sm-12">
+    <div class="card" style="margin-bottom: 0px">
+      <div class="card-body p-b-0 card-body-tabs">
+        <div *ngIf="selectedTabs.length > 0">
+          <ul class="nav nav-tabs customtab2" role="tablist">
+            <li
+              class="nav-item"
+              *ngFor="let tab of selectedTabs"
+              (click)="makeActive(tab)"
+            >
+              <a
+                class="nav-link"
+                [ngClass]="tab.active ? 'active' : 'non-active'"
+                data-toggle="tab"
+                [href]="'#' + tab.id"
+                role="tab"
+              >
+                <!-- <span  class="hidden-sm-up"><i class="ti-user"></i></span>  -->
+                <span class="hidden-xs-down"> {{ tab.titlename }} </span>
+                <span class="hidden-sm-up"
+                  ><i (click)="closeTab(tab)" class="ti-close"></i
+                ></span>
+              </a>
+            </li>
+            <li class="nav-item dropdown" *ngIf="allSubscribedTabs.length > 5">
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                href="javascript:void(0)"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="hidden-sm-up"
+                  ><i class="ti-layout-grid4-alt"></i
+                ></span>
+                <span class="hidden-xs-down"></span>
+              </a>
+              <div class="dropdown-menu">
+                <a
+                  class="dropdown-item"
+                  (click)="rewriteTab(tab)"
+                  *ngFor="let tab of hidedTabs"
+                  id="{{ tab.id }}"
+                  href="#{{ tab.id }}"
+                  role="tab"
+                  data-toggle="tab"
+                  aria-controls="dropdown1"
+                  >{{ tab.titlename }}</a
+                >
+                <!-- <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab"
+                  aria-controls="dropdown2">@mdo</a> -->
+              </div>
+            </li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <ng-container *ngFor="let tab of selectedTabs">
+              <!-- <ng-container *ngIf="tab.active"> -->
+              <div
+                class="tab-pane"
+                [ngClass]="tab.active ? 'active' : 'non-active'"
+                [id]="tab.id"
+                role="tabpanel"
+              ></div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <app-apploader [Uloading]="loading"></app-apploader> -->
