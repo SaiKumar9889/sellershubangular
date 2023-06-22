@@ -94,8 +94,14 @@ Login register and recover password Page
 }
 .card {
     padding: 1.25rem;
-    height: 630px;
+    height: 94vh;
   }
   .user{
     width: 100%;
   }
+  .h3, h3 {
+    font-size: 1.5rem;
+}
+.mt{
+    margin-top: 20px;
+}
