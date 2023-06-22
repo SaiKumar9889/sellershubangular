@@ -17,9 +17,10 @@ export class AppTabsComponent implements OnInit {
   subscription: Subscription;
   subscribedTabs: any;
   constructor(private datasharingService: DatasharingService) {
+    console.log("In");
     this.subscription = this.datasharingService.salesHubTabs.subscribe(
       (data) => {
-        ////console.log('In App Tabs', data);
+        console.log("In App Tabs", data);
         // this.selectedTabs = data;
         this.allSubscribedTabs = data;
         this.tabsArrangmentI(this.allSubscribedTabs);
@@ -31,8 +32,10 @@ export class AppTabsComponent implements OnInit {
     if (data.length > 5) {
       this.selectedTabs = data.slice(0, 5);
       this.hidedTabs = data.slice(5, this.allSubscribedTabs.length);
+      console.log(this.selectedTabs);
     } else {
       this.selectedTabs = data;
+      console.log(this.selectedTabs);
     }
   }
 
@@ -70,7 +73,6 @@ export class AppTabsComponent implements OnInit {
     this.subscribedTabs = this.allSubscribedTabs.find((stab) => {
       stab.id === tab.id;
     });
-    console.log(this.subscribedTabs);
     this.subscribedTabs.active = true;
   }
 }

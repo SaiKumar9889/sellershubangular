@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { AppTabsComponent } from "./app-tabs.component";
-import { Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
   {
@@ -18,6 +18,6 @@ const routes: Routes = [
 @NgModule({
   exports: [AppTabsComponent],
   declarations: [AppTabsComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule.forChild(routes)],
 })
 export class AppTabsModule {}
