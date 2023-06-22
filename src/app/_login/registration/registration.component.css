@@ -41,7 +41,7 @@ Login register and recover password Page
   position: fixed;
 }
 .images {
-  height: 100%;
+  height: 1080px;
   width: 100%;
   margin: 0px;
 }
@@ -113,6 +113,8 @@ Login register and recover password Page
 }
 .btn-gradient {
   background-color: #ff8a00;
+  width: 100%;
+  border-radius: 30px;
 }
 .text-gradient {
   color: #ff8a00;
@@ -126,4 +128,13 @@ Login register and recover password Page
 }
 .text-center {
   text-align: center;
+}
+mat-form-field {
+  width: 100%;
+}
+.text-center a {
+  text-decoration: none;
+}
+.text-center b {
+  font-weight: 500 !important;
 }

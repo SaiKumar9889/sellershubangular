@@ -4,13 +4,258 @@
   </div>
   <div fxFlex="40">
     <div class="card">
-      <h4 class="text-gradient text-center" style="font-weight: 600">
-        BEST MULTICHANNEL ECOMMERCE SOFTWARE
-      </h4>
-      <h4 class="mt-2 text-center" style="font-weight: 400">
-        "Sellershub has changed the world of Multichannel Selling forever in so
-        many ways, start your journey with us"
-      </h4>
+      <form class="form-horizontal" id="loginform" autocomplete="off">
+        <h4 class="text-gradient text-center" style="font-weight: 600">
+          BEST MULTICHANNEL ECOMMERCE SOFTWARE
+        </h4>
+        <h4 class="mt-2 text-center" style="font-weight: 400">
+          "Sellershub has changed the world of Multichannel Selling forever in
+          so many ways, start your journey with us"
+        </h4>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+          <div fxFlex="46">
+            <mat-form-field appearance="outline" class="fifty">
+              <mat-label>First Name</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="name"
+                type="text"
+                name="name"
+                id="name"
+                class="form-control"
+                placeholder="First Name"
+                required=""
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="46">
+            <mat-form-field appearance="outline" class="fifty">
+              <mat-label>Last Name</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="lastname"
+                type="text"
+                name="name"
+                id="name"
+                class="form-control"
+                placeholder="Last Name"
+                required=""
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <mat-form-field appearance="outline" class="hundred">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="email"
+                email="true"
+                type="email"
+                name="email"
+                id="email"
+                class="form-control"
+                placeholder="Email"
+                required=""
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="46">
+            <mat-form-field appearance="outline" class="fifty">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="password"
+                type="password"
+                name="password"
+                id="password"
+                class="form-control"
+                placeholder="Password"
+                required=""
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="46">
+            <mat-form-field appearance="outline" class="fifty">
+              <mat-label>Phone Number</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="phonenumber"
+                name="phonenumber"
+                class="form-control"
+                type="text"
+                required=""
+                placeholder="Contact Number"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <mat-form-field appearance="outline" class="hundred">
+              <mat-label>Company Name</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="companyname"
+                name="Company Name"
+                class="form-control"
+                type="text"
+                required=""
+                placeholder="Company Name"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <mat-form-field appearance="outline" class="hundred">
+              <mat-label>Vat Number</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="vat"
+                name="VAT Number"
+                class="form-control"
+                type="text"
+                required=""
+                placeholder="VAT Number"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <mat-select
+                [(ngModel)]="country"
+                (change)="onCountryChange()"
+                name="contactnumber"
+                required=""
+              >
+                <mat-option
+                  *ngFor="let row of countryList"
+                  [value]="row.country_code"
+                  >{{ row.name }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <mat-form-field appearance="outline">
+              <mat-label>Select the Channel You have:</mat-label>
+              <mat-select
+                [(ngModel)]="selectedChannle"
+                (selectionChange)="onItemSelect($event)"
+                name="channel"
+                multiple
+                required=""
+              >
+                <mat-option *ngFor="let row of allChannels" [value]="row.id">{{
+                  row.display
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <mat-form-field appearance="outline">
+              <mat-label>Select the Couriers You have:</mat-label>
+              <mat-select
+                [(ngModel)]="selectedCourier"
+                (selectionChange)="onItemSelectCourior($event)"
+                name="courier"
+                multiple
+                required=""
+              >
+                <mat-option *ngFor="let row of allCourier" [value]="row.id">{{
+                  row.display
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="46">
+            <mat-form-field appearance="outline" class="fifty">
+              <mat-label>Number of Orders Per Month</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="orders"
+                name="orders"
+                class="form-control"
+                type="text"
+                required=""
+                placeholder="Number of Orders Per Month"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="46">
+            <mat-form-field appearance="outline" class="fifty">
+              <mat-label>No. of SKU's</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="sku"
+                name="sku"
+                class="form-control"
+                type="text"
+                required=""
+                placeholder="No. of SKU's"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <mat-form-field appearance="outline" class="hundred">
+              <mat-label>Promotional Code</mat-label>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="promotioncode"
+                name="pramotioncode"
+                class="form-control"
+                type="text"
+                required=""
+                placeholder=" Promotional Code"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="97">
+            <button
+              mat-raised-button
+              (click)="registerNewUser()"
+              class="btn-gradient"
+              type="submit"
+            >
+              GET STARTED NOW
+            </button>
+          </div>
+          <div fxFlex="97" style="margin-top: 15px">
+            <div class="col-sm-12 text-center" style="font-size: 14px">
+              Already have an account?
+              <a
+                href="javascript:void(0)"
+                (click)="gotToSignIn()"
+                class="text-info m-l-5"
+                ><b>Sign in to Sellershub </b></a
+              >
+            </div>
+          </div>
+          <div fxFlex="97" style="margin-top: 15px">
+            <div class="text-center">
+              You can upgrade, downgrade or cancel your plan at any time.
+            </div>
+          </div>
+          <div fxFlex="97" style="margin-top: 15px">
+            <div class="col-sm-12 text-center">
+              By clicking on 'Get Started Now' you are accepting our terms of
+              usage and
+              <a
+                href="http://www.sellershub.io/privacy-policy/"
+                class="text-info m-l-5"
+                ><b>privacy policy</b></a
+              >
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
