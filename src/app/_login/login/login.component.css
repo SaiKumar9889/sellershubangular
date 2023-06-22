@@ -105,3 +105,13 @@ Login register and recover password Page
 .mt{
     margin-top: 20px;
 }
+.text-center a {
+    text-decoration: none;
+  }
+  .text-center b {
+    font-weight: 500 !important;
+  }
+  .text-muted{
+    text-decoration: none;
+    color: #6c757d!important;
+  }
