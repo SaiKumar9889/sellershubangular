@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { AppTabsComponent } from "./app-tabs.component";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "../material.module";
-
+import { InventoryModule } from "../modules/inventory/inventory.module";
 const routes: Routes = [
   {
     path: "",
@@ -19,6 +19,11 @@ const routes: Routes = [
 @NgModule({
   exports: [AppTabsComponent],
   declarations: [AppTabsComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), MaterialModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MaterialModule,
+    InventoryModule,
+  ],
 })
 export class AppTabsModule {}

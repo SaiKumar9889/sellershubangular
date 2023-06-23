@@ -73,7 +73,18 @@
                 [ngClass]="tab.active ? 'active' : 'non-active'"
                 [id]="tab.id"
                 role="tabpanel"
-              ></div>
+              >
+                <div>
+                  <div [ngSwitch]="tab.id">
+                    <div *ngSwitchCase="'stock_view'">
+                      <app-stock-overview></app-stock-overview>
+                    </div>
+                    <div *ngSwitchDefault>
+                      <p>No one is matched</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </ng-container>
           </div>
         </div>

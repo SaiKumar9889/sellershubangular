@@ -1,0 +1,338 @@
+<div fxLayout="row wrap" fxLayoutAlign="end center">
+  <div>
+    <mat-form-field appearance="outline" style="margin-right: 12px">
+      <mat-label>Search By</mat-label>
+      <mat-select [(ngModel)]="searchBy" id="searchname">
+        <mat-option value="0">Search By</mat-option>
+        <mat-option value="2">Sku</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="outline" style="margin-right: 12px">
+      <mat-label>Enter Search Value</mat-label>
+      <input matInput [(ngModel)]="searchValue" id="pass3" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div>
+    <button
+      style="margin-bottom: 18px; margin-right: 12px"
+      (click)="reset(); auditTrack(2)"
+      type="button"
+      class="btn btn-warning"
+    >
+      <i class="fa fa-plus-circle"></i> Reset
+    </button>
+  </div>
+  <div style="margin-right: 12px">
+    <select
+      style="margin-bottom: 18px"
+      (change)="changespage(pageSize)"
+      class="form-control custom-select"
+      [(ngModel)]="pageSize"
+    >
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+    </select>
+  </div>
+</div>
+<div class="m-l-5">
+  <div class="table-responsive">
+    <table
+      class="table table color-bordered-table success-bordered-table table-bordered"
+    >
+      <thead class="text-center">
+        <th>SKU</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>QTY</th>
+        <th>Supplier</th>
+        <th>Order History</th>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let prod of allStock">
+          <td>
+            <span class="sku">{{ prod.sku }}</span>
+          </td>
+          <td>
+            <span class="title">{{ prod.title }}</span>
+          </td>
+          <td>{{ prod.sellingPrice }}</td>
+          <td>{{ prod.qty }}</td>
+          <td>{{ prod.supplier }}</td>
+          <td>
+            <i
+              title="view"
+              style="cursor: pointer; color: #fec107"
+              class="fas fa-eye fa-lg"
+              (click)="orderHistory(prod)"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row col-lg-12 col-md-12">
+    <div class="col-lg-6 col-md-6">
+      <span
+        >Showing {{ pageSize <= collectionsize ? pageSize : collectionsize }} of
+        {{ collectionsize }} entries</span
+      >
+    </div>
+  </div>
+</div>
+
+<div
+  id="search-modal"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  style="display: none"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2
+          class="modal-title"
+          style="padding-left: 30%; color: rgb(255 165 0); font-weight: 400"
+        >
+          Search Criteria
+        </h2>
+
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="modalclosed()"
+          aria-hidden="true"
+        >
+          ×
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <select
+                class="form-control custom-select"
+                aria-placeholder="filter By"
+              >
+                <option value="">Male</option>
+                <option value="">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 row">
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4">
+            <div class="form-group">
+              <label class="control-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="John doe"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn waves-effect waves-light btn-success">
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="order-history-modal"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  style="display: none"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2
+          class="modal-title"
+          style="padding-left: 30%; color: rgb(255 165 0); font-weight: 400"
+        >
+          Order Details
+        </h2>
+
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="modalclosed()"
+          aria-hidden="true"
+        >
+          ×
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table
+            class="table table color-bordered-table success-bordered-table"
+          >
+            <thead>
+              <th>Date</th>
+              <th>Order Id</th>
+              <th>Out</th>
+              <th>Channel</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of orderDetails">
+                <td>{{ order.purchaseDate | date : "dd MMM yyyy" }}</td>
+                <td>{{ order.orderId }}</td>
+                <td>{{ order.title }}</td>
+                <td>{{ order.channel }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger waves-effect"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
