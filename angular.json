@@ -25,15 +25,28 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/scss/style.min.css",
+              "src/assets/css/responsive.dataTables.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
+              "src/assets/morisjs/morris.css",
+              "src/assets/jsv2/vectormap/jquery-jvectormap-2.0.2.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/jsv2/perfect-scrollbar.jquery.min.js",
+              "src/assets/jsv2/waves.js",
+              "src/assets/jsv2/custom.min.js",
+              "node_modules/sweetalert2/dist/sweetalert2.all.min.js",
+              "src/assets/morisjs/morris.min.js",
+              "src/assets/jsv2/vectormap/jquery-jvectormap-2.0.2.min.js",
+              "src/assets/jsv2/vectormap/jquery-jvectormap-world-mill-en.js",
+              "src/assets/jsv2/jquery.PrintArea.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -93,10 +106,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"

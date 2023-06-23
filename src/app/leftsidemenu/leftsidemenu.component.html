@@ -8,11 +8,7 @@
       <mat-panel-title>
         <div fxLayout="row" fxLayoutAlign="start center">
           <a *ngIf="!menu.haschildrens">
-            <span>
-              <img
-                [src]="menu.icon"
-                class="center-xs padding borderbootom hover"
-            /></span>
+            <i [class]="menu.icon"></i>
             <span matTooltip="{{ menu.menuname }}">{{ menu.menuname }}</span>
             <span *ngIf="menu.isPremium" class="label-loc label-prime"
               >Premium</span
