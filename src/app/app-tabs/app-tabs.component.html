@@ -1,5 +1,5 @@
-<div class="container-fluid" style="margin-top: 2px">
-  <div class="col-md-12 col-lg-12 col-sm-12">
+<div fxLayout="row wrap" fxLayoutAlign="center" style="margin-top: 2px">
+  <div fxFlex="94">
     <div class="card" style="margin-bottom: 0px">
       <div class="card-body p-b-0 card-body-tabs">
         <div *ngIf="selectedTabs.length > 0">
@@ -49,9 +49,19 @@
                   aria-controls="dropdown1"
                   >{{ tab.titlename }}</a
                 >
+
                 <!-- <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" role="tab" data-toggle="tab"
                   aria-controls="dropdown2">@mdo</a> -->
               </div>
+              <mat-menu
+                #menu="matMenu"
+                (click)="rewriteTab(tab)"
+                *ngFor="let tab of hidedTabs"
+                id="{{ tab.id }}"
+                [routerLink]="tab.id"
+              >
+                <button mat-menu-item>{{ tab.titlename }}</button>
+              </mat-menu>
             </li>
           </ul>
           <!-- Tab panes -->
