@@ -34,7 +34,8 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "src/assets/morisjs/morris.css",
-              "src/assets/jsv2/vectormap/jquery-jvectormap-2.0.2.css"
+              "src/assets/jsv2/vectormap/jquery-jvectormap-2.0.2.css",
+              "node_modules/material-design-icons/iconfont/material-icons.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -86,7 +87,7 @@
           "options": {
             "browserTarget": "sellers-hub:build",
             "proxyConfig": "proxy.config.js"
-        },
+          },
           "configurations": {
             "production": {
               "browserTarget": "sellershubangularui:build:production"
