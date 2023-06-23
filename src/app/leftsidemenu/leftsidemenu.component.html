@@ -1,1 +1,99 @@
-<p>leftsidemenu works!</p>
+<mat-accordion>
+  <mat-expansion-panel
+    *ngFor="let menu of allMenus"
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header (click)="setMenuName(menu)">
+      <mat-panel-title>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <a *ngIf="!menu.haschildrens">
+            <span>
+              <img
+                [src]="menu.icon"
+                class="center-xs padding borderbootom hover"
+            /></span>
+            <span matTooltip="{{ menu.menuname }}">{{ menu.menuname }}</span>
+            <span *ngIf="menu.isPremium" class="label-loc label-prime"
+              >Premium</span
+            >
+            <span *ngIf="menu.isComingSoon" class="label-loc label-comingsoon"
+              >Coming soon</span
+            >
+            <span *ngIf="menu.isBeta" class="label-loc label-comingsoon"
+              >Beta</span
+            >
+          </a>
+          <a *ngIf="menu.haschildrens">
+            <span>
+              <img
+                [src]="menu.icon"
+                class="center-xs padding borderbootom hover"
+            /></span>
+            <span *ngIf="menu.isPremium" class="label-loc label-prime"
+              >Premium</span
+            >
+            <span *ngIf="menu.isComingSoon" class="label-loc label-comingsoon"
+              >Coming soon</span
+            >
+            <span *ngIf="menu.isBeta" class="label-loc label-comingsoon"
+              >Beta</span
+            >
+            <span matTooltip="{{ menu.menuname }}">{{ menu.menuname }}</span>
+          </a>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+
+    <div fxLayout="column" *ngIf="menu.chaildrens && menu.haschildrens">
+      <mat-accordion>
+        <div *ngFor="let cmenu of menu.chaildrens">
+          <mat-expansion-panel hideToggle style="box-shadow: none !important">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="center center"
+                  style="border-left: 1px solid #f0eded"
+                  [ngClass]="{ active: menu.pmenu === selectedMenuName }"
+                >
+                  <span>
+                    <img
+                      [src]="cmenu.icon"
+                      class="center-xs padding borderbootom hover"
+                  /></span>
+                  <span
+                    *ngIf="cmenu.isPremium"
+                    class="label-loc-inner label-prime"
+                    >Premium</span
+                  >
+                  <span
+                    *ngIf="cmenu.isComingSoon"
+                    class="label-loc-inner label-comingsoon"
+                    >Coming soon</span
+                  >
+                  <span
+                    *ngIf="cmenu.isBeta"
+                    class="label-loc-inner label-comingsoon"
+                    >Beta</span
+                  >
+                  <a
+                    *ngIf="
+                      status == 'ACTIVE' ||
+                      status == 'active' ||
+                      status == 'Active'
+                    "
+                    (click)="setMenuName(cmenu)"
+                    >{{ cmenu.menuname }}</a
+                  >
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </div>
+      </mat-accordion>
+    </div>
+  </mat-expansion-panel>
+  <br />
+</mat-accordion>

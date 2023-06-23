@@ -1,0 +1,134 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.is-mobile .toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 9;
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  z-index: 9;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.app-name {
+  margin-left: 8px;
+}
+
+.sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+           causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.is-mobile .sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+           `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+.is-hide {
+  display: none !important;
+}
+
+.active-link {
+  color: white !important;
+  border-radius: 6px;
+  width: 90%;
+  margin-left: 4px;
+}
+
+.active-link a {
+  font-size: 13px !important;
+}
+
+.mat-toolbar {
+  height: 68px !important;
+}
+
+.horizontal-nav {
+  border-radius: 3px;
+}
+
+.logo {
+  text-align: center;
+  font-weight: 700;
+  color: #727c87;
+  border-right: 1px solid rgba(#727c87, 0.4);
+  padding: 8px 16px 8px;
+  width: 100px;
+}
+
+.nav-item {
+  padding: 8px 16px 8px;
+}
+.nav-item:not(:last-child) {
+  border-right: 1px solid rgba(#727c87, 0.2);
+}
+
+.logo,
+.nav-item {
+  font-size: 20px;
+}
+
+.logo,
+.nav-item,
+.vertical-align-middle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.title {
+  margin: 24px 0 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #999;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.display {
+  display: none !important;
+}
+
+div.scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
+  max-width: 92%;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0px !important;
+}
+
+.padding-top-bottom {
+  padding: 12px 2px;
+}

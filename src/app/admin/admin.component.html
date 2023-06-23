@@ -1,11 +1,19 @@
 <div [ngClass]="getTheme()">
   <div id="main-wrapper">
-    <!-- <app-header></app-header> -->
-    <app-leftsidemenu></app-leftsidemenu>
-    <!-- <app-rightside></app-rightside> -->
-    <div class="page-wrapper">
-      <router-outlet></router-outlet>
+    <div fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="100">
+        <!-- <app-header></app-header> -->
+      </div>
+      <div fxFlex="20">
+        <app-leftsidemenu></app-leftsidemenu>
+      </div>
+      <div fxFlex="80">
+        <!-- <app-rightside></app-rightside> -->
+        <div class="page-wrapper">
+          <router-outlet></router-outlet>
+        </div>
+        <!-- <app-footer></app-footer> -->
+      </div>
     </div>
-    <!-- <app-footer></app-footer> -->
   </div>
 </div>
