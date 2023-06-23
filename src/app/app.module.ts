@@ -13,12 +13,14 @@ import { AppInterceptorService } from './_service/app-interceptor.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminComponent } from './admin/admin.component';
 import { LeftsidemenuComponent } from './leftsidemenu/leftsidemenu.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    LeftsidemenuComponent
+    LeftsidemenuComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
