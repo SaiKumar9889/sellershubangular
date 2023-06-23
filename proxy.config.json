@@ -1,0 +1,17 @@
+{
+  "/user": {
+    "target": "https://team.sellershub.io",
+    "secure": false,
+    "timeout": 360000
+  },
+  "/channelintegration/ebaytoken": {
+    "target": "https://team.sellershub.io",
+    "secure": true,
+    "timeout": 360000
+  },
+  "/generateetsytoken": {
+    "target": "https://team.sellershub.io",
+    "secure": true,
+    "timeout": 360000
+  }
+}

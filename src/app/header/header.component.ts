@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { ManageUsersService } from '../modules/user-manage/services/manage-users.service';
+import { ManageUsersService } from '../modules/user-manage/services/manage-users.service';
 import { CreateTicket } from '../_models/create-ticket';
 import { Menu } from '../_models/Menu';
 import { AllMenuTabs } from '../_models/Tabs';
@@ -9,7 +9,7 @@ import { DatasharingService } from '../_service/datasharing.service';
 import { LoginService } from '../_service/login.service';
 import { ToasterService } from '../_service/toaster.service';
 import { HeaderService } from '../_service/header.service';
-// import { SalsesOrdersService } from '../modules/orders/services/salses-orders.service';
+import { SalsesOrdersService } from '../modules/orders/services/salses-orders.service';
 declare var $: any;
 @Component({
   selector: 'app-header',
@@ -24,9 +24,9 @@ export class HeaderComponent implements OnInit {
   allProducts: any = [];
   prod = true;
   order = false;
-  constructor( private toasterService: ToasterService,
+  constructor(private manageUsersService:ManageUsersService, private toasterService: ToasterService,
     private router: Router, private datasharingService: DatasharingService,
-    private loginService: LoginService, private headerService: HeaderService) { }
+    private loginService: LoginService, private headerService: HeaderService, private userService: ManageUsersService,private salsesOrdersService: SalsesOrdersService) { }
   ngOnInit(): void {
     this.headerService.getExpiredProducts().subscribe(result => {
       console.log(result);
@@ -47,24 +47,24 @@ export class HeaderComponent implements OnInit {
   allSubscriptions: any = []; customerSubscriptions: any = []; selectedSubscriptionIndex = -1;status:any;
   expiringDays: any = ''; date: any = new Date();
   getSubscriptions() {
-    // this.userService.getAllSubscription().subscribe((res: any) => {
-    //   this.selectedSubscriptionIndex = -1;
-    //   this.allSubscriptions = res;
-    //   // console.log(this.allSubscriptions)
-    //   this.customerSubscriptions = res?.customerSubscriptions;
+    this.userService.getAllSubscription().subscribe((res: any) => {
+      this.selectedSubscriptionIndex = -1;
+      this.allSubscriptions = res;
+      // console.log(this.allSubscriptions)
+      this.customerSubscriptions = res?.customerSubscriptions;
       
-    //   // console.log(this.customerSubscriptions)
-    //   if (this.allSubscriptions.trialSubscriber == true && this.customerSubscriptions[0].endDate >= this.date) {
-    //     const date1: any = this.date;
-    //     const date2: any = new Date(this.customerSubscriptions[0].endDate);
-    //     const diffTime = Math.abs(date2 - date1);
-    //     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    //     this.expiringDays = diffDays + " days";
-    //     console.log(this.expiringDays)
-    //   }
-    // }, (error: any) => {
-    //   console.log(error)
-    // });
+      // console.log(this.customerSubscriptions)
+      if (this.allSubscriptions.trialSubscriber == true && this.customerSubscriptions[0].endDate >= this.date) {
+        const date1: any = this.date;
+        const date2: any = new Date(this.customerSubscriptions[0].endDate);
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        this.expiringDays = diffDays + " days";
+        console.log(this.expiringDays)
+      }
+    }, (error: any) => {
+      console.log(error)
+    });
   };
   OpenSubscription() {
     let menu = { icon: '', pmenu: '', menuname: '', routerLink: '', haschildrens: false, tab: AllMenuTabs.suscrption };
@@ -85,18 +85,18 @@ export class HeaderComponent implements OnInit {
   name: string = "";
   email: string = "";
   getProfileName() {
-    // this.manageUsersService.getUsersData().subscribe((res: any) => {
-    //   console.log(res);
-    //   let userProfile = res.emailAddress == localStorage.getItem("userLoginEmail")
-    //   if (userProfile && userProfile[0]) {
-    //     localStorage.setItem("userRoles", userProfile[0].roles);
-    //   } else {
-    //     localStorage.setItem("userRoles", null);
-    //   }
-    //   this.name = res?.users[0].name;
-    //   this.email = res?.emailaddress
-    //   ;
-    // })
+    this.manageUsersService.getUsersData().subscribe((res: any) => {
+      console.log(res);
+      let userProfile:any = res.emailAddress == localStorage.getItem("userLoginEmail")
+      if (userProfile && userProfile[0]) {
+        localStorage.setItem("userRoles", userProfile[0].roles);
+      } else {
+        localStorage.setItem("userRoles", '');
+      }
+      this.name = res?.users[0].name;
+      this.email = res?.emailaddress
+      ;
+    })
   }
 
   logout() {
@@ -132,7 +132,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/announcments/messages/']);
   }
   addTab(tabname: string) {
-    let menu: Menu;
+    let menu: Menu=new Menu();
     switch (tabname) {
       case 'My Account':
         menu = { icon: '', pmenu: '', menuname: '', routerLink: '', haschildrens: false, tab: AllMenuTabs.my_account };
@@ -157,7 +157,7 @@ export class HeaderComponent implements OnInit {
         break;
     };
 
-    // this.datasharingService.addtoTab(menu);
+    this.datasharingService.addtoTab(menu);
   }
 
   openTicketModal() {
@@ -181,9 +181,9 @@ export class HeaderComponent implements OnInit {
     this.createTicket.query = '';
   }
   getDefaultData() {
-    // this.salsesOrdersService.getAllOrders().subscribe((sales_orders: any) => {
-    //   console.log(sales_orders);
-    // });
+    this.salsesOrdersService.getAllOrders().subscribe((sales_orders: any) => {
+      console.log(sales_orders);
+    });
   }
   expprodmodalclosed(){
     $('#expired-products-modal').modal('hide');
