@@ -1,0 +1,327 @@
+<div fxLayout="row wrap" fxLayoutAlign="start center">
+  <div fxFlex="100">
+    <mat-card>
+      <div fxLayout="row wrap" fxLayoutAlign="start center">
+        <div fxFlex="100">
+          <div fxLayout="row wrap" fxLayoutAlign="start center">
+            <div>
+              <h4 class="card-title" style="padding-top: 15px">
+                Sales by Product Report
+              </h4>
+            </div>
+            <div>
+              <button
+                title="Description"
+                (click)="toggleDesc()"
+                type="button"
+                class="btn-sm m-l-15 btn btn-dark btn-circle"
+              >
+                <i class="fas fa-info"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="100" *ngIf="isDescEnables">
+          <mat-card>
+            <h5 class="text-left text-white">Description :</h5>
+            <p class="text-left">
+              This report will show you all sales for each product during the
+              specified time period. All orders for all variants within a
+              product will be added together to generate the values in this
+              report. All orders that were downloaded into Sellershub during the
+              time period will be used to present the data.
+            </p>
+          </mat-card>
+        </div>
+        <div fxFlex="18">
+          <app-app-date-picker
+            [isclear]="isclear"
+            lable="From Date"
+            (selectedDate)="selectedFormDate($event)"
+          ></app-app-date-picker>
+        </div>
+        <div fxFlex="18">
+          <app-app-date-picker
+            [isclear]="isclear"
+            lable="To Date"
+            (selectedDate)="selectedToDate($event)"
+          ></app-app-date-picker>
+        </div>
+        <div fxFlex="18">
+          <mat-form-field appearance="outline">
+            <mat-label>filter By</mat-label>
+            <mat-select [(ngModel)]="searchBy">
+              <mat-option value="0" disabled> --Select One-- </mat-option>
+              <mat-option value="1"> SKU </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="18">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter Value</mat-label>
+            <input
+              matInput
+              [(ngModel)]="searchValue"
+              id="value"
+              placeholder="Enter Value"
+            />
+          </mat-form-field>
+        </div>
+        <div fxFlex="4">
+          <button
+            title="Clear"
+            type="button"
+            (click)="clear()"
+            class="btn btn-success btn-circle faTimes"
+          >
+            <i class="fas fa-times-circle"></i>
+          </button>
+        </div>
+        <div fxFlex="4">
+          <button
+            title="Search"
+            type="button"
+            (click)="searchField()"
+            class="btn btn-primary btn-circle faTimes"
+          >
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div fxFlex="4">
+          <button
+            title="Download"
+            (click)="download()"
+            type="button"
+            class="btn btn-warning btn-circle faTimes"
+          >
+            <i class="fas fa-download"></i>
+          </button>
+        </div>
+        <div fxFlex="3"></div>
+        <div fxFlex="10">
+          <select
+            class="form-control custom-select faTimes select_height"
+            [(ngModel)]="pageSize"
+            (change)="changePageSize()"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div fxFlex="100">
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex="24">
+              <mat-card class="box bg-info text-center">
+                <h1 class="font-light text-white">{{ topsalepercent }}</h1>
+                <h4 class="text-white sales">Sales (%)</h4>
+              </mat-card>
+            </div>
+            <div fxFlex="24">
+              <mat-card class="box bg-primary text-center">
+                <h1 class="font-light text-white">{{ topsaleValue }}</h1>
+                <h4 class="text-white sales">Product sales</h4>
+              </mat-card>
+            </div>
+            <div fxFlex="24">
+              <mat-card class="box bg-success text-center">
+                <h1 class="font-light text-white">{{ topproductpercent }}</h1>
+                <h4 class="text-white">Top Products(%) sales</h4>
+              </mat-card>
+            </div>
+            <div fxFlex="24">
+              <mat-card class="box bg-dark text-center">
+                <h1 class="font-light text-white">{{ topproductunits }}</h1>
+                <h4 class="text-white">Units</h4>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+
+        <div fxFlex="100">
+          <br />
+          <mat-card class="col-xs-12">
+            <mat-card-content class="start-xs fixed-table">
+              <table
+                mat-table
+                [dataSource]="dataSource"
+                matSort
+                class="report-table"
+              >
+                <ng-container matColumnDef="sku">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    fxLayoutAlign="start center"
+                    fxFlex="16"
+                  >
+                    SKU
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="16"
+                  >
+                    {{ row.sku }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="product">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="34"
+                  >
+                    PRODUCT
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="34"
+                  >
+                    {{ row.title }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    TOTAL
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    {{ row.totalprice }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="per_total">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    TOTAL (%)
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    {{ row.pricePercent }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="units">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    UNITS
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    {{ row.qty }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="per_units">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    UNITS (%)
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    {{ row.qtyPercent }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="price/units">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    PRICE/UNITS
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxFlex="10"
+                  >
+                    {{ row.price }}
+                  </td>
+                </ng-container>
+                <mat-card>
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="displayedColumns; sticky: true"
+                  ></tr>
+                </mat-card>
+
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+            </mat-card-content>
+          </mat-card>
+          <mat-paginator
+            #myPaginator
+            fxLayout="row"
+            fxLayoutAlign="end end"
+            [pageSize]="25"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

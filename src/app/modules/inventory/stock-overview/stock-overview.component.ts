@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { TrackMenus } from "src/app/_models/menuForTrack";
 import { pages } from "src/app/_models/pages";
 import { subMenus } from "src/app/_models/subMenuTrack";
@@ -8,6 +8,9 @@ import { AppTrackingService } from "src/app/_service/app-tracking.service";
 import { ToasterService } from "src/app/_service/toaster.service";
 import { environment } from "src/environments/environment";
 import { StockOverviewService } from "../services/stock-overview.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
+import { MatPaginator } from "@angular/material/paginator";
 declare var $: any;
 
 @Component({
@@ -18,6 +21,17 @@ declare var $: any;
 export class StockOverviewComponent implements OnInit {
   loading: boolean = false;
   orderDetails: any;
+  dataSource = new MatTableDataSource([]);
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  displayedColumns: any[] = [
+    "sku",
+    "title",
+    "price",
+    "qty",
+    "supplier",
+    "order_history",
+  ];
 
   constructor(
     private appTrackingService: AppTrackingService,
@@ -37,7 +51,6 @@ export class StockOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.getStockOverview();
   }
-
   pageSize = environment.defaultPaginationValue;
   total = environment.defaultTotalValue;
   collectionsize = 0;
@@ -90,7 +103,15 @@ export class StockOverviewComponent implements OnInit {
       .subscribe(
         (res: any) => {
           ////console.log(res);
+          if (res.length !== 0) {
+            this.dataSource = new MatTableDataSource(res?.products);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          } else {
+            this.dataSource = new MatTableDataSource([]);
+          }
           this.allStock = res?.products;
+
           this.collectionsize = res?.page?.totalResults;
           //this.page = res?.page?.currentPageNumber;
           // this.topproductpercent = res?.topproductpercent;
@@ -115,7 +136,10 @@ export class StockOverviewComponent implements OnInit {
         }
       );
   }
-
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   isAllChecked: boolean = false;
 
   selectall(event: any) {

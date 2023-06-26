@@ -1,26 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { MaterialModule } from './material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppInterceptorService } from './_service/app-interceptor.service';
-import { ToastrModule } from 'ngx-toastr';
-import { AdminComponent } from './admin/admin.component';
-import { LeftsidemenuComponent } from './leftsidemenu/leftsidemenu.component';
-import { HeaderComponent } from './header/header.component';
+import { MaterialModule } from "./material.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AppInterceptorService } from "./_service/app-interceptor.service";
+import { ToastrModule } from "ngx-toastr";
+import { AdminComponent } from "./admin/admin.component";
+import { LeftsidemenuComponent } from "./leftsidemenu/leftsidemenu.component";
+import { HeaderComponent } from "./header/header.component";
+import { CustomcomponentsModule } from "./customcomponents/customcomponents.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
     LeftsidemenuComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,13 +31,14 @@ import { HeaderComponent } from './header/header.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CustomcomponentsModule,
     FlexLayoutModule,
     ToastrModule.forRoot({
-      progressAnimation:"decreasing",
-      progressBar:true,
+      progressAnimation: "decreasing",
+      progressBar: true,
       timeOut: 4000,
-      closeButton:true,
-      positionClass: 'toast-top-right',
+      closeButton: true,
+      positionClass: "toast-top-right",
       preventDuplicates: true,
     }),
   ],
@@ -44,9 +46,9 @@ import { HeaderComponent } from './header/header.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptorService,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -79,6 +79,12 @@
                     <div *ngSwitchCase="'stock_view'">
                       <app-stock-overview></app-stock-overview>
                     </div>
+                    <div *ngSwitchCase="'sales_by_prod'">
+                      <app-search-by-prod></app-search-by-prod>
+                    </div>
+                    <div *ngSwitchCase="'stock_value_repo'">
+                      <app-stock-value-repo></app-stock-value-repo>
+                    </div>
                     <div *ngSwitchDefault>
                       <p>No one is matched</p>
                     </div>

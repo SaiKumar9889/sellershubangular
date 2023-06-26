@@ -31,87 +31,88 @@ Login register and recover password Page
 ******************/
 
 .login-register {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    height: 100%;
-    width: 100%;
-    padding: 5% 0;
-    position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100%;
+  width: 100%;
+  padding: 5% 0;
+  position: fixed;
 }
-.images{
-    height: 100vh;
-    width: 100%;
-    margin: 0px;
+.images {
+  height: 100vh;
+  width: 100%;
+  margin: 0px;
 }
 .login-box {
-    width: 100%;
-    height: 100vh;
-    margin: 0px;
+  width: 100%;
+  height: 100vh;
+  margin: 0px;
 }
-.image-responsive{
-    max-width: 46%;
-    height: auto;
+.image-responsive {
+  max-width: 46%;
+  height: auto;
 }
-.m-l-50{
-    margin-left: 162px;
+.m-l-50 {
+  margin-left: 162px;
 }
 .login-box .footer {
-    width: 100%;
-    left: 0px;
-    right: 0px;
+  width: 100%;
+  left: 0px;
+  right: 0px;
 }
 
 .login-box .social {
-    display: block;
-    margin-bottom: 30px;
+  display: block;
+  margin-bottom: 30px;
 }
 
 #recoverform {
-    display: none;
+  display: none;
 }
 
 .login-sidebar {
-    padding: 0px;
-    margin-top: 0px;
+  padding: 0px;
+  margin-top: 0px;
 }
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 .login-sidebar .login-box {
-    right: 0px;
-    position: absolute;
-    height: 100%;
+  right: 0px;
+  position: absolute;
+  height: 100%;
 }
-.btn-gradient{
-    background-color: #FF8A00;
-    width: 100%;
-    border-radius: 60px;
+.btn-gradient {
+  background-color: #ff8a00;
+  width: 100%;
+  border-radius: 60px;
 }
-.padding{
-    padding-left: 0px;
-    padding-right: 0px;
+.padding {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .card {
-    padding: 1.25rem;
-    height: 94vh;
-  }
-  .user{
-    width: 100%;
-  }
-  .h3, h3 {
-    font-size: 1.5rem;
+  padding: 1.25rem;
+  height: 100vh;
 }
-.mt{
-    margin-top: 20px;
+.user {
+  width: 100%;
+}
+.h3,
+h3 {
+  font-size: 1.5rem;
+}
+.mt {
+  margin-top: 20px;
 }
 .text-center a {
-    text-decoration: none;
-  }
-  .text-center b {
-    font-weight: 500 !important;
-  }
-  .text-muted{
-    text-decoration: none;
-    color: #6c757d!important;
-  }
+  text-decoration: none;
+}
+.text-center b {
+  font-weight: 500 !important;
+}
+.text-muted {
+  text-decoration: none;
+  color: #6c757d !important;
+}

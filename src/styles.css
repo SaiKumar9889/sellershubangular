@@ -2,7 +2,9 @@
 
 html,
 body {
-  height: 100%;
+  height: 100% !important;
+  width: 100% !important;
+  white-space: nowrap !important;
 }
 body {
   margin: 0;
@@ -43,4 +45,39 @@ h4 {
 }
 .mat-expansion-panel-spacing {
   margin: 0px !important;
+}
+.mat-drawer-inner-container {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+.mat-drawer {
+  overflow-y: hidden !important;
+}
+.fixed-table {
+  max-height: 500px;
+  overflow-y: auto;
+}
+th.mat-row {
+  padding: 10px 0px !important;
+}
+.activeMenu {
+  /* background-color: #05aaf3 !important; */
+  color: #ffffff;
+  /* border-right: 5px solid #0081bd !important;
+   color: #05aaf3; */
+}
+
+.activeMenu .arrow svg path {
+  stroke: rgba(0, 0, 0, 0.87);
+}
+.activeMenu .arrow svg {
+  transform: rotate(90deg);
+}
+.miniActiveMenu {
+  /* border-left: 5px solid #0081bd !important; */
+  color: #05aaf3 !important;
+}
+.miniActiveMenu .new svg g,
+.miniActiveMenu .list svg g {
+  fill: #05aaf3;
 }

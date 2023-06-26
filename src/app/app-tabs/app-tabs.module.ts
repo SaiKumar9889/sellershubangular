@@ -4,6 +4,7 @@ import { AppTabsComponent } from "./app-tabs.component";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "../material.module";
 import { InventoryModule } from "../modules/inventory/inventory.module";
+import { ReportsModule } from "../modules/reports/reports.module";
 const routes: Routes = [
   {
     path: "",
@@ -24,6 +25,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MaterialModule,
     InventoryModule,
+    ReportsModule,
   ],
 })
 export class AppTabsModule {}

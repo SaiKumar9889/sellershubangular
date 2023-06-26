@@ -1,12 +1,9 @@
 <mat-accordion>
-  <mat-expansion-panel
-    *ngFor="let menu of allMenus"
-    (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false"
-  >
+  <mat-expansion-panel #panel hideToggle *ngFor="let menu of allMenus">
     <mat-expansion-panel-header
       (click)="setMenuName(menu)"
-      [ngClass]="{ active: menu.pmenu === selectedMenuName }"
+      [ngClass]="{ activeMenu: panel.expanded }"
+      [class.inactiva]="!panel.expanded"
     >
       <mat-panel-title>
         <div fxLayout="row" fxLayoutAlign="start center">
@@ -24,6 +21,28 @@
             <span *ngIf="menu.isBeta" class="label-loc label-comingsoon"
               >Beta</span
             >
+            <div
+              class="arrow"
+              *ngIf="menu.chaildrens && menu.chaildrens.length > 0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                viewBox="0 0 25 25"
+              >
+                <path
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="#333"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 15L11 10 16 15"
+                  opacity=".8"
+                  transform="rotate(90 12.5 12.5)"
+                />
+              </svg>
+            </div>
           </a>
           <a *ngIf="menu.haschildrens">
             <span> <i [class]="menu.icon"></i>&nbsp;&nbsp;</span>
@@ -42,6 +61,28 @@
               >{{ menu.menuname }}</span
             >
           </a>
+          <div
+            class="arrow"
+            *ngIf="menu.chaildrens && menu.chaildrens.length > 0"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              viewBox="0 0 25 25"
+            >
+              <path
+                fill="none"
+                fill-rule="evenodd"
+                stroke="#333"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 15L11 10 16 15"
+                opacity=".8"
+                transform="rotate(90 12.5 12.5)"
+              />
+            </svg>
+          </div>
         </div>
       </mat-panel-title>
     </mat-expansion-panel-header>
@@ -53,7 +94,7 @@
           fxLayout="row"
           fxLayoutAlign="start start"
           style="border-left: 1px solid #f0eded"
-          [ngClass]="{ active: menu.pmenu === selectedMenuName }"
+          class="padding-top-bottom"
         >
           <span *ngIf="cmenu.isPremium" class="label-loc-inner label-prime"
             >Premium</span
@@ -81,3 +122,102 @@
   </mat-expansion-panel>
   <br />
 </mat-accordion>
+
+<!-- <mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav
+    #sidenav
+    class="example-sidenav"
+    mode="side"
+    opened="true"
+    (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()"
+  >
+    <mat-nav-list *ngFor="let menu of allMenus">
+      <mat-list-item
+        (click)="showSubmenu = !showSubmenu"
+        (click)="setMenuName(menu)"
+        class="parent"
+        [ngClass]="{ active: menu.pmenu === selectedMenuName }"
+      >
+        <span class="full-width" *ngIf="isExpanded || isShowing">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <a *ngIf="!menu.haschildrens">
+              <i [class]="menu.icon"></i>&nbsp;
+              <span matTooltip="{{ menu.menuname }}" class="active">{{
+                menu.menuname
+              }}</span>
+              <span *ngIf="menu.isPremium" class="label-loc label-prime"
+                >Premium</span
+              >
+              <span *ngIf="menu.isComingSoon" class="label-loc label-comingsoon"
+                >Coming soon</span
+              >
+              <span *ngIf="menu.isBeta" class="label-loc label-comingsoon"
+                >Beta</span
+              >
+            </a>
+            <a *ngIf="menu.haschildrens">
+              <span> <i [class]="menu.icon"></i>&nbsp;&nbsp;</span>
+              <span *ngIf="menu.isPremium" class="label-loc label-prime"
+                >Premium</span
+              >
+              <span *ngIf="menu.isComingSoon" class="label-loc label-comingsoon"
+                >Coming soon</span
+              >
+              <span *ngIf="menu.isBeta" class="label-loc label-comingsoon"
+                >Beta</span
+              >
+              <span
+                matTooltip="{{ menu.menuname }}"
+                routerLinkActive="active-link"
+                >{{ menu.menuname }}</span
+              >
+            </a>
+          </div>
+        </span>
+        <mat-icon
+          class="menu-button"
+          [ngClass]="{ rotated: showSubmenu }"
+          *ngIf="isExpanded || isShowing"
+          >expand_more</mat-icon
+        >
+      </mat-list-item>
+
+      <div fxLayout="column" *ngIf="menu.chaildrens && menu.haschildrens">
+        <div *ngFor="let cmenu of menu.chaildrens">
+          <div
+            class="submenu"
+            [ngClass]="{ expanded: showSubmenu }"
+            *ngIf="isShowing || isExpanded"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+            style="border-left: 1px solid #f0eded"
+            [ngClass]="{ active: menu.pmenu === selectedMenuName }"
+          >
+            <span *ngIf="cmenu.isPremium" class="label-loc-inner label-prime"
+              >Premium</span
+            >
+            <span
+              *ngIf="cmenu.isComingSoon"
+              class="label-loc-inner label-comingsoon"
+              >Coming soon</span
+            >
+            <span *ngIf="cmenu.isBeta" class="label-loc-inner label-comingsoon"
+              >Beta</span
+            >
+            <a
+              *ngIf="
+                status == 'ACTIVE' || status == 'active' || status == 'Active'
+              "
+              style="margin: 10px 0px 10px 45px; cursor: pointer"
+              (click)="setMenuName(cmenu)"
+              routerLinkActive="active-link"
+              >{{ cmenu.menuname }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </mat-nav-list>
+    <mat-nav-list> </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container> -->

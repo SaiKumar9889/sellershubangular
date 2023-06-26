@@ -26,7 +26,6 @@ export class LeftsidemenuComponent implements OnInit, OnDestroy, AfterViewInit {
   loggedinRole: string = "";
   selectedMenuName: any;
   allMenus: Menu[] = [];
-  panelOpenState = false;
   isLeftsidemenuhide: boolean = false;
   subscription: Subscription = new Subscription();
   mSubscription: Subscription = new Subscription();
