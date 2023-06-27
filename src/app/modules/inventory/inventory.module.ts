@@ -4,10 +4,12 @@ import { StockOverviewComponent } from "./stock-overview/stock-overview.componen
 import { FormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { CategoryComponent } from "./category/category.component";
+// import { CategoryModalComponent } from './category-modal/category-modal.component';
 
 @NgModule({
-  declarations: [StockOverviewComponent],
-  exports: [StockOverviewComponent],
+  declarations: [StockOverviewComponent, CategoryComponent],
+  exports: [StockOverviewComponent, CategoryComponent],
   imports: [CommonModule, FormsModule, MaterialModule, FlexLayoutModule],
 })
 export class InventoryModule {}

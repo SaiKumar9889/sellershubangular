@@ -1,0 +1,237 @@
+<div fxLayout="row wrap" fxLayoutAlign="start center">
+  <div fxFlex="100">
+    <mat-card>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div>
+          <div fxLayout="row wrap" fxLayoutAlign="start center">
+            <div>
+              <h4 class="card-title" style="padding-top: 15px">Categories</h4>
+            </div>
+            <div>
+              <a
+                title="Description"
+                href="https://www.sellershub.io/userguide/user-guide/inventory-management/how-to-add-edit-and-delete-the-categories/"
+                target="_blank"
+                class="btn-sm m-l-15 btn btn-dark btn-circle"
+              >
+                <i class="fas fa-info"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            (click)="openModal(); auditTrack(1)"
+            title="Add Category"
+            type="button"
+            class="btn btn-primary"
+          >
+            <i class="fa fa-plus"></i> Add Category
+          </button>
+        </div>
+      </div>
+      <div class="m-l-5">
+        <mat-card class="col-xs-12">
+          <mat-card-content class="start-xs fixed-table">
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              class="report-table"
+            >
+              <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Category
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.name }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Description
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.details }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="path">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Path</th>
+                <td mat-cell *matCellDef="let row">
+                  {{ row.path }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Action
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <div class="row justify-content-center align-items-center">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-success d-md-block mr-1"
+                      title="Add Subcategory"
+                      (click)="openSubCategory(row)"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-success d-md-block"
+                      title="Edit"
+                      (click)="openCategory(row); auditTrack(2)"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button
+                      type="button"
+                      (click)="delete(row); auditTrack(3)"
+                      title="Remove"
+                      class="btn btn-sm ml-1 btn-warning d-md-block"
+                    >
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+              <mat-card>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              </mat-card>
+
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+        <mat-paginator
+          #myPaginator
+          fxLayout="row"
+          fxLayoutAlign="end end"
+          [pageSize]="25"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+        >
+        </mat-paginator>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<div
+  id="category-modal"
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  style="display: none"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2
+          *ngIf="!isEditTrue && !isAddSubcategory"
+          class="modal-title"
+          style="color: rgb(255 165 0)"
+        >
+          Category
+        </h2>
+        <h2
+          *ngIf="isEditTrue && !isAddSubcategory"
+          class="modal-title"
+          style="color: rgb(255 165 0)"
+        >
+          Edit Category
+        </h2>
+        <h2
+          *ngIf="!isEditTrue && isAddSubcategory"
+          class="modal-title"
+          style="color: rgb(255 165 0)"
+        >
+          Add SubCategory
+        </h2>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="modalclosed()"
+          aria-hidden="true"
+        >
+          ×
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-lg-12 row">
+          <div class="form-group" style="width: 100%">
+            <!-- <label>Category</label> -->
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="categoryName"
+              placeholder="Category Name"
+              [disabled]="isEditTrue"
+            />
+          </div>
+          <div
+            class="form-group"
+            style="width: 100%"
+            *ngIf="!isEditTrue && isAddSubcategory"
+          >
+            <!-- <label>Category</label> -->
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="subcategoryName"
+              placeholder="Sub Category Name"
+            />
+          </div>
+          <div class="form-group" style="width: 100%">
+            <!-- <label>Category</label> -->
+            <textarea
+              class="form-control"
+              rows="5"
+              [(ngModel)]="categoryDesc"
+              placeholder="descrption"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="!isEditTrue && !isAddSubcategory"
+          (click)="saveSelectedCate()"
+          type="button"
+          class="btn waves-effect waves-light btn-success"
+          data-dismiss="modal"
+        >
+          Save
+        </button>
+        <button
+          *ngIf="isEditTrue && !isAddSubcategory"
+          (click)="updateSelectedCate()"
+          type="button"
+          class="btn waves-effect waves-light btn-success"
+          data-dismiss="modal"
+        >
+          Save
+        </button>
+        <button
+          *ngIf="isAddSubcategory && !isEditTrue"
+          (click)="addSubcategory()"
+          type="button"
+          class="btn waves-effect waves-light btn-success"
+          data-dismiss="modal"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger waves-effect"
+          data-dismiss="modal"
+          (click)="modalclosed()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

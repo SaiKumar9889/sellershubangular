@@ -85,3 +85,6 @@ th.mat-row {
 .mat-table {
   font-family: Poppins, sans-serif !important;
 }
+tr.mat-header-row {
+  height: 40px !important;
+}
