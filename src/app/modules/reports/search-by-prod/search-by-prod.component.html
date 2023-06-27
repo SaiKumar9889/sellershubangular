@@ -22,9 +22,9 @@
           </div>
         </div>
         <div fxFlex="100" *ngIf="isDescEnables">
-          <mat-card>
-            <h5 class="text-left text-white">Description :</h5>
-            <p class="text-left">
+          <mat-card class="box bg-warning text-center descriptionBox">
+            <h5 class="text-left text-white description">Description :</h5>
+            <p class="text-left description_text">
               This report will show you all sales for each product during the
               specified time period. All orders for all variants within a
               product will be added together to generate the values in this
@@ -299,10 +299,7 @@
                   </td>
                 </ng-container>
                 <mat-card>
-                  <tr
-                    mat-header-row
-                    *matHeaderRowDef="displayedColumns; sticky: true"
-                  ></tr>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 </mat-card>
 
                 <tr

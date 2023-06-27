@@ -7,6 +7,7 @@ import { MaterialModule } from "src/app/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { CustomcomponentsModule } from "src/app/customcomponents/customcomponents.module";
 import { StockValueRepoComponent } from "./stock-value-repo/stock-value-repo.component";
+import { OrderHistoryComponent } from "./order-history/order-history.component";
 
 const routes: Routes = [
   {
@@ -21,8 +22,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [SearchByProdComponent, StockValueRepoComponent],
-  exports: [SearchByProdComponent, StockValueRepoComponent],
+  declarations: [
+    SearchByProdComponent,
+    StockValueRepoComponent,
+    OrderHistoryComponent,
+  ],
+  exports: [
+    SearchByProdComponent,
+    StockValueRepoComponent,
+    OrderHistoryComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

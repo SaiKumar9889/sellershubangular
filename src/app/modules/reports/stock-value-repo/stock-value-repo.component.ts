@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { TrackMenus } from "src/app/_models/menuForTrack";
 import { pages } from "src/app/_models/pages";
 import { subMenus } from "src/app/_models/subMenuTrack";
@@ -10,8 +10,9 @@ import { ToasterService } from "src/app/_service/toaster.service";
 import { environment } from "src/environments/environment";
 import { LowStockService } from "../services/low-stock.service";
 import { StockValueReportService } from "../services/stock-value-report.service";
-import * as $ from "jquery";
-import DataTable from "datatables.net-dt";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
+import { MatPaginator } from "@angular/material/paginator";
 
 @Component({
   selector: "app-stock-value-repo",
@@ -29,6 +30,11 @@ export class StockValueRepoComponent implements OnInit {
   totalElements: number = environment.defaultTotalValue;
   isclear: boolean = false;
   fromDate: any = "";
+
+  dataSource = new MatTableDataSource([]);
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  displayedColumns: any[] = ["sku", "title", "qty", "item_cost", "stock_value"];
   constructor(
     private appTrackingService: AppTrackingService,
     private toasterService: ToasterService,
@@ -67,6 +73,13 @@ export class StockValueRepoComponent implements OnInit {
       .subscribe(
         (res: any) => {
           ////console.log(res);
+          if (res.length !== 0) {
+            this.dataSource = new MatTableDataSource(res?.products);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          } else {
+            this.dataSource = new MatTableDataSource([]);
+          }
           this.allReports = res?.products;
           if (res?.products["costPrice"] == null) {
             this.costPrice = "NOT AVAILABLE";

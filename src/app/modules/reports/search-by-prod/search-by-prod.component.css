@@ -35,14 +35,19 @@ table th {
   font-family: Poppins, sans-serif !important;
   font-weight: 600;
 }
-table td {
+table td,
+.description_text {
   white-space: initial !important;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-family: Poppins, sans-serif !important;
 }
 tr.mat-row,
 tr.mat-footer-row {
   height: 10vh !important;
+}
+.description {
+  font-size: 1rem !important;
+  font-family: Poppins, sans-serif !important;
+}
+.descriptionBox {
+  margin-bottom: 10px;
 }

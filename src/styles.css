@@ -27,6 +27,7 @@ h6 {
   font-weight: 300;
   line-height: 1.2;
   color: inherit;
+  white-space: initial !important;
 }
 .card {
   background-color: #fff;
@@ -80,4 +81,7 @@ th.mat-row {
 .miniActiveMenu .new svg g,
 .miniActiveMenu .list svg g {
   fill: #05aaf3;
+}
+.mat-table {
+  font-family: Poppins, sans-serif !important;
 }

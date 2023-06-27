@@ -15,7 +15,7 @@ export class AppTabsComponent implements OnInit {
   hidedTabs: Tabs[] = [];
   allSubscribedTabs: Tabs[] = [];
   subscription: Subscription;
-  subscribedTabs: any;
+  subscribedTabs: any = [];
   constructor(private datasharingService: DatasharingService) {
     console.log("In");
     this.subscription = this.datasharingService.salesHubTabs.subscribe(
